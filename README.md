@@ -24,9 +24,7 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 -->
-
-![header](https://capsule-render.vercel.app/api?type=waving&color=28DF99&height=300&section=header&text=Eco%20Basket&fontSize=90&animation=fadeIn&fontAlignY=38&desc=🌳환경을%20보호하는%20공용%20장바구니%20프로젝트🌳&descAlignY=51&descAlign=62&fontColor=FEFFDE&animation=twinkling)
-
+<a href="https://github.com/KPUCE2021SP/OOSOO#%EB%A7%81%ED%81%AC">![header](https://capsule-render.vercel.app/api?type=waving&color=28DF99&height=300&section=header&text=Eco%20Basket&fontSize=90&animation=fadeIn&fontAlignY=38&desc=🌳환경을%20보호하는%20공용%20장바구니%20프로젝트🌳&descAlignY=51&descAlign=62&fontColor=FEFFDE&animation=twinkling)</a>
 <!-- 사용하는 기술 정리 -->
 
 <h4 align="center">지원 언어</h4>
