@@ -81,7 +81,10 @@
 </p> 
 -->
 
-### ~~사용법~~
+## 사용법
+> - #### Prototype
+>    <a href="https://ovenapp.io/view/CfG3Jrx27qCfaSJ5BxDKU9aZ5hA06o89/BUhLs" target="_blank"><img src="https://img.shields.io/badge/Oven-F7E600?style=flat-square&logo=Kakao&logoColor=black"/></a> <!-- Oven -->
+
 ### ~~기능~~
 ### ~~UI~~
 
