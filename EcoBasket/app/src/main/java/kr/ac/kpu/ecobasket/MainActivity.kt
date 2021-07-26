@@ -8,5 +8,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         // Jaehyun Commit Test
+        // Jinho Commit Test 6:51
     }
 }
