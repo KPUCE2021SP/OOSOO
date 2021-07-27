@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "636571117168",
+    "project_id": "ecobasket-c3ef9",
+    "storage_bucket": "ecobasket-c3ef9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636571117168:android:6aae2e41039faf444936b5",
+        "android_client_info": {
+          "package_name": "kr.ac.kpu.ecobasket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "636571117168-u679nnvjmlehi7heclft3tee8fol9dgl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAj9r-RZXJXq-2BLqNr8R5Cd60rBSIvpw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "636571117168-u679nnvjmlehi7heclft3tee8fol9dgl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
