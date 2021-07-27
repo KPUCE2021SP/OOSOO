@@ -10,6 +10,5 @@ class MainActivity : AppCompatActivity() {
         // Jaehyun Commit Test
         // Jinho Commit Test 6:51
         // Muyaho
-        // commit
     }
 }
