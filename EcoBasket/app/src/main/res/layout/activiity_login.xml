@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/Google_btn"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        android:drawableLeft="@drawable/google_icon"
+        android:text="Sign in with Google"
+        app:backgroundTint="#0083f5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kakao_btn"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7" />
+
+    <Button
+        android:id="@+id/kakao_btn"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        android:drawableLeft="@drawable/kakao_icon"
+        android:text="카카오 로그인"
+        android:textColor="#3A1D1D"
+        app:backgroundTint="#F7E600"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <EditText
+        android:id="@+id/EMail_edit"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="E-Mail"
+        android:inputType="textPersonName"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline1" />
+
+    <EditText
+        android:id="@+id/PW_edit"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/EMail_edit" />
+
+    <Button
+        android:id="@+id/Login_btn"
+        android:layout_width="145dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:text="Login"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/PW_edit"
+        app:layout_constraintTop_toBottomOf="@+id/PW_edit"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/SignUp_btn"
+        android:layout_width="145dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:text="Sign Up"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="@+id/PW_edit"
+        app:layout_constraintTop_toBottomOf="@+id/PW_edit"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
