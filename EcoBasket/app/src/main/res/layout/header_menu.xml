@@ -11,26 +11,29 @@
         android:id="@+id/img_profile_header"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:src="@drawable/google_icon" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
+        android:padding="10dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_name_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="이름"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:text="이름or닉네임"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/tv_level_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lv. ???" />
+            android:text="Lv. ???"
+            android:textSize="16sp" />
     </LinearLayout>
 
 </LinearLayout>
