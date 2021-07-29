@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EcoBasket">
+        <activity android:name=".PreferencesActivity"></activity>
         <activity android:name=".GuideActivity" />
         <activity android:name=".MyInfoActivity" />
         <activity android:name=".MainActivity">

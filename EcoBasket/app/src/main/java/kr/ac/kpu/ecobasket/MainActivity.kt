@@ -29,8 +29,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (item.itemId) {
             R.id.menu_guide ->
                 startActivity<GuideActivity>()
+            R.id.menu_pref ->
+                startActivity<PreferencesActivity>()
         }
-
         return false
+    }
+
+    override fun onBackPressed() {
+        if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
+            drawerLayout.closeDrawers()
+        } else {
+            super.onBackPressed()
+        }
     }
 }
