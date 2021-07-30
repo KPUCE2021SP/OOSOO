@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
 class LoginActivity : AppCompatActivity() {
@@ -18,6 +19,10 @@ class LoginActivity : AppCompatActivity() {
             val userEmail = EMail_edit.text.toString()
             val password = PW_edit.text.toString()
             doLogin(userEmail, password)
+        }
+
+        btn_test.setOnClickListener {
+            startActivity<MainActivity>()
         }
     }
 
