@@ -15,14 +15,26 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        Login_btn.setOnClickListener {
+        //로그인 버튼 누를 시 로그인 시도
+        btn_login.setOnClickListener {
             val userEmail = EMail_edit.text.toString()
             val password = PW_edit.text.toString()
-            doLogin(userEmail, password)
+
+            if(userEmail == "" || password == ""){
+                toast("이메일 또는 비밀번호가 비어있습니다. 다시 입력해주십시오.")
+            }else{
+                doLogin(userEmail, password)
+            }
         }
 
         btn_test.setOnClickListener {
             startActivity<MainActivity>()
+            finish()
+        }
+
+        //회원가입 버튼 누를 시 회원가입 액티비티로 전환
+        btn_signUp.setOnClickListener {
+            startActivity<SignUpActivity>()
         }
     }
 
@@ -39,5 +51,4 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
-
 }
