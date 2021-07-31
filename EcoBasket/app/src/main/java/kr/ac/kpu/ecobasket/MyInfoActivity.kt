@@ -10,7 +10,7 @@ class MyInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_info)
 
-        setSupportActionBar(toolbar_pref)
+        setSupportActionBar(toolbar_my_info)
 
         supportActionBar?.title = ""
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

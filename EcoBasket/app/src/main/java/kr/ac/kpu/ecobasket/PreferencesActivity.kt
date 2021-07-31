@@ -2,10 +2,68 @@ package kr.ac.kpu.ecobasket
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
+import kotlinx.android.synthetic.main.activity_preferences.*
 
 class PreferencesActivity : AppCompatActivity() {
+    lateinit var memberAdapter : PrefRecyAdapter
+    lateinit var supportAdapter : PrefRecyAdapter
+    lateinit var infoAdapter : PrefRecyAdapter
+    val list_member = mutableListOf<String>()
+    val list_support = mutableListOf<String>()
+    val list_info = mutableListOf<String>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_preferences)
+
+        setSupportActionBar(toolbar_pref)
+
+        supportActionBar?.title = ""
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        initRecycler()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home ->
+                finish()
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun initRecycler() {
+        memberAdapter = PrefRecyAdapter(this)
+        supportAdapter = PrefRecyAdapter(this)
+        infoAdapter = PrefRecyAdapter(this)
+
+        recy_member.adapter = memberAdapter
+        recy_support.adapter = supportAdapter
+        recy_info.adapter = infoAdapter
+
+        list_member.apply {
+            add("회원정보 수정")
+            add("비밀번호 변경")
+            add("회원 탈퇴")
+        }
+        list_support.apply {
+            add("요청하기")
+            add("신고하기")
+        }
+        list_info.apply {
+            add("프로그램 버전 1.0")
+            add("개발자 정보")
+        }
+
+        memberAdapter.datas = list_member
+        memberAdapter.notifyDataSetChanged()
+
+        supportAdapter.datas = list_support
+        supportAdapter.notifyDataSetChanged()
+
+        infoAdapter.datas = list_info
+        infoAdapter.notifyDataSetChanged()
     }
 }
