@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.MenuItem
+import android.view.View.*
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_layout.*
@@ -14,17 +15,48 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        nav_menu.setNavigationItemSelectedListener(this)
+        /* 로그인정보 GET
+        val userEmail = intent.getStringExtra("userEmail")
+        val password = intent.getStringExtra("password")
+        */
 
         btn_menu.setOnClickListener {
             drawerLayout.openDrawer(Gravity.RIGHT)
         }
+
+        //메인 - 섬꾸미기 아이콘
+        btn_island.setOnClickListener {
+            startActivity<IslandActivity>()
+        }
+
+        //메인 - 대여버튼
+        btn_rent.setOnClickListener {
+            btn_return.visibility = VISIBLE
+            btn_rent.visibility = INVISIBLE
+
+            /* QR코드리더기 액티비티 구현
+            startActivityForResult<QRActivity>()
+               //+Database연동
+             */
+        }
+
+        //메인 - 반납버튼
+        btn_return.setOnClickListener {
+            btn_return.visibility = INVISIBLE
+            btn_rent.visibility = VISIBLE
+
+            //+Database연동
+        }
+
+        //메인 - 우측메뉴바
+        nav_menu.setNavigationItemSelectedListener(this)
 
         nav_menu.getHeaderView(0).setOnClickListener {
             startActivity<MyInfoActivity>()
         }
     }
 
+    //메뉴바 메뉴 연결
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_guide ->
@@ -35,6 +67,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return false
     }
 
+    //메뉴바 닫기 액션 구현
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
             drawerLayout.closeDrawers()
