@@ -7,7 +7,7 @@
     tools:context=".MyInfoActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_myinfo"
+        android:id="@+id/toolbar_pref"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#505050"
@@ -19,7 +19,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -44,7 +43,7 @@
         android:layout_marginTop="16dp"
         android:src="@drawable/google_icon"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_myinfo" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_pref" />
 
     <TextView
         android:id="@+id/tv_name"
