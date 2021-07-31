@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/back_btn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="#00E5FF"
+            android:src="@drawable/ic_baseline_keyboard_backspace_24" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/ecoPoint2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="#00E676"
+            android:drawableLeft="@drawable/eco_icon"
+            android:text="n 에코포인트"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:id="@+id/frame1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:text="기본 테마"
+                        android:textColor="#000000" />
+
+                    <Button
+                        android:id="@+id/onfocused1"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:clickable="false"
+                        android:text="적용중"
+                        android:textStyle="bold"
+                        app:backgroundTint="#CC00E676" />
+
+                    <ImageButton
+                        android:id="@+id/image_island"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@color/white"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/island" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/frame2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1">
+
+                    <ImageButton
+                        android:id="@+id/image_spring"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@color/white"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/raspberry" />
+
+                    <TextView
+                        android:id="@+id/tv_spring"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:text="봄 테마"
+                        android:textColor="#000000" />
+
+                    <Button
+                        android:id="@+id/onfocused2"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:clickable="false"
+                        android:text="적용중"
+                        android:textStyle="bold"
+                        android:visibility="invisible"
+                        app:backgroundTint="#CC00E676" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:id="@+id/frame3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:foreground="@drawable/rounded_layout">
+
+                    <ImageButton
+                        android:id="@+id/image_summer"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@color/white"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/beach" />
+
+                    <TextView
+                        android:id="@+id/tv_summer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:text="여름 테마"
+                        android:textColor="#000000" />
+
+                    <ImageView
+                        android:id="@+id/iv_lock1"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/lock" />
+
+                    <TextView
+                        android:id="@+id/tv_eco_lock1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|top"
+                        android:text="500 에코포인트"
+                        android:textColor="#D50000"
+                        android:textColorHighlight="#000000" />
+
+                    <Button
+                        android:id="@+id/onfocused3"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:clickable="false"
+                        android:text="적용중"
+                        android:textStyle="bold"
+                        android:visibility="invisible"
+                        app:backgroundTint="#CC00E676" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/frame4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:foreground="@drawable/rounded_layout">
+
+                    <ImageButton
+                        android:id="@+id/image_autumn"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@color/white"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/tree" />
+
+                    <TextView
+                        android:id="@+id/tv_autumn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:text="가을 테마"
+                        android:textColor="#000000" />
+
+                    <ImageView
+                        android:id="@+id/iv_lock2"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/lock" />
+
+                    <TextView
+                        android:id="@+id/tv_eco_lock2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|top"
+                        android:text="Lv.3 달성"
+                        android:textColor="#D50000"
+                        android:textColorHighlight="#000000" />
+
+                    <Button
+                        android:id="@+id/onfocused4"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:clickable="false"
+                        android:text="적용중"
+                        android:textStyle="bold"
+                        android:visibility="invisible"
+                        app:backgroundTint="#CC00E676" />
+
+                </FrameLayout>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:id="@+id/frame5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:foreground="@drawable/rounded_layout">
+
+                    <ImageButton
+                        android:id="@+id/image_winter"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@color/white"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/hill" />
+
+                    <TextView
+                        android:id="@+id/tv_winter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:text="겨울 테마"
+                        android:textColor="#000000" />
+
+                    <ImageView
+                        android:id="@+id/iv_lock3"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/lock" />
+
+                    <TextView
+                        android:id="@+id/tv_eco_lock3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|top"
+                        android:text="800 에코포인트"
+                        android:textColor="#D50000"
+                        android:textColorHighlight="#000000" />
+
+                    <Button
+                        android:id="@+id/onfocused5"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:clickable="false"
+                        android:text="적용중"
+                        android:textStyle="bold"
+                        android:visibility="invisible"
+                        app:backgroundTint="#CC00E676" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/frame6"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:foreground="@drawable/rounded_layout">
+
+                    <ImageButton
+                        android:id="@+id/image_sunset"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@color/white"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/ocean" />
+
+                    <TextView
+                        android:id="@+id/tv_sunset"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:text="석양 테마"
+                        android:textColor="#000000" />
+
+                    <ImageView
+                        android:id="@+id/iv_lock4"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"
+                        app:srcCompat="@drawable/lock" />
+
+                    <TextView
+                        android:id="@+id/tv_eco_lock4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|top"
+                        android:text="사용 횟수 10회 이상"
+                        android:textColor="#D50000"
+                        android:textColorHighlight="#000000" />
+
+                    <Button
+                        android:id="@+id/onfocused6"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:clickable="false"
+                        android:text="적용중"
+                        android:textStyle="bold"
+                        android:visibility="invisible"
+                        app:backgroundTint="#CC00E676" />
+
+                </FrameLayout>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

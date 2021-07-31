@@ -19,7 +19,7 @@ class IslandActivity : AppCompatActivity() {
 
         //테마 고르기 버튼
         shop_btn.setOnClickListener {
-            //startActivity<ThemeActivity>()
+            startActivity<ThemeActivity>()
         }
 
         //뒤로가기 버튼
