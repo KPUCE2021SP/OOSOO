@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_main_layout.*
 import org.jetbrains.anko.startActivity
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,21 +32,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //메인 - 대여버튼
         btn_rent.setOnClickListener {
-            btn_return.visibility = VISIBLE
-            btn_rent.visibility = INVISIBLE
+            btn_return.visibility = VISIBLE     //** 버튼 일치화 필요 (xml 상태지정) */
+            btn_rent.visibility = GONE
 
-            /* QR코드리더기 액티비티 구현
-            startActivityForResult<QRActivity>()
+            /* QR코드리더기 액티비티 구현 */
+            startActivity<QRActivity>()
+            /*
+            startActivityForResult<QRActivity>(requestCode)
                //+Database연동
              */
+
         }
 
-        //메인 - 반납버튼
+        //** 임시(상태지정) */
         btn_return.setOnClickListener {
-            btn_return.visibility = INVISIBLE
             btn_rent.visibility = VISIBLE
-
-            //+Database연동
+            btn_return.visibility = GONE
         }
 
         //메인 - 우측메뉴바

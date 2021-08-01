@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
+    android:background="@drawable/top_action_bar_scrim">
+
+    <ImageView
+        android:id="@+id/btn_close_qr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:padding="12dp"
+        android:contentDescription="뒤로 가기"
+        app:srcCompat="@drawable/ic_close_vd_white_24"
+        tools:ignore="VectorDrawableCompat" />
+
+    <ImageView
+        android:id="@+id/btn_inputCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:padding="12dp"
+        android:contentDescription="코드 입력"
+        app:srcCompat="@drawable/ic_baseline_code_white_24"
+        tools:ignore="VectorDrawableCompat" />
+
+    <ImageView
+        android:id="@+id/btn_flash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/btn_inputCode"
+        android:padding="12dp"
+        android:contentDescription="카메라 플래시"
+        app:srcCompat="@drawable/camera_flash"/>
+
+</RelativeLayout>
