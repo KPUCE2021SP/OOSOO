@@ -1,6 +1,5 @@
 package kr.ac.kpu.ecobasket
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
@@ -28,7 +27,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
         btn_test.setOnClickListener {
-            startActivity<MainActivity>()
             finish()
         }
 

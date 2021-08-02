@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (Firebase.auth.currentUser == null){
             startActivity(
                 Intent(this, LoginActivity::class.java))
-            finish()
         }
 
         btn_menu.setOnClickListener {

@@ -3,7 +3,10 @@ package kr.ac.kpu.ecobasket
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import kotlinx.android.synthetic.main.activity_preferences.*
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.toast
 
 class PreferencesActivity : AppCompatActivity() {
     lateinit var memberAdapter : PrefRecyAdapter
@@ -23,6 +26,63 @@ class PreferencesActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         initRecycler()
+
+        memberAdapter.setItemClickListener(object: PrefRecyAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                //클릭 이벤트
+                when (position) {
+                    0 -> {
+                        toast("0번 클릭")
+                        alert(title = "회원정보 변경", message = "회원정보 변경 다이얼로그") {
+                            positiveButton("확인"){
+
+                            }
+                            negativeButton("취소"){
+
+                            }
+                        }.show()
+                    }
+
+                    1 -> {
+                        toast("1번 클릭")
+                        alert(title = "비밀번호 변경", message = "비밀번호 변경 다이얼로그") {
+                            positiveButton("확인") {
+
+                            }
+                            negativeButton("취소") {
+
+                            }
+                        }.show()
+                    }
+
+                    2 -> {
+                        toast("2번 클릭")
+                        alert(title = "로그아웃", message = "로그아웃 다이얼로그") {
+                            positiveButton("확인") {
+
+                            }
+                            negativeButton("취소") {
+
+                            }
+                        }.show()
+                    }
+
+                    3 -> {
+                        toast("3번 클릭")
+                        alert(title = "회원 탈퇴", message = "회원 탈퇴 다이얼로그") {
+                            positiveButton("확인") {
+
+                            }
+                            negativeButton("취소") {
+
+                            }
+                        }.show()
+                    }
+                }
+            }
+        })
+
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -46,6 +106,7 @@ class PreferencesActivity : AppCompatActivity() {
         list_member.apply {
             add("회원정보 수정")
             add("비밀번호 변경")
+            add("로그아웃")
             add("회원 탈퇴")
         }
         list_support.apply {
