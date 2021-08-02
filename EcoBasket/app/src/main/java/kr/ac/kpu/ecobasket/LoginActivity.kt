@@ -42,12 +42,11 @@ class LoginActivity : AppCompatActivity() {
         Firebase.auth.signInWithEmailAndPassword(userEmail, password)
             .addOnCompleteListener(this){
                 if (it.isSuccessful){
-                    startActivity(Intent(this, MainActivity::class.java))
+                    startActivity<MainActivity>()
                     //메인 액티비티
-                    toast("이메일: $userEmail 비밀번호: $password 로 로그인 성공!")
-                    finish()
+                    toast("로그인 성공!")
                 } else{
-                    toast("로그인 실패")
+                    toast("로그인 정보가 일치하지 않습니다.")
                 }
             }
         }

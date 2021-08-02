@@ -1,14 +1,18 @@
 package kr.ac.kpu.ecobasket
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View.*
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_layout.*
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -16,10 +20,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        /* 로그인정보 GET
-        val userEmail = intent.getStringExtra("userEmail")
-        val password = intent.getStringExtra("password")
-        */
+        toast("${Firebase.auth.currentUser}")
+
+        // 로그인 안되어있을 시에 로그인 화면
+        if (Firebase.auth.currentUser == null){
+            startActivity(
+                Intent(this, LoginActivity::class.java))
+            finish()
+        }
 
         btn_menu.setOnClickListener {
             drawerLayout.openDrawer(Gravity.RIGHT)
