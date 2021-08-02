@@ -82,6 +82,59 @@ class PreferencesActivity : AppCompatActivity() {
             }
         })
 
+        supportAdapter.setItemClickListener(object: PrefRecyAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                //클릭 이벤트
+                when (position) {
+                    0 -> {
+                        toast("0번 클릭")
+                        alert(title = "요청하기", message = "요청하기 다이얼로그") {
+                            positiveButton("확인") {
+
+                            }
+                            negativeButton("취소") {
+
+                            }
+                        }.show()
+                    }
+
+                    1 -> {
+                        toast("1번 클릭")
+                        alert(title = "신고하기", message = "신고하기 다이얼로그") {
+                            positiveButton("확인") {
+
+                            }
+                            negativeButton("취소") {
+
+                            }
+                        }.show()
+                    }
+                }
+            }
+        })
+
+        infoAdapter.setItemClickListener(object: PrefRecyAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                //클릭 이벤트
+                when (position) {
+                    0 -> {
+                        toast("0번 클릭")
+                    }
+
+                    1 -> {
+                        toast("1번 클릭")
+                        alert(title = "개발자 정보", message = "개발자 정보 다이얼로그") {
+                            positiveButton("확인") {
+
+                            }
+                            negativeButton("취소") {
+
+                            }
+                        }.show()
+                    }
+                }
+            }
+        })
 
     }
 
