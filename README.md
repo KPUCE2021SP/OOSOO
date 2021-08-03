@@ -62,7 +62,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## 소개
-> <a><p align="center"><img src="Eco_Basket_icon/Eco_Basket_icon.svg" alt="Logo" width="150" height="150"></p></a>
+> <a><p align="center"><img src="EcoBasket/app/src/main/res/Eco_Basket_icon/Eco_Basket_icon.svg" alt="Logo" width="150" height="150"></p></a>
 > -	거주지 근처, 역 근처 등 생활권 내에 장바구니 보관소를 설치해 두고 **QR코드**를 통해 **장바구니를 대여 · 반납**할 수 있도록 하는 시스템이다. 
 > -	이용 횟수에 따라 **포인트를 지급**해 포인트로 **나만의 지구, 마을을 꾸밀 수 있는 아이템**들을 잠금 해제하여 취향에 맞게 꾸밀 수 있도록 한다.
 > 
