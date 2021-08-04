@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.viewpager2.widget.ViewPager2
 import kotlinx.android.synthetic.main.activity_guide.*
-import org.jetbrains.anko.toast
 
 class GuideActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

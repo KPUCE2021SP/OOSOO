@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "636571117168",
+    "firebase_url": "https://ecobasket-c3ef9-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "ecobasket-c3ef9",
     "storage_bucket": "ecobasket-c3ef9.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "636571117168-jfjjpf25a74n0svo42tls6oqiac48gg0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kr.ac.kpu.ecobasket",
+            "certificate_hash": "1902f41f63f1699905d4e5ce7bcfbbe1009b844c"
+          }
+        },
         {
           "client_id": "636571117168-u679nnvjmlehi7heclft3tee8fol9dgl.apps.googleusercontent.com",
           "client_type": 3

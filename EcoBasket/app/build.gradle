@@ -65,6 +65,9 @@ dependencies {
     //Auth 인증
     implementation 'com.google.firebase:firebase-auth-ktx'
 
+    //구글 로그인 서비스
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+
     //Cloud Firestore
     implementation 'com.google.firebase:firebase-firestore-ktx'
 
