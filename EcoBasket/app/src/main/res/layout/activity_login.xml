@@ -5,20 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/Google_btn"
-        android:layout_width="350dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="8dp"
-        android:drawableLeft="@drawable/google_icon"
-        android:text="Sign in with Google"
-        app:backgroundTint="#0083f5"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/kakao_btn"
-        app:layout_constraintVertical_bias="0.0" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
         android:layout_width="wrap_content"
@@ -32,19 +18,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.7" />
-
-    <Button
-        android:id="@+id/kakao_btn"
-        android:layout_width="350dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="8dp"
-        android:drawableLeft="@drawable/kakao_icon"
-        android:text="카카오 로그인"
-        android:textColor="#3A1D1D"
-        app:backgroundTint="#F7E600"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
     <EditText
         android:id="@+id/EMail_edit"
@@ -102,5 +75,29 @@
         android:text="To Main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_signUp" />
+
+    <Button
+        android:id="@+id/kakao_btn"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        android:drawableLeft="@drawable/kakao_icon"
+        android:text="카카오 로그인"
+        android:textColor="#3A1D1D"
+        app:backgroundTint="#F7E600"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/Google_btn"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kakao_btn"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
