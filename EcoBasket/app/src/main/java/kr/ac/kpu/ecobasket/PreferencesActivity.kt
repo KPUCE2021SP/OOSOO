@@ -42,7 +42,9 @@ class PreferencesActivity : AppCompatActivity() {
                 when (position) {
                     0 -> { // 회원정보 전체 수정
                         toast("0번 클릭")
-                        // 회원정보수정 액티비티 소환!
+                        // 회원정보수정 액티비티
+                        startActivity<ModifyActivity>()
+                        finish()
                     }
 
                     1 -> { //로그아웃하고 로그인화면으로 돌아가기

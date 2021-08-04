@@ -18,6 +18,7 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".IslandActivity" />
         <activity android:name=".ThemeActivity" />
+        <activity android:name=".ModifyActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

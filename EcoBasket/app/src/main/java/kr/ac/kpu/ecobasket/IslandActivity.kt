@@ -6,6 +6,7 @@ import kotlinx.android.synthetic.main.activity_island.*
 import org.jetbrains.anko.startActivity
 
 class IslandActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_island)
