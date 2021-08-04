@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/static_overlay_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#00000000">
 
-    <TextView
+    <Button
+        android:id="@+id/btn_test_qr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="QR 코드"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:backgroundTint="@color/white"
+        android:shadowColor="@color/gray"
+        android:text="QR 코드 스캔"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:drawableTopCompat="@drawable/ic_baseline_qr_code_scanner_24" />
+
 </FrameLayout>
 

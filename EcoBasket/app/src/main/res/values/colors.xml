@@ -9,4 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#666666</color>
     <color name="light_gray">#AAAAAA</color>
+    <color name="app_primeColor">#666666</color>
+    <color name="app_primaryVariantColor">#AAAAAA</color>
+    <color name="btn_rent_color">#666666</color>
+    <color name="btn_return_color">#FF4848</color>
 </resources>

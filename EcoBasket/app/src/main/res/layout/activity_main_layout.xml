@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.1504788" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guide2"
@@ -35,34 +36,82 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.8" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7" />
+
     <Button
         android:id="@+id/btn_rent"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
         android:text="대여하기"
         android:textSize="24sp"
-        app:backgroundTint="#888888"
+        android:typeface="normal"
+        android:visibility="visible"
+        app:backgroundTint="@color/gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/btn_return"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="32dp"
-        android:text="반납하기"
-        android:textSize="24sp"
-        app:backgroundTint="#D33D3D"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/boxInfoCard"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:visibility="gone"
+        app:cardBackgroundColor="@color/light_gray"
+        app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guide5"
+        app:strokeColor="#000000"
+        app:strokeWidth="3dp">
+
+        <LinearLayout
+            android:id="@+id/boxInfoField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/textBoxTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:text="보관함 이름"
+                android:textSize="24sp"
+                app:autoSizeTextType="uniform" />
+
+            <TextView
+                android:id="@+id/textBoxId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="4dp"
+                android:text="#보관함 번호"
+                android:textSize="18sp"
+                app:autoSizeTextType="uniform" />
+
+            <TextView
+                android:id="@+id/textRemainBacket"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center_horizontal"
+                android:text="잔여 바구니 0/0"
+                android:textSize="24sp"
+                app:autoSizeTextType="uniform" />
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
     <ImageButton
         android:id="@+id/btn_island"

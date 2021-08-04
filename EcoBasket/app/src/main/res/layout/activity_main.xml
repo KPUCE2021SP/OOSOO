@@ -8,10 +8,32 @@
     tools:context=".MainActivity">
 
     <!-- 임시로 넣어놓은 MapView임 (Test용) -->
+
     <com.google.android.gms.maps.MapView
         android:id="@+id/map"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btn_testBoxInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@mipmap/ic_eco_basket"
+            android:insetTop="0dp"
+            android:paddingTop="10dp"
+            android:shadowColor="#554F4F"
+            android:text="보관함 버튼 테스트용"
+            android:textColor="#000000"
+            app:backgroundTint="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include
         layout="@layout/activity_main_layout"

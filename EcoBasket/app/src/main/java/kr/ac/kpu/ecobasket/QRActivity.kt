@@ -1,7 +1,10 @@
 package kr.ac.kpu.ecobasket
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import kotlinx.android.synthetic.main.qr_overlay.*
 import kotlinx.android.synthetic.main.top_action_bar_in_qr.*
 
 class QRActivity : AppCompatActivity() {
@@ -10,6 +13,12 @@ class QRActivity : AppCompatActivity() {
         setContentView(R.layout.activity_qractivity)
 
         btn_close_qr.setOnClickListener {
+            setResult(Activity.RESULT_CANCELED)
+            finish()
+        }
+
+        btn_test_qr.setOnClickListener {
+            setResult(Activity.RESULT_OK)
             finish()
         }
 
