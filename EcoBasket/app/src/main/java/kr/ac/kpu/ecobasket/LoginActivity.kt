@@ -1,7 +1,14 @@
 package kr.ac.kpu.ecobasket
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
@@ -34,6 +41,37 @@ class LoginActivity : AppCompatActivity() {
         btn_signUp.setOnClickListener {
             startActivity<SignUpActivity>()
         }
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        val googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        Google_btn.setOnClickListener {
+            val signInIntent = googleSignInClient.signInIntent
+            startActivityForResult(signInIntent, 900)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == 900) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                val account = task.getResult(ApiException::class.java)!!
+                Log.d("Google Login", "firebaseAuthWithGoogle:" + account.id)G
+                firebaseAuthWithGoogle(account)
+                finish()
+            } catch (e: ApiException) {
+                // Google Sign In failed, update UI appropriately
+                Log.w("Google Login", "Google sign in failed", e)
+            }
+        }
     }
 
     private fun doLogin(userEmail: String, password: String){
@@ -47,5 +85,20 @@ class LoginActivity : AppCompatActivity() {
                     toast("로그인 정보가 일치하지 않습니다.")
                 }
             }
-        }
+    }
+
+    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+        Firebase.auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) {
+                if (it.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("Google Login", "signInWithCredential:success")
+                    val user = Firebase.auth.currentUser
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w("Google Login", "signInWithCredential:failure", it.exception)
+                }
+            }
+    }
 }
