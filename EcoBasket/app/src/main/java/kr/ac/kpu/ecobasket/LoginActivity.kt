@@ -11,6 +11,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
@@ -49,10 +50,35 @@ class LoginActivity : AppCompatActivity() {
 
         val googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        Google_btn.setOnClickListener {
+        google_btn.setOnClickListener {
             val signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, 900)
         }
+
+        kakao_btn.setOnClickListener {
+            if (UserApiClient.instance.isKakaoTalkLoginAvailable(applicationContext)) {
+                // 카카오톡으로 로그인
+                UserApiClient.instance.loginWithKakaoTalk(applicationContext) { token, error ->
+                    if (error != null) {
+                        Log.e("Kakao", "로그인 실패", error)
+                    }
+                    else if (token != null) {
+                        Log.i("Kakao", "로그인 성공 ${token.accessToken}")
+                    }
+                }
+            } else {
+                // 카카오계정으로 로그인
+                UserApiClient.instance.loginWithKakaoAccount(applicationContext) { token, error ->
+                    if (error != null) {
+                        Log.e("Kakao", "로그인 실패", error)
+                    }
+                    else if (token != null) {
+                        Log.i("Kakao", "로그인 성공 ${token.accessToken}")
+                    }
+                }
+            }
+        }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

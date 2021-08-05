@@ -68,6 +68,9 @@ dependencies {
     //구글 로그인 서비스
     implementation 'com.google.android.gms:play-services-auth:19.2.0'
 
+    // 카카오 로그인
+    implementation "com.kakao.sdk:v2-user:2.5.2"
+
     //Cloud Firestore
     implementation 'com.google.firebase:firebase-firestore-ktx'
 

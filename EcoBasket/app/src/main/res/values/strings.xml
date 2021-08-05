@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">EcoBasket</string>
+    <string name="kakao_app_key">0091a5e6843ee089e0bcdfe685c63edb</string>
 </resources>
