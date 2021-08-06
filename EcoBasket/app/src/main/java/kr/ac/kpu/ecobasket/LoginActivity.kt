@@ -11,6 +11,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.startActivity
@@ -56,27 +57,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         kakao_btn.setOnClickListener {
-            if (UserApiClient.instance.isKakaoTalkLoginAvailable(applicationContext)) {
-                // 카카오톡으로 로그인
-                UserApiClient.instance.loginWithKakaoTalk(applicationContext) { token, error ->
-                    if (error != null) {
-                        Log.e("Kakao", "로그인 실패", error)
-                    }
-                    else if (token != null) {
-                        Log.i("Kakao", "로그인 성공 ${token.accessToken}")
-                    }
-                }
-            } else {
-                // 카카오계정으로 로그인
-                UserApiClient.instance.loginWithKakaoAccount(applicationContext) { token, error ->
-                    if (error != null) {
-                        Log.e("Kakao", "로그인 실패", error)
-                    }
-                    else if (token != null) {
-                        Log.i("Kakao", "로그인 성공 ${token.accessToken}")
-                    }
-                }
-            }
+            kakaoLogin()
         }
 
     }
@@ -92,7 +73,6 @@ class LoginActivity : AppCompatActivity() {
                 val account = task.getResult(ApiException::class.java)!!
                 Log.d("Google Login", "firebaseAuthWithGoogle:" + account.id)
                 firebaseAuthWithGoogle(account)
-                finish()
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
                 Log.w("Google Login", "Google sign in failed", e)
@@ -120,11 +100,51 @@ class LoginActivity : AppCompatActivity() {
                 if (it.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("Google Login", "signInWithCredential:success")
-                    val user = Firebase.auth.currentUser
+                    finish()
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("Google Login", "signInWithCredential:failure", it.exception)
                 }
             }
+    }
+
+    private fun kakaoLogin() {
+        // 로그인 공통 callback 구성
+        val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+            if (error != null) {
+                Log.e("Kakao", "로그인 실패", error)
+            }
+            else if (token != null) {
+                Log.i("Kakao", "로그인 성공 ${token.accessToken}")
+
+                /*
+                // Firebase Cloud Function 구현 필요
+
+                token.accessToken.let {
+                    Firebase.auth.signInWithCustomToken(it)
+                        .addOnCompleteListener(this) { task ->
+                            if (task.isSuccessful) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d("Kakao", "signInWithCustomToken:success")
+                                finish()
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w("Kakao", "signInWithCustomToken:failure", task.exception)
+                                toast("Authentication failed.")
+                            }
+                        }
+                }
+
+                 */
+
+            }
+        }
+
+        // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
+        if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
+            UserApiClient.instance.loginWithKakaoTalk(this, callback = callback)
+        } else {
+            UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
+        }
     }
 }

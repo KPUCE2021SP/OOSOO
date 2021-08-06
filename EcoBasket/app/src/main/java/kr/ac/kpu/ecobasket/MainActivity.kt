@@ -2,7 +2,6 @@ package kr.ac.kpu.ecobasket
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,7 +12,6 @@ import androidx.annotation.RequiresApi
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.kakao.sdk.common.KakaoSdk
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_layout.*
 import org.jetbrains.anko.startActivity
@@ -28,9 +26,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        //카카오 SDK 초기화
-        KakaoSdk.init(this, "0091a5e6843ee089e0bcdfe685c63edb")
 
         toast("${Firebase.auth.currentUser}")
 
