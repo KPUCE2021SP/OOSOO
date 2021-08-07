@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         btn_menu.setOnClickListener {
-            //drawerLayout.openDrawer(Gravity.RIGHT)
+            drawerLayout.openDrawer(Gravity.RIGHT)
             boxInfoCard.visibility = GONE   //보관함 정보 숨기기
         }
 
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             if(isRentMode) {
                 /* QR코드리더기 액티비티 구현 */
 
-                //startActivityForResult<QRActivity>(0)
+                startActivityForResult<QRActivity>(0)
             }
             else {
                 btn_rent.text = "대여하기"
