@@ -81,7 +81,7 @@
             android:weightSum="1">
 
             <TextView
-                android:id="@+id/textBoxTitle"
+                android:id="@+id/textCabinetTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -91,7 +91,7 @@
                 app:autoSizeTextType="uniform" />
 
             <TextView
-                android:id="@+id/textBoxId"
+                android:id="@+id/textCabinetQR"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"

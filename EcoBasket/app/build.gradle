@@ -72,7 +72,7 @@ dependencies {
     implementation "com.kakao.sdk:v2-user:2.5.2"
 
     //Cloud Firestore
-    implementation 'com.google.firebase:firebase-firestore-ktx'
+    implementation 'com.google.firebase:firebase-database-ktx'
 
     //anko 라이브러리
     implementation "org.jetbrains.anko:anko-commons:0.10.5"
