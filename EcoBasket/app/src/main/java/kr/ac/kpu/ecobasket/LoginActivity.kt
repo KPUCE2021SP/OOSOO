@@ -11,11 +11,20 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
+import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
+import org.json.JSONObject
+import retrofit2.Retrofit
 
 class LoginActivity : AppCompatActivity() {
 
@@ -55,6 +64,7 @@ class LoginActivity : AppCompatActivity() {
             val signInIntent = googleSignInClient.signInIntent
             startActivityForResult(signInIntent, 900)
         }
+
 
         kakao_btn.setOnClickListener {
             kakaoLogin()
@@ -108,38 +118,49 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
+    private val kakaoAPIServe by lazy {
+        KakaoRequest.create()
+    }
+
+    var disposable: Disposable? = null
+
     private fun kakaoLogin() {
         // 로그인 공통 callback 구성
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
-                Log.e("Kakao", "로그인 실패", error)
+                Log.e("KakaoLogin", "로그인 실패", error)
             }
             else if (token != null) {
-                Log.i("Kakao", "로그인 성공 ${token.accessToken}")
+                Log.i("KakaoLogin", "로그인 성공 ${token.accessToken}")
 
-                /*
-                // Firebase Cloud Function 구현 필요
+                disposable = kakaoAPIServe.getFirebaseToken(token.accessToken)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        { result ->
+                            Log.d("KakaoLogin", result)
 
-                token.accessToken.let {
-                    Firebase.auth.signInWithCustomToken(it)
-                        .addOnCompleteListener(this) { task ->
-                            if (task.isSuccessful) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d("Kakao", "signInWithCustomToken:success")
-                                finish()
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.w("Kakao", "signInWithCustomToken:failure", task.exception)
-                                toast("Authentication failed.")
-                            }
-                        }
-                }
+                            val json = JSONObject(result)
+                            val res = json.getString("firebase_token")
+                            Log.d("KakaoLogin", res)
 
-                 */
-
+                            Firebase.auth.signInWithCustomToken(res)
+                                .addOnCompleteListener(this) { task ->
+                                    if (task.isSuccessful) {
+                                        // Sign in success, update UI with the signed-in user's information
+                                        Log.d("KakaoLogin", "signInWithCustomToken:success")
+                                        finish()
+                                    } else {
+                                        // If sign in fails, display a message to the user.
+                                        Log.w("KakaoLogin", "signInWithCustomToken:failure", task.exception)
+                                        toast("Authentication failed.")
+                                    }
+                                }
+                        },
+                        { error -> Log.d("KakaoLogin", "error:" + error.message.toString())}
+                    )
             }
         }
-
         // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
         if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
             UserApiClient.instance.loginWithKakaoTalk(this, callback = callback)
@@ -147,4 +168,5 @@ class LoginActivity : AppCompatActivity() {
             UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
         }
     }
+
 }
