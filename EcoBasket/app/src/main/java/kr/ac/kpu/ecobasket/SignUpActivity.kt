@@ -2,6 +2,7 @@ package kr.ac.kpu.ecobasket
 
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -14,7 +15,7 @@ import org.jetbrains.anko.toast
 class SignUpActivity: AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
-    private lateinit var database: DatabaseReference
+    private var usersRef = Firebase.database.getReference("users")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +23,7 @@ class SignUpActivity: AppCompatActivity() {
 
         //FirebaseAuth, DB 인스턴스 가져오기
         auth = FirebaseAuth.getInstance()
-        database = Firebase.database.reference
+
 
         //회원가입 버튼
         join_btn.setOnClickListener {
@@ -57,10 +58,9 @@ class SignUpActivity: AppCompatActivity() {
                 if(task.isSuccessful){
                     toast("$email 회원가입 성공!")
                     val user = auth.currentUser
-                    val uid = user?.uid.toString()
 
                     updateUI(user)
-                    createUserDB(name, phone, email, uid)
+                    createUserDB(name, phone, email)
                     finish()
                 } else { // 이미 등록된 회원일 경우 fail
                     toast("이미 등록된 회원입니다.")
@@ -80,18 +80,12 @@ class SignUpActivity: AppCompatActivity() {
     }
 
     //DB에 회원정보 넣기
-    private fun createUserDB(name: String?, phone: String?, email: String, UID: String ){
-        val database = Firebase.database
-        val usersRef = database.getReference("users")
+    private fun createUserDB(name: String?, phone: String?, email: String){
+        val user = User(name = name, phone = phone, mileage = 0, isUsing = false, level = 1, email = email)
 
-        val user = User(UID = UID, name = name, phone = phone, mileage = 0, isUsing = false, email = email)
-
-        usersRef.child("$UID").child("name").setValue(name)
-        usersRef.child("$UID").child("phone").setValue(phone)
-        usersRef.child("$UID").child("email").setValue(email)
-        usersRef.child("$UID").child("mileage").setValue(0)
-        usersRef.child("$UID").child("isUsing").setValue(false)
-        usersRef.child("$UID").child("level").setValue(1)
+        usersRef.child(auth.currentUser?.uid.toString()).setValue(user).addOnSuccessListener {
+            Log.i("firebase", "Successful Create User")
+        }.addOnFailureListener{ Log.w("firebase","Failure Create User")}
         //사용중인 장바구니정보 추가해야함
 
     }

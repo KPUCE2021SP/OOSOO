@@ -31,27 +31,26 @@ import org.jetbrains.anko.toast
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var database = Firebase.database.reference
-    val cabinetRef = Firebase.database.getReference("Cabinet")
-    val auth = FirebaseAuth.getInstance()
-    val usersRef = Firebase.database.getReference("users").child("${auth.currentUser?.uid}")
-    var isRentMode = true
+    private val cabinetRef = Firebase.database.getReference("Cabinet")
+    private val auth = FirebaseAuth.getInstance()
+    private val usersRef = Firebase.database.getReference("users").child("${auth.currentUser?.uid}")
+    var user : User? = null //현재 로그인한 user 정보 객체
 
     @RequiresApi(Build.VERSION_CODES.M) //getColor 함수
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         // 로그인 안되어있을 시에 로그인 화면
         if (Firebase.auth.currentUser == null){
             startActivity(
                 Intent(this, LoginActivity::class.java))
         }else{
-
-
+            queryUserInformation()  //user 객체 초기화
         }
 
-
-
+        //우측 메뉴바
         btn_menu.setOnClickListener {
             drawerLayout.openDrawer(Gravity.RIGHT)
             boxInfoCard.visibility = GONE   //보관함 정보 숨기기
@@ -65,22 +64,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //메인 - 대여버튼 & 반납 (상태변화로 구현)
         btn_rent.setOnClickListener {
-            if(isRentMode) {
+            if(user?.isUsing!!) {   //대여
                 /* QR코드리더기 액티비티 구현 */
-
-                startActivityForResult<QRActivity>(0)
+                startActivityForResult<QRActivity>(1000)
             }
-            else {
-                btn_rent.text = "대여하기"
-                btn_rent.setBackgroundColor(getColor(R.color.btn_rent_color))
-                isRentMode = !isRentMode
+            else {  //반납
+                startActivityForResult<QRActivity>(2000)
             }
-
-            /*
-            startActivityForResult<QRActivity>(requestCode)
-               //+Database연동
-             */
-
         }
 
 
@@ -130,10 +120,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    //유저 정보 읽기 쿼리문
+    private fun queryUserInformation() {
+        usersRef.addValueEventListener( object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                user = snapshot.getValue<User>()    //user 객체화
+                //테스트 코드 (성공 확인)
+                Log.i("firebase", "Got value $user")
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadUser:onCancelled", databaseError.toException())
+            }
+        })
+    }
+
     //위치 데이터 읽기(Map API 후 수정)
     private fun queryCabinetLocation(locX : Int, locY : Int) {
-        cabinetRef.child("${locX}_${locY}").addListenerForSingleValueEvent(
-            object : ValueEventListener {      //남은 과제 : 데이터베이스 구조 깔끔하게, 쿼리문 숙지할 것
+        cabinetRef.child("${locX}_${locY}").addListenerForSingleValueEvent(  object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     /* Map 강제 형변환 식
                      * var cabinet = snapshot.value as Map<*, *>   //객체화
@@ -159,28 +164,41 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         })
     }
-    //QRActivity 리턴값 받는 용도
+
+
+    //QRActivity 리턴값 받는 용도(대여, 반납 : requestCode로 구분)
     @RequiresApi(Build.VERSION_CODES.M) //getColor 함수
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                0 -> {
-                    //QR찍었을 때
-                    btn_rent.text = "반납하기"
-                    btn_rent.setBackgroundColor(getColor(R.color.btn_return_color))
-                    isRentMode = !isRentMode
-                }
+        //1000번 : 대여하기 QR
+        if(requestCode == 1000) {
+            if (resultCode == Activity.RESULT_OK) { //QR찍었을 때
+                btn_rent.text = "반납하기"
+                btn_rent.setBackgroundColor(getColor(R.color.btn_return_color))
+                usersRef.child("isUsing").setValue(true)
+            } else if(resultCode == Activity.RESULT_CANCELED) {
+                //QR안찍고 돌아왔을때
+                toast("대여 QR 촬영 Canceled")
             }
-        } else if(resultCode == Activity.RESULT_CANCELED) {
-            when (requestCode) {
-                0 -> {
-                    //QR안찍고 돌아왔을때
-                }
+
+        }
+        //2000번 : 반납하기 QR
+        else if(requestCode == 2000) {
+            if(resultCode == Activity.RESULT_OK) {
+                btn_rent.text = "대여하기"
+                btn_rent.setBackgroundColor(getColor(R.color.btn_rent_color))
+                usersRef.child("isUsing").setValue(false)
             }
+            else if(resultCode == Activity.RESULT_CANCELED) {
+                toast("반납 QR 촬영 Canceled")
+            }
+
         }
     }
+
+
+
 
 
 }
