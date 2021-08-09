@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.view.View
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_preferences.*
 import org.jetbrains.anko.alert
@@ -28,6 +29,8 @@ class PreferencesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_preferences)
 
         auth = FirebaseAuth.getInstance()
+
+        val usersRef = Firebase.database.getReference("users").child("${auth.currentUser?.uid}")
 
         setSupportActionBar(toolbar_pref)
 
@@ -65,10 +68,15 @@ class PreferencesActivity : AppCompatActivity() {
                         toast("2번 클릭")
                         alert(title = "회원 탈퇴", message = "회원 탈퇴 하시겠습니까?") {
                             positiveButton("확인") {
-                                auth.currentUser?.delete()
-                                toast("${auth.currentUser?.email} 회원탈퇴 되었습니다.")
-                                startActivity<LoginActivity>()
-                                finish()
+                                //DB삭제 후 auth삭제
+                                usersRef.removeValue()
+                                    .addOnSuccessListener{
+                                        toast("DB삭제 완료")
+                                        auth.currentUser?.delete()
+                                        toast("${auth.currentUser?.email} 회원탈퇴 되었습니다.")
+                                        startActivity<LoginActivity>()
+                                        finish()
+                                    }
                             }
                             negativeButton("취소") {
                             }

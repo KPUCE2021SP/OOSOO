@@ -13,6 +13,7 @@ import android.view.View
 import android.view.View.*
 import androidx.annotation.RequiresApi
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -29,10 +30,10 @@ import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    val database = Firebase.database
-    val cabinetRef = database.getReference("Cabinet")
-    //val userRef = database.getReference("Users")
-
+    var database = Firebase.database.reference
+    val cabinetRef = Firebase.database.getReference("Cabinet")
+    val auth = FirebaseAuth.getInstance()
+    val usersRef = Firebase.database.getReference("users").child("${auth.currentUser?.uid}")
     var isRentMode = true
 
     @RequiresApi(Build.VERSION_CODES.M) //getColor 함수
@@ -40,13 +41,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        toast("${Firebase.auth.currentUser}")
-
         // 로그인 안되어있을 시에 로그인 화면
         if (Firebase.auth.currentUser == null){
             startActivity(
                 Intent(this, LoginActivity::class.java))
+        }else{
+
+
         }
+
+
 
         btn_menu.setOnClickListener {
             drawerLayout.openDrawer(Gravity.RIGHT)
