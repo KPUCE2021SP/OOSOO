@@ -83,10 +83,9 @@ class SignUpActivity: AppCompatActivity() {
     private fun createUserDB(name: String?, phone: String?, email: String){
         val user = User(name = name, phone = phone, mileage = 0, isUsing = false, level = 1, email = email)
 
-        usersRef.child(auth.currentUser?.uid.toString()).setValue(user).addOnSuccessListener {
+        usersRef.child(auth.currentUser?.uid.toString()).setValue(user.toMap()).addOnSuccessListener {
             Log.i("firebase", "Successful Create User")
         }.addOnFailureListener{ Log.w("firebase","Failure Create User")}
         //사용중인 장바구니정보 추가해야함
-
     }
 }

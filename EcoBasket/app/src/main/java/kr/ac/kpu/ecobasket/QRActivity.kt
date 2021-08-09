@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.qr_overlay.*
 import kotlinx.android.synthetic.main.top_action_bar_in_qr.*
+import org.jetbrains.anko.toast
 
 class QRActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
