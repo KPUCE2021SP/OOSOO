@@ -15,10 +15,7 @@ import androidx.annotation.RequiresApi
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
@@ -110,6 +107,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    //QRActivity 리턴값 받는 용도(대여, 반납 : requestCode로 구분)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK) { //QR찍었을 때
+            when(requestCode) {
+                1000 -> {   //1000번 : 대여하기 QR
+                    usersRef.child("isUsing").setValue(true)
+                    toast("${data!!.getStringExtra("location").toString()} 대여완료")
+                }
+                2000 -> {   //2000번 : 반납하기 QR
+                    usersRef.child("isUsing").setValue(false)
+                    toast("${data!!.getStringExtra("location").toString()} 반납완료")
+                }
+            }
+        }
+        else if(resultCode == Activity.RESULT_CANCELED) {
+            toast("반납 QR 촬영 Canceled")
+        }
+    }
+
     //유저 정보 읽기 쿼리문
     private fun queryUserInformation() {
         usersRef.addValueEventListener( object : ValueEventListener {
@@ -134,9 +152,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
     }
 
-
+    //유저 대여 서비스 사용 여부 판단(대여/반납) 함수
     @RequiresApi(Build.VERSION_CODES.M) //getColor 함수
     private fun queryIsUsingState() {
+        /** 아두이노 연결 및 구현 이후 보관함 개폐여부에 따라 대여/반납 금지하는 코드 추가 필요 */
+
         usersRef.child("isUsing").addValueEventListener( object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 //메인 - 대여버튼 & 반납 (상태변화로 구현)
@@ -167,6 +187,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         })
     }
+
     //위치 데이터 읽기(Map API 후 수정)
     private fun queryCabinetLocation(locX : Int, locY : Int) {
         cabinetRef.child("${locX}_${locY}").addValueEventListener(  object : ValueEventListener {
@@ -194,32 +215,4 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         })
     }
-
-
-    //QRActivity 리턴값 받는 용도(대여, 반납 : requestCode로 구분)
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode == Activity.RESULT_OK) { //QR찍었을 때
-            toast("$requestCode")
-            when(requestCode) {
-                1000 -> {   //1000번 : 대여하기 QR
-                    usersRef.child("isUsing").setValue(true)
-                }
-                2000 -> {   //2000번 : 반납하기 QR
-                    usersRef.child("isUsing").setValue(false)
-                }
-
-            }
-        }
-        else if(resultCode == Activity.RESULT_CANCELED) {
-            toast("반납 QR 촬영 Canceled")
-        }
-
-
-    }
-
-
-
 }
