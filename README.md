@@ -31,17 +31,23 @@
 <p align="center">
    <img src="https://img.shields.io/badge/Android-3DDC84?style=flat-square&logo=Android&logoColor=white"/></a> <!-- Android -->
 </p>
-<h4 align="center">개발 환경</h4>
+<h4 align="center">개발 기술</h4>
 <p align="center">
   <img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=Firebase&logoColor=white"/></a> <!-- Firebase -->
   <img src="https://img.shields.io/badge/Google%20Cloud-4285F4?style=flat-square&logo=Google%20Cloud&logoColor=white"/></a> <!-- Google Cloud -->
   <img src="https://img.shields.io/badge/Android%20Studio-3DDC84?style=flat-square&logo=Android%20Studio&logoColor=white"/></a> <!-- Android Studio -->
   <img src="https://img.shields.io/badge/Arduino-00979D?style=flat-square&logo=Arduino&logoColor=white"/></a> <!-- Android Studio -->
 </p>
+<p align="center">
+   <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=Node.js&logoColor=white"/></a> <!-- Node.js -->
+   <img src="https://img.shields.io/badge/ML%20kit-00A8E1?style=flat-square&logo=Firebase&logoColor=white"/></a> <!-- ML Kit -->
+   <img src="https://img.shields.io/badge/Naver%20Map-03C75A?style=flat-square&logo=Naver&logoColor=white"/></a> <!-- Naver Map API -->
+</p>
 <h4 align="center">개발 언어</h4>
 <p align="center">
   <img src="https://img.shields.io/badge/Kotlin-0095D5?style=flat-square&logo=Kotlin&logoColor=white"/></a> <!-- Kotlin -->
   <img src="https://img.shields.io/badge/C++-00599C?style=flat-square&logo=C%2B%2B&logoColor=white"/></a> <!-- C++ -->
+  <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=white"/></a> <!-- JavaScript -->
 </p>
 
 
