@@ -22,7 +22,7 @@ interface KakaoRequest {
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .baseUrl("http://192.168.55.13:8000")
+                .baseUrl("http://192.168.55.13:9060")  // 외부에서 접근시 http://175.123.168.59:9060
                 .build()
 
             return retrofit.create(KakaoRequest::class.java)

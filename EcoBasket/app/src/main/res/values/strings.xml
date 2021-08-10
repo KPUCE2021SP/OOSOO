@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">EcoBasket</string>
     <string name="kakao_app_key">0091a5e6843ee089e0bcdfe685c63edb</string>
-    <string name="kakao_valid_server_domain">http://localhost:8080</string>
+    <string name="kakao_valid_server_domain">http://http://192.168.55.13:8000</string>
 </resources>

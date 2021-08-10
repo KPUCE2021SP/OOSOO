@@ -2,12 +2,14 @@ package kr.ac.kpu.ecobasket
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_preferences.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.customView
@@ -55,9 +57,17 @@ class PreferencesActivity : AppCompatActivity() {
                         alert(title = "로그아웃", message = "로그아웃 하시겠습니까?") {
                             positiveButton("확인") {
                                 Firebase.auth.signOut()
+                                UserApiClient.instance.logout { error ->
+                                    if (error != null) {
+                                        Log.e("KakaoLogout", "로그아웃 실패. Invalid Token")
+                                    }
+                                    else {
+                                        Log.i("KakaoLogout", "로그아웃 성공. SDK에서 토큰 삭제됨")
+                                    }
+                                }
                                 toast("로그아웃 되었습니다.")
-                                startActivity<LoginActivity>()
                                 finish()
+                                startActivity<LoginActivity>()
                             }
                             negativeButton("취소") {
                             }
@@ -73,9 +83,17 @@ class PreferencesActivity : AppCompatActivity() {
                                     .addOnSuccessListener{
                                         toast("DB삭제 완료")
                                         auth.currentUser?.delete()
+                                        UserApiClient.instance.unlink { error ->
+                                            if (error != null) {
+                                                Log.e("KakaoUnlink", "연결 끊기 실패", error)
+                                            }
+                                            else {
+                                                Log.i("KakaoUnlink", "연결 끊기 성공. SDK에서 토큰 삭제 됨")
+                                            }
+                                        }
                                         toast("${auth.currentUser?.email} 회원탈퇴 되었습니다.")
-                                        startActivity<LoginActivity>()
                                         finish()
+                                        startActivity<LoginActivity>()
                                     }
                             }
                             negativeButton("취소") {
