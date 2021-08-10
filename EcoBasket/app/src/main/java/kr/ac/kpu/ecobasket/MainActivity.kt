@@ -1,5 +1,6 @@
 package kr.ac.kpu.ecobasket
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
@@ -42,7 +43,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
         // 로그인 안되어있을 시에 로그인 화면
-        if (Firebase.auth.currentUser == null){
+        if (Firebase.auth.currentUser == null || usersRef == null){
             startActivity(
                 Intent(this, LoginActivity::class.java))
         }else{
@@ -124,12 +125,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (resultCode == Activity.RESULT_OK) { //QR찍었을 때
             when(requestCode) {
                 1000 -> {   //1000번 : 대여하기 QR
+                    transactRemainCount(data!!.getStringExtra("qr").toString(), true)
                     usersRef.child("isUsing").setValue(true)
-                    toast("${data!!.getStringExtra("location").toString()} 대여완료")
                 }
                 2000 -> {   //2000번 : 반납하기 QR
                     usersRef.child("isUsing").setValue(false)
-                    toast("${data!!.getStringExtra("location").toString()} 반납완료")
+                    transactRemainCount(data!!.getStringExtra("qr").toString(), false)
                 }
             }
         }
@@ -226,6 +227,55 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
     }
 
+    //QR 코드로 객체를 읽어 잔여 바구니 수 변경하는 트랜잭션
+    private fun transactRemainCount(QRCode: String, isUsing : Boolean){
+        val query = cabinetRef.orderByChild("QRCode").equalTo(QRCode)
+        var key : String
+        query.addListenerForSingleValueEvent(object : ValueEventListener {  //QR코드로 객체 불러오기
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val cabinetMap = snapshot.value as Map<String, Cabinet>
+                key = cabinetMap.keys.iterator().next()     //Location 정보 읽기
+                Log.i("Transaction", "Got Key Of $key")
+
+                cabinetRef.child(key).runTransaction(object : Transaction.Handler { //잔여 바구니 count
+                    override fun doTransaction(mutableData: MutableData): Transaction.Result {
+                        val cabinet = mutableData.getValue<Cabinet>()
+                            ?: return Transaction.success(mutableData)
+
+                        if (isUsing) {
+                            if(cabinet.remain <= 0) {   /**예외처리 필요 (구현 안됨)*/
+                                toast("현재 보관함의 잔여 바구니가 없습니다. 다른 보관함을 이용해주세요.")
+                                return Transaction.success(mutableData)
+                            }
+                            else cabinet.remain -= 1
+                        } else {                        /**예외처리 필요 (구현 안됨)*/
+                            if(cabinet.remain >= MAX_COUNT_OF_BASKET) {
+                                toast("현재 보관함이 가득 찼습니다. 다른 보관함에 반납해주세요.")
+                                return Transaction.success(mutableData)
+                            }
+                            else cabinet.remain += 1
+                        }
+                        mutableData.value = cabinet.toMap()
+                        return Transaction.success(mutableData)
+                    }
+
+                    override fun onComplete(
+                        databaseError: DatabaseError?,
+                        committed: Boolean,
+                        currentData: DataSnapshot?
+                    ) {
+                        Log.d("Transaction",
+                            "Transaction Count Complete : $currentData"
+                        )
+                    }
+                })
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Transaction", "Fail To Read")
+            }
+        })
+    }
+
     private fun kakaoUser() {
         Log.d("KakaoUser", Firebase.auth.currentUser!!.uid)
 
@@ -243,6 +293,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
 
+    }
+
+    companion object {
+        const val MAX_COUNT_OF_BASKET = 12  //보관함 최대 바구니 개수
     }
 
 }

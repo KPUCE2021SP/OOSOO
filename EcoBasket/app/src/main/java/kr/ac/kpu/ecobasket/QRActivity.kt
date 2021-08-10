@@ -7,21 +7,19 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.RadioButton
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.qr_overlay.*
 import kotlinx.android.synthetic.main.top_action_bar_in_qr.*
 import org.jetbrains.anko.toast
 
 class QRActivity : AppCompatActivity() {
 
-    var QRLocation : String = ""    //QR코드 장소정보
+    var QRCode : String = ""    //QR코드
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_qractivity)
-
-        var intent : Intent = intent
-
-
 
         btn_close_qr.setOnClickListener {
             setResult(Activity.RESULT_CANCELED)
@@ -30,15 +28,18 @@ class QRActivity : AppCompatActivity() {
 
         btn_test_qr.setOnClickListener { view ->
             when(testRadioGroup.checkedRadioButtonId) {
-                R.id.radio123_123 ->
-                        QRLocation = radio123_123.text.toString()
-                R.id.radio234_234 ->
-                        QRLocation = radio234_234.text.toString()
-                R.id.radio777_777 ->
-                        QRLocation = radio777_777.text.toString()
+                R.id.radio123_123 -> {
+                    QRCode = "1a2s3d4f"
+                }
+                R.id.radio234_234 -> {
+                    QRCode = "as12df34"
+                }
+                R.id.radio777_777 -> {
+                    QRCode = "abcd1234"
+                }
             }
             setResult(Activity.RESULT_OK, intent)
-            intent.putExtra("location", QRLocation)
+            intent.putExtra("qr", QRCode)
             finish()
         }
 
