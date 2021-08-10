@@ -3,14 +3,36 @@ package kr.ac.kpu.ecobasket
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_island.*
 import kotlinx.android.synthetic.main.activity_themes.*
+import kotlinx.android.synthetic.main.activity_themes.ecoPoint3
+import org.jetbrains.anko.toast
 
 class ThemeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_themes)
 
-        //island 액티비티에서 넘어온 에코포인트 데이터를 그대로 표시
+        var auth = FirebaseAuth.getInstance()
+        val usersRef = Firebase.database.getReference("users").child("${auth.currentUser?.uid}")
+
+        //에코포인트 데이터 표시
+        usersRef.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val map = snapshot.value as Map<*, *>
+
+                ecoPoint3.setText("${map["mileage"].toString()} 에코포인트")
+            }
+            override fun onCancelled(error: DatabaseError) {
+                toast("DB에러")
+            }
+        })
 
         //사용자가 테마 클릭시 '적용중'이 보이게 하고(visibility), 섬 테마 바꾸기(미구현)
 
