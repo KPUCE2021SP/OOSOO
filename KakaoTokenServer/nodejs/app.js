@@ -130,7 +130,7 @@ app.get('/verifyToken/:token', (req, res) => {
 });
 
 // Start the server
-const server = app.listen(process.env.PORT || '8000', () => {
+const server = app.listen(process.env.PORT || '9060', () => {
   console.log('KakaoLoginServer for Firebase listening on port %s',
   server.address().port);
 });
