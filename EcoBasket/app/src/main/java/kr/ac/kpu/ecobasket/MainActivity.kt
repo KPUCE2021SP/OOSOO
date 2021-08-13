@@ -253,7 +253,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                                 toast("현재 보관함이 가득 찼습니다. 다른 보관함에 반납해주세요.")
                                 return Transaction.success(mutableData)
                             }
-                            else cabinet.remain += 1
+                            else {
+                                cabinet.remain += 1
+                                queryAddPoint(10)
+                            }
                         }
                         mutableData.value = cabinet.toMap()
                         return Transaction.success(mutableData)
@@ -272,6 +275,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             override fun onCancelled(error: DatabaseError) {
                 Log.e("Transaction", "Fail To Read")
+            }
+        })
+    }
+
+    //에코포인트 지급 함수
+    private fun queryAddPoint(point : Int) {
+        usersRef.child("mileage").runTransaction(object : Transaction.Handler { //잔여 바구니 count
+            override fun doTransaction(mutableData: MutableData): Transaction.Result {
+                val mileage = mutableData.value.toString().toInt()
+                    ?: return Transaction.success(mutableData)
+                mutableData.value = mileage + point
+                return Transaction.success(mutableData)
+            }
+
+            override fun onComplete(
+                databaseError: DatabaseError?,
+                committed: Boolean,
+                currentData: DataSnapshot?
+            ) {
+                Log.d("Transaction",
+                    "Transaction ADD Complete : $currentData"
+                )
             }
         })
     }
