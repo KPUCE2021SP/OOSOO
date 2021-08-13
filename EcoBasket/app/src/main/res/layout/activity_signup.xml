@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageButton
-        android:id="@+id/back_btn2"
+        android:id="@+id/btn_back2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -26,7 +26,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/back_btn2" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_back2" />
 
     <TextView
         android:id="@+id/tv2"
@@ -99,7 +99,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/tv1"
-        app:layout_constraintTop_toBottomOf="@+id/back_btn2" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_back2" />
 
     <EditText
         android:id="@+id/edit_pw1"

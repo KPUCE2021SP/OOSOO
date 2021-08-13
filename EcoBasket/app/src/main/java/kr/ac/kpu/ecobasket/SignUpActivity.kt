@@ -1,12 +1,10 @@
 package kr.ac.kpu.ecobasket
 
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_signup.*
@@ -46,7 +44,7 @@ class SignUpActivity: AppCompatActivity() {
         }
 
         //뒤로 돌아가기 버튼
-        back_btn2.setOnClickListener{
+        btn_back2.setOnClickListener{
             finish()
         }
     }

@@ -16,7 +16,7 @@
         app:srcCompat="@drawable/main_island" />
 
     <ImageButton
-        android:id="@+id/back_btn2"
+        android:id="@+id/btn_back4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -53,7 +53,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/back_btn2"
+        app:layout_constraintTop_toBottomOf="@+id/btn_back4"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView

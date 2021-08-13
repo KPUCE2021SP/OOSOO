@@ -47,7 +47,7 @@ class IslandActivity : AppCompatActivity() {
         }
 
         //뒤로가기 버튼
-        back_btn2.setOnClickListener{
+        btn_back4.setOnClickListener{
             finish()
         }
 

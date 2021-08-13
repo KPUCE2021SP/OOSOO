@@ -42,6 +42,10 @@ class ModifyActivity : AppCompatActivity() {
             }
         })
 
+        back_btn5.setOnClickListener{
+            finish()
+        }
+
         btn_modify.setOnClickListener {
             var email = mod_email.text.toString().trim()
             var password1 = mod_pw1.text.toString().trim()

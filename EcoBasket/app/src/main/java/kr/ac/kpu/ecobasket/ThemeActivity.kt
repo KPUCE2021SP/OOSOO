@@ -34,6 +34,10 @@ class ThemeActivity : AppCompatActivity() {
             }
         })
 
+        btn_back3.setOnClickListener{
+            finish()
+        }
+
         //사용자가 테마 클릭시 '적용중'이 보이게 하고(visibility), 섬 테마 바꾸기(미구현)
 
         //테마 잠금 해제 조건을 달성한다면 framelayout의 foreground 속성 바꾸고, (조건 텍스트뷰, 잠금이미지)invisible
