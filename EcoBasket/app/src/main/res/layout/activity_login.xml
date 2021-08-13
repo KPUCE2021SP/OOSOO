@@ -82,7 +82,7 @@
         android:layout_height="60dp"
         android:layout_marginTop="8dp"
         android:drawableLeft="@drawable/kakao_icon"
-        android:text="카카오 로그인"
+        android:text="카카오 로그인 / 회원가입"
         android:textColor="#3A1D1D"
         app:backgroundTint="#F7E600"
         app:layout_constraintEnd_toEndOf="parent"
@@ -91,7 +91,7 @@
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/google_btn"
-        android:layout_width="350dp"
+        android:layout_width="358dp"
         android:layout_height="60dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"

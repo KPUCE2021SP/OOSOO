@@ -49,8 +49,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }else{
             queryUserInformation()  //user 객체 초기화
             queryIsUsingState()
-
-            kakaoUser()
         }
 
         //우측 메뉴바
@@ -299,25 +297,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 )
             }
         })
-    }
-
-    private fun kakaoUser() {
-        Log.d("KakaoUser", Firebase.auth.currentUser!!.uid)
-
-        UserApiClient.instance.me { user, error ->
-            if (error != null) {
-                Log.e("KakaoUser", "사용자 정보 요청 실패", error)
-            }
-            else if (user != null) {
-                Log.i("KakaoUser", "사용자 정보 요청 성공" +
-                        "\n회원번호: ${user.id}" +
-                        "\n이메일: ${user.kakaoAccount?.email}" +
-                        "\n닉네임: ${user.kakaoAccount?.profile?.nickname}" +
-                        "\n번호: ${user.kakaoAccount?.phoneNumber}" +
-                        "\n프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}")
-            }
-        }
-
     }
 
     companion object {

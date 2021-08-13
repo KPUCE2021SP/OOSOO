@@ -62,7 +62,7 @@ class PreferencesActivity : AppCompatActivity() {
                                         Log.e("KakaoLogout", "로그아웃 실패. Invalid Token")
                                     }
                                     else {
-                                        Log.i("KakaoLogout", "로그아웃 성공. SDK에서 토큰 삭제됨")
+                                        Log.i("KakaoLogout", "로그아웃 성공")
                                     }
                                 }
                                 toast("로그아웃 되었습니다.")

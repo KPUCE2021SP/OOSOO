@@ -10,6 +10,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.util.Utility
@@ -23,6 +25,8 @@ import org.jetbrains.anko.toast
 import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
+
+    private var usersRef = Firebase.database.getReference("users")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -147,7 +151,20 @@ class LoginActivity : AppCompatActivity() {
                                     if (task.isSuccessful) {
                                         // Sign in success, update UI with the signed-in user's information
                                         Log.d("KakaoLogin", "signInWithCustomToken:success")
-                                        finish()
+
+                                        UserApiClient.instance.me { user, error ->
+                                            if (error != null) {
+                                                Log.e("KakaoUser", "사용자 정보 요청 실패", error)
+                                            }
+                                            else if (user != null) {
+                                                Log.d("KakaoUserIn", "\n name : ${user.kakaoAccount?.profile?.nickname}" +
+                                                        "\n email : ${user.kakaoAccount?.email}")
+                                                createUserDB(user.kakaoAccount?.profile?.nickname.toString(),
+                                                    "", user.kakaoAccount?.email.toString())
+                                                Log.d("KakaoLogin", "DB에 추가 성공")
+                                                finish()
+                                            }
+                                        }
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w("KakaoLogin", "signInWithCustomToken:failure", task.exception)
@@ -165,6 +182,32 @@ class LoginActivity : AppCompatActivity() {
         } else {
             UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
         }
+    }
+
+    //DB에 회원정보 넣기
+    private fun createUserDB(name: String?, phone: String?, email: String){
+        val user = User(name = name, phone = phone, mileage = 0, isUsing = false, level = 1, email = email)
+
+        usersRef.child(Firebase.auth.currentUser?.uid.toString()).setValue(user.toMap()).addOnSuccessListener {
+            Log.i("KakaoDB", "Successful Create User")
+        }.addOnFailureListener{ Log.w("KakaoDB","Failure Create User")}
+
+        /*
+
+        usersRef.child(Firebase.auth.currentUser?.uid.toString()).get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Log.d("KakaoDB", "Already exist UID")
+            } else {
+                Log.d("KakaoDB", "New UID")
+                usersRef.child(Firebase.auth.currentUser?.uid.toString()).setValue(user.toMap()).addOnSuccessListener {
+                    Log.i("KakaoDB", "Successful Create User")
+                }.addOnFailureListener{ Log.w("KakaoDB","Failure Create User")}
+            }
+        }
+
+         */
+
+
     }
 
 }
