@@ -1,6 +1,5 @@
 package kr.ac.kpu.ecobasket
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
@@ -13,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.View.*
 import androidx.annotation.RequiresApi
+import androidx.annotation.UiThread
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -20,14 +20,18 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-import com.kakao.sdk.user.UserApiClient
+import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.MapFragment
+import com.naver.maps.map.NaverMap
+import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.overlay.Marker
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_layout.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
 import org.jetbrains.anko.toast
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
     var database = Firebase.database.reference
     private val cabinetRef = Firebase.database.getReference("Cabinet")
@@ -35,12 +39,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private val usersRef = Firebase.database.getReference("users").child("${auth.currentUser?.uid}")
     //var user : User? = null  //현재 로그인한 user 정보 객체 -- 비동기식 firebase 함수 때문에 보류
 
+    private lateinit var naverMap: NaverMap  // 네이버 지도 객체
 
     @RequiresApi(Build.VERSION_CODES.M) //getColor 함수
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
 
         // 로그인 안되어있을 시에 로그인 화면
         if (Firebase.auth.currentUser == null || usersRef == null){
@@ -50,6 +54,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             queryUserInformation()  //user 객체 초기화
             queryIsUsingState()
         }
+
+        //네이버 지도
+        val fm = supportFragmentManager
+        val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
+            ?: MapFragment.newInstance().also {
+                fm.beginTransaction().add(R.id.map, it).commit()
+            }
+        mapFragment.getMapAsync(this)
 
         //우측 메뉴바
         btn_menu.setOnClickListener {
@@ -63,24 +75,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             boxInfoCard.visibility = GONE   //보관함 정보 숨기기
         }
 
-        //** 임시(MapView에서 보관함 id 불러오는 것으로 수정) */
-        val testLocationClickListener = View.OnClickListener { view ->
-            boxInfoCard.visibility = VISIBLE
-
-            when(view.id) {
-                R.id.testLocation1 -> queryCabinetLocation(123, 123)
-                R.id.testLocation2 -> queryCabinetLocation(234, 234)
-                R.id.testLocation3 -> queryCabinetLocation(777, 777)
-            }
-        }
-        testLocation1.setOnClickListener(testLocationClickListener)
-        testLocation2.setOnClickListener(testLocationClickListener)
-        testLocation3.setOnClickListener(testLocationClickListener)
-
-        map.setOnClickListener{
-            boxInfoCard.visibility = GONE
-        }
-
         //메인 - 우측메뉴바
         nav_menu.setNavigationItemSelectedListener(this)
 
@@ -89,6 +83,43 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
                 drawerLayout.closeDrawers()
             }
+        }
+    }
+
+    //네이버 지도
+    @UiThread
+    override fun onMapReady(map: NaverMap) {
+        naverMap = map
+
+        naverMap.uiSettings.isLocationButtonEnabled = true
+        naverMap.uiSettings.isCompassEnabled = true
+        naverMap.uiSettings.isZoomControlEnabled = false
+
+        val kpuMarker = Marker()
+        kpuMarker.position = LatLng(37.34019520033833, 126.73352755632864)
+        kpuMarker.map = naverMap
+        kpuMarker.setOnClickListener {
+            queryCabinetLocation(777, 777)
+            boxInfoCard.visibility = VISIBLE
+            true
+        }
+
+        val emartMarker = Marker()
+        emartMarker.position = LatLng(37.34586947498446, 126.73650149948088)
+        emartMarker.map = naverMap
+        emartMarker.setOnClickListener {
+            queryCabinetLocation(234, 234)
+            boxInfoCard.visibility = VISIBLE
+            true
+        }
+
+        val exit2Marker = Marker()
+        exit2Marker.position = LatLng(37.35192338031364, 126.74285252358916)
+        exit2Marker.map = naverMap
+        exit2Marker.setOnClickListener {
+            queryCabinetLocation(123, 123)
+            boxInfoCard.visibility = VISIBLE
+            true
         }
     }
 

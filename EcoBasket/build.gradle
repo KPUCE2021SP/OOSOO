@@ -23,6 +23,7 @@ allprojects {
 
         maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' } // 카카오 SDK repo
         maven { url "https://oss.jfrog.org/libs-snapshot" } // ReactiveX
+        maven { url "https://naver.jfrog.io/artifactory/maven/" } // Naver API
     }
 }
 
