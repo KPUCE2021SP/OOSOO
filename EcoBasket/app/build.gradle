@@ -81,6 +81,9 @@ dependencies {
     //Naver 지도
     implementation "com.naver.maps:map-sdk:3.12.0"
 
+    //위치 서비스
+    implementation "com.google.android.gms:play-services-location:16.0.0"
+
     //Realtime DB
     implementation 'com.google.firebase:firebase-database-ktx'
 

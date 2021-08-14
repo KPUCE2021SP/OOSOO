@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
-import android.view.View
 import android.view.View.*
 import androidx.annotation.RequiresApi
 import androidx.annotation.UiThread
@@ -21,10 +20,9 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.naver.maps.geometry.LatLng
-import com.naver.maps.map.MapFragment
-import com.naver.maps.map.NaverMap
-import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.util.FusedLocationSource
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_layout.*
 import org.jetbrains.anko.startActivity
@@ -40,6 +38,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     //var user : User? = null  //현재 로그인한 user 정보 객체 -- 비동기식 firebase 함수 때문에 보류
 
     private lateinit var naverMap: NaverMap  // 네이버 지도 객체
+    private lateinit var locationSource: FusedLocationSource
 
     @RequiresApi(Build.VERSION_CODES.M) //getColor 함수
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,10 +54,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             queryIsUsingState()
         }
 
+        //위치 서비스
+        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+
         //네이버 지도
+        val option = NaverMapOptions()
+            .camera(CameraPosition(LatLng(37.34019520033833, 126.73352755632864), 14.0))
         val fm = supportFragmentManager
         val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
-            ?: MapFragment.newInstance().also {
+            ?: MapFragment.newInstance(option).also {
                 fm.beginTransaction().add(R.id.map, it).commit()
             }
         mapFragment.getMapAsync(this)
@@ -86,13 +90,30 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    //위치 서비스 요청
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (locationSource.onRequestPermissionsResult(requestCode, permissions,
+                grantResults)) {
+            if (!locationSource.isActivated) { // 권한 거부됨
+                naverMap.locationTrackingMode = LocationTrackingMode.None
+            }
+            return
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
     //네이버 지도
     @UiThread
     override fun onMapReady(map: NaverMap) {
         naverMap = map
+        naverMap.locationSource = locationSource
 
-        naverMap.uiSettings.isLocationButtonEnabled = true
-        naverMap.uiSettings.isCompassEnabled = true
+        map_location.map = naverMap
+        map_compass.map = naverMap
         naverMap.uiSettings.isZoomControlEnabled = false
 
         val kpuMarker = Marker()
@@ -332,6 +353,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     companion object {
         const val MAX_COUNT_OF_BASKET = 12  //보관함 최대 바구니 개수
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1000  // 위치 요청 코드
     }
 
 }
