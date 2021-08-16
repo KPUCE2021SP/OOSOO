@@ -97,5 +97,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-database-ktx'
 
     //anko 라이브러리
-    implementation "org.jetbrains.anko:anko-commons:0.10.5"
+    implementation "org.jetbrains.anko:anko:$anko_version"
 }

@@ -1,10 +1,12 @@
 package kr.ac.kpu.ecobasket
 
 import android.Manifest
+import android.app.Activity
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
 import android.widget.Toast
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -12,20 +14,54 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import kotlinx.android.synthetic.main.qr_overlay.*
+import kotlinx.android.synthetic.main.activity_qractivity.*
+import kotlinx.android.synthetic.main.top_action_bar_in_qr.*
+import org.jetbrains.anko.*
 import java.io.File
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class QRActivity : AppCompatActivity() {
-    private var imageCapture: ImageCapture? = null
 
+    private var imageCapture: ImageCapture? = null
+    var QRCode : String = ""    //QR코드
+    var inputCode : EditText? = null        //직접 입력 코드
     private lateinit var outputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_qractivity)
+
+        btn_close_qr.setOnClickListener {
+            setResult(Activity.RESULT_CANCELED)
+            finish()
+        }
+
+        btn_inputCode.setOnClickListener {
+            /* 바코드 직접 입력 dialog 생성 */
+            alert {
+                customView{
+                    inputCode = editText {
+                        hint = "코드를 직접 입력하세요"
+                    }
+                }
+                yesButton {
+                    QRCode = inputCode?.text.toString()
+                    setResult(Activity.RESULT_OK, intent)
+                    intent.putExtra("qr", QRCode)
+                    finish()
+                }
+                noButton { toast("코드 입력 취소") }
+            }.show()
+
+        }
+
+        btn_flash.setOnClickListener {
+            btn_flash?.let {
+                it.isSelected = !it.isSelected
+            }
+        }
 
         // Request camera permissions
         if (allPermissionsGranted()) {
