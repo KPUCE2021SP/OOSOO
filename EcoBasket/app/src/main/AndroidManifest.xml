@@ -6,6 +6,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 위치 사용 권한 설정-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 카메라 Realtime 보장 -->
+    <uses-feature android:name="android.hardware.camera.any" />
+    <!-- 카메라 접근권한 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
 
     <application
         android:name=".GlobalApplication"

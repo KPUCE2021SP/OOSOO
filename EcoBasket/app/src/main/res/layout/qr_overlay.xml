@@ -1,60 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/static_overlay_container"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#00000000">
 
-    <Button
-        android:id="@+id/btn_test_qr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:backgroundTint="@color/white"
-        android:shadowColor="@color/gray"
-        android:text="QR 코드 스캔"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:drawableTopCompat="@drawable/ic_baseline_qr_code_scanner_24" />
+    <androidx.camera.view.PreviewView
+        android:id="@+id/viewFinder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-    <!-- 임시용 테스트 QR 선택 버튼 -->
-    <RadioGroup
-        android:id="@+id/testRadioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center">
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#AE5FF3"
-            android:text="테스트용 QR 선택"
-            android:textAlignment="center"
-            android:textColor="#673AB7"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <RadioButton
-            android:id="@+id/radio123_123"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="정왕역 2번출구" />
-
-        <RadioButton
-            android:id="@+id/radio234_234"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="정왕동 이마트" />
-
-        <RadioButton
-            android:id="@+id/radio777_777"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="한국산업기술대학교" />
-    </RadioGroup>
-
-</FrameLayout>
-
+</androidx.constraintlayout.widget.ConstraintLayout>
