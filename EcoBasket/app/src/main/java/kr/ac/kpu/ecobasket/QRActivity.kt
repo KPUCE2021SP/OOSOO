@@ -8,9 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.Preview
+import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -18,16 +16,19 @@ import kotlinx.android.synthetic.main.activity_qractivity.*
 import kotlinx.android.synthetic.main.top_action_bar_in_qr.*
 import org.jetbrains.anko.*
 import java.io.File
+import java.nio.ByteBuffer
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
+/** QR Debug용 리스너 : Alias변환 */
+typealias QRListener = (QR : String) -> Unit
+
 class QRActivity : AppCompatActivity() {
 
-    private var imageCapture: ImageCapture? = null
     var QRCode : String = ""    //QR코드
     var inputCode : EditText? = null        //직접 입력 코드
-    private lateinit var outputDirectory: File
-    private lateinit var cameraExecutor: ExecutorService
+
+    private lateinit var cameraExecutor: ExecutorService    //카메라 서비스 실행 인스턴스
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +64,7 @@ class QRActivity : AppCompatActivity() {
             }
         }
 
-        // Request camera permissions
+        // 카메라 접근권한 요청
         if (allPermissionsGranted()) {
             startCamera()
         } else {
@@ -71,13 +72,8 @@ class QRActivity : AppCompatActivity() {
                 this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
 
-
-        outputDirectory = getOutputDirectory()
-
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
-
-    private fun takePhoto() {}
 
     /* 뷰파인더(카메라 화면에서 미리보기) 구현 : 인스턴스 만들기 *
      *
@@ -99,6 +95,21 @@ class QRActivity : AppCompatActivity() {
                     it.setSurfaceProvider(viewFinder.surfaceProvider)
                 }
 
+            // ImageAnalyzer : CameraX의 이미지 분석기 클래스
+            // ImageAnalyzer 객체 빌드
+            val imageAnalyzer = ImageAnalysis.Builder()
+                .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                /** STRATEGY_KEEP_ONLY_LATEST : 비차단모드 = analyze()호출 시점 마지막 사용가능 프레임만 수신
+                 * 동시성 프레임으로 인한 다중 분석으로 원활한 인식이 불가할 수 있음
+                 * cf) 이미지 분석 기본설정 : STRATEGY_BLOCK_PRODUCER (차단모드)
+                 */
+                .build()
+                .also {
+                    it.setAnalyzer(cameraExecutor, QRCodeAnalyzer { QR ->
+                        Log.d(TAG, "$QR")
+                    })
+                }
+
             // 후방 카메라로 기본 설정
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
@@ -108,7 +119,7 @@ class QRActivity : AppCompatActivity() {
 
                 // 카메라 Bind하고 LifeCycle에 넘기기
                 cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview)
+                    this, cameraSelector, preview, imageAnalyzer)
 
             } catch(exc: Exception) {
                 Log.e(TAG, "Use case binding failed", exc)
@@ -154,10 +165,32 @@ class QRActivity : AppCompatActivity() {
         }
     }
 
+    //기본 상수 Base Set
     companion object {
         private const val TAG = "CameraXBasic"
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+    }
+}
+
+//QRCode 인식 분석 Inner Class
+private class QRCodeAnalyzer(private val listener: QRListener) : ImageAnalysis.Analyzer {
+    //toByteArray 세팅
+    private fun ByteBuffer.toByteArray(): ByteArray {
+        rewind()    // 버퍼 비우기
+        val data = ByteArray(remaining())
+        get(data)   // 버퍼를 ByteArray로 복사
+        return data // ByteArray 리턴
+    }
+    //CameraX 분석 코드 : 화면 인식
+    override fun analyze(image: ImageProxy) {
+        val buffer = image.planes[0].buffer   //버퍼 불러오기
+        val data = buffer.toByteArray()       //분석 데이터 초기화
+
+        //*********************************test용 임시 코드
+        listener("Not yet, Request To Write Code")
+
+        image.close()
     }
 }

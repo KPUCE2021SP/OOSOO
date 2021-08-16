@@ -70,7 +70,7 @@ dependencies {
 
     //CameraX
     def camerax_version = "1.0.1"   //CameraX 버전 설정
-    // CameraX core library using camera2 호출
+    // camera2 호출 : CameraX로 확장 목적
     implementation "androidx.camera:camera-camera2:$camerax_version"
     // CameraX Lifecycle 라이브러리
     implementation "androidx.camera:camera-lifecycle:$camerax_version"
