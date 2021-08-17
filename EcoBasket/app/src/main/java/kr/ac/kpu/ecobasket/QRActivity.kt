@@ -1,6 +1,7 @@
 package kr.ac.kpu.ecobasket
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,10 @@ import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.mlkit.vision.barcode.Barcode
+import com.google.mlkit.vision.barcode.BarcodeScannerOptions
+import com.google.mlkit.vision.barcode.BarcodeScanning
+import com.google.mlkit.vision.common.InputImage
 import kotlinx.android.synthetic.main.activity_qractivity.*
 import kotlinx.android.synthetic.main.top_action_bar_in_qr.*
 import org.jetbrains.anko.*
@@ -105,8 +110,12 @@ class QRActivity : AppCompatActivity() {
                  */
                 .build()
                 .also {
-                    it.setAnalyzer(cameraExecutor, QRCodeAnalyzer { QR ->
-                        Log.d(TAG, "$QR")
+                    it.setAnalyzer(cameraExecutor, QRCodeAnalyzer { QRCode ->   //인식할시 대여/반납
+                        this@QRActivity.QRCode = QRCode
+                        Log.d(TAG, "$QRCode")
+                        setResult(Activity.RESULT_OK, intent)
+                        intent.putExtra("qr", QRCode)
+                        finish()
                     })
                 }
 
@@ -135,13 +144,13 @@ class QRActivity : AppCompatActivity() {
             baseContext, it) == PackageManager.PERMISSION_GRANTED
     }
 
-    //출력 디렉토리 Get함수
+    /* 출력 디렉토리 Get함수
     private fun getOutputDirectory(): File {
         val mediaDir = externalMediaDirs.firstOrNull()?.let {
             File(it, resources.getString(R.string.app_name)).apply { mkdirs() } }
         return if (mediaDir != null && mediaDir.exists())
             mediaDir else filesDir
-    }
+    }*/
 
     override fun onDestroy() {
         super.onDestroy()
@@ -176,21 +185,41 @@ class QRActivity : AppCompatActivity() {
 
 //QRCode 인식 분석 Inner Class
 private class QRCodeAnalyzer(private val listener: QRListener) : ImageAnalysis.Analyzer {
-    //toByteArray 세팅
-    private fun ByteBuffer.toByteArray(): ByteArray {
-        rewind()    // 버퍼 비우기
-        val data = ByteArray(remaining())
-        get(data)   // 버퍼를 ByteArray로 복사
-        return data // ByteArray 리턴
-    }
+
     //CameraX 분석 코드 : 화면 인식
-    override fun analyze(image: ImageProxy) {
-        val buffer = image.planes[0].buffer   //버퍼 불러오기
-        val data = buffer.toByteArray()       //분석 데이터 초기화
+    @SuppressLint("UnsafeOptInUsageError")
+    override fun analyze(imageProxy: ImageProxy) {
+        val mediaImage = imageProxy.image
+        if (mediaImage != null) {
+            val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
 
-        //*********************************test용 임시 코드
-        listener("Not yet, Request To Write Code")
-
-        image.close()
+            //바코드 인식 후 정보 전달 함수
+            scanBarcodes(image, listener)
+        }
+        //imageProxy 닫기
+        imageProxy.close()
     }
+}
+
+//QR옵션 지정 및 QR코드 해석 함수
+private fun scanBarcodes(image: InputImage, listener: QRListener) {
+
+    //스캐너 옵션 설정
+    val options = BarcodeScannerOptions.Builder()
+        .setBarcodeFormats(
+            Barcode.FORMAT_QR_CODE)
+        //기타 코드를 추가할 수 있음 - 필요하면 추가함(옵션없애서 전체 포멧 스캔도 가능)
+        .build()
+    //바코드 스캐너 인스턴스 Get
+    val scanner = BarcodeScanning.getClient(options)
+
+    //바코드 정보 넘기기
+    val result = scanner.process(image)
+        .addOnSuccessListener { barcodes ->
+            for (barcode in barcodes) {
+                listener(barcode.rawValue ?: "")
+            }
+        }
+        .addOnFailureListener { }
+        .addOnCompleteListener { }
 }

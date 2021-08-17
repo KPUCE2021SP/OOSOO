@@ -77,6 +77,9 @@ dependencies {
     // CameraX View 클래스
     implementation "androidx.camera:camera-view:1.0.0-alpha27"
 
+    // Barcode(QR) MLKit
+    implementation 'com.google.mlkit:barcode-scanning:17.0.0'
+
     //Retrofit2
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'

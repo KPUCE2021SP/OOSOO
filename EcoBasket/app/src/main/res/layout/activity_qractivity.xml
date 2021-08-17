@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:keepScreenOn="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#00000000">
@@ -14,15 +15,22 @@
         <androidx.camera.view.PreviewView
             android:id="@+id/viewFinder"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
+            android:layout_height="match_parent">
 
         </androidx.camera.view.PreviewView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/textInfoBarcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="50dp"
+        android:text="화면에 QR코드를 인식해주세요."
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <include
         layout="@layout/top_action_bar_in_qr"
