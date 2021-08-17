@@ -74,6 +74,8 @@ dependencies {
     implementation "androidx.camera:camera-camera2:$camerax_version"
     // CameraX Lifecycle 라이브러리
     implementation "androidx.camera:camera-lifecycle:$camerax_version"
+    // CameraX Core 라이브러리
+    implementation "androidx.camera:camera-core:${camerax_version}"
     // CameraX View 클래스
     implementation "androidx.camera:camera-view:1.0.0-alpha27"
 

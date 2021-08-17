@@ -4,11 +4,11 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
@@ -20,18 +20,23 @@ import com.google.mlkit.vision.common.InputImage
 import kotlinx.android.synthetic.main.activity_qractivity.*
 import kotlinx.android.synthetic.main.top_action_bar_in_qr.*
 import org.jetbrains.anko.*
-import java.io.File
-import java.nio.ByteBuffer
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
-/** QR Debug용 리스너 : Alias변환 */
+/**
+ * 바코드 생성기 링크
+ * https://wepplication.github.io/tools/barcodeGen/
+ */
+
+// QR Debug용 리스너 : Alias변환
 typealias QRListener = (QR : String) -> Unit
 
 class QRActivity : AppCompatActivity() {
 
-    var QRCode : String = ""    //QR코드
-    var inputCode : EditText? = null        //직접 입력 코드
+    private var QRCode : String = ""    //QR코드
+    private var inputCode : EditText? = null        //직접 입력 코드
+    private var cameraController : CameraControl? = null    //카메라 장치 제어(플래시 목적)
+    private var cameraInfo : CameraInfo? = null //카메라 정보 불러오기
 
     private lateinit var cameraExecutor: ExecutorService    //카메라 서비스 실행 인스턴스
 
@@ -66,6 +71,18 @@ class QRActivity : AppCompatActivity() {
         btn_flash.setOnClickListener {
             btn_flash?.let {
                 it.isSelected = !it.isSelected
+
+                // 플래시 on/off
+                when (cameraInfo?.torchState?.value) {
+                    TorchState.ON -> {
+                        cameraController?.enableTorch(false)
+                        Log.i(TAG, "Flash Off")
+                    }
+                    TorchState.OFF -> {
+                        cameraController?.enableTorch(true)
+                        Log.i(TAG, "Flash On")
+                    }
+                }
             }
         }
 
@@ -127,8 +144,12 @@ class QRActivity : AppCompatActivity() {
                 cameraProvider.unbindAll()
 
                 // 카메라 Bind하고 LifeCycle에 넘기기
-                cameraProvider.bindToLifecycle(
+                val camera = cameraProvider.bindToLifecycle(
                     this, cameraSelector, preview, imageAnalyzer)
+
+                //Controller, Info 객체 정의
+                cameraController = camera!!.cameraControl
+                cameraInfo = camera!!.cameraInfo
 
             } catch(exc: Exception) {
                 Log.e(TAG, "Use case binding failed", exc)
@@ -223,3 +244,4 @@ private fun scanBarcodes(image: InputImage, listener: QRListener) {
         .addOnFailureListener { }
         .addOnCompleteListener { }
 }
+
