@@ -1,5 +1,6 @@
 package kr.ac.kpu.ecobasket
 
+import android.Manifest
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
@@ -12,6 +13,8 @@ import android.view.MenuItem
 import android.view.View.*
 import androidx.annotation.RequiresApi
 import androidx.annotation.UiThread
+import androidx.core.app.ActivityCompat
+import androidx.core.view.isVisible
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -58,11 +61,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
 
         //네이버 지도
-        val option = NaverMapOptions()
-            .camera(CameraPosition(LatLng(37.34019520033833, 126.73352755632864), 14.0))
         val fm = supportFragmentManager
         val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
-            ?: MapFragment.newInstance(option).also {
+            ?: MapFragment.newInstance().also {
                 fm.beginTransaction().add(R.id.map, it).commit()
             }
         mapFragment.getMapAsync(this)
@@ -100,6 +101,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 grantResults)) {
             if (!locationSource.isActivated) { // 권한 거부됨
                 naverMap.locationTrackingMode = LocationTrackingMode.None
+            } else {
+                naverMap.locationTrackingMode = LocationTrackingMode.Follow
             }
             return
         }
@@ -111,6 +114,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onMapReady(map: NaverMap) {
         naverMap = map
         naverMap.locationSource = locationSource
+
+        val requirePermission = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
+        ActivityCompat.requestPermissions(this, requirePermission, LOCATION_PERMISSION_REQUEST_CODE)
 
         map_location.map = naverMap
         map_compass.map = naverMap
@@ -159,12 +165,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return false
     }
 
-    //메뉴바 닫기 액션 구현
+    //Back 버튼 이벤트 커스텀
     override fun onBackPressed() {
-        if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
-            drawerLayout.closeDrawers()
-        } else {
-            super.onBackPressed()
+        when {
+            drawerLayout.isDrawerOpen(Gravity.RIGHT) -> {
+                drawerLayout.closeDrawers()
+            }
+            boxInfoCard.isVisible -> {
+                boxInfoCard.visibility = GONE
+            }
+            else -> {
+                super.onBackPressed()
+            }
         }
     }
 
