@@ -118,6 +118,16 @@ class LoginActivity : AppCompatActivity() {
                 if (it.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("Google Login", "signInWithCredential:success")
+
+                    var email = Firebase.auth.currentUser?.email!!
+                    var name = Firebase.auth.currentUser?.displayName
+                    var phone = Firebase.auth.currentUser?.phoneNumber
+                    Log.d("Google Login",
+                        "\n email : $email" +
+                            "\n name : $name" +
+                            "\n phone : $phone")
+                    createUserDB(name, phone, email)
+2
                     finish()
                 } else {
                     // If sign in fails, display a message to the user.
