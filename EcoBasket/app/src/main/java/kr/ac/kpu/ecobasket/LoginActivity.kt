@@ -27,6 +27,7 @@ import org.json.JSONObject
 class LoginActivity : AppCompatActivity() {
 
     private var usersRef = Firebase.database.getReference("users")
+    var disposable: Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,6 +93,11 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        disposable?.let{ disposable!!.dispose() }
+        super.onDestroy()
+    }
+
     private fun doLogin(userEmail: String, password: String){
         Firebase.auth.signInWithEmailAndPassword(userEmail, password)
             .addOnCompleteListener(this){
@@ -124,8 +130,6 @@ class LoginActivity : AppCompatActivity() {
         KakaoRequest.create()
     }
 
-    var disposable: Disposable? = null
-
     private fun kakaoLogin() {
         // 로그인 공통 callback 구성
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
@@ -135,11 +139,14 @@ class LoginActivity : AppCompatActivity() {
             else if (token != null) {
                 Log.i("KakaoLogin", "로그인 성공 ${token.accessToken}")
 
+                val loadingDialog = LoadingDialog(this)
+                loadingDialog.show()
+
                 disposable = kakaoAPIServe.getFirebaseToken(token.accessToken)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                        { result ->
+                        { result ->  // onNext
                             Log.d("KakaoLogin", result)
 
                             val json = JSONObject(result)
@@ -163,16 +170,18 @@ class LoginActivity : AppCompatActivity() {
                                                     "", user.kakaoAccount?.email.toString())
                                                 Log.d("KakaoLogin", "DB에 추가 성공")
                                                 finish()
+                                                loadingDialog.dismiss()
                                             }
                                         }
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w("KakaoLogin", "signInWithCustomToken:failure", task.exception)
                                         toast("Authentication failed.")
+                                        loadingDialog.dismiss()
                                     }
                                 }
                         },
-                        { error -> Log.d("KakaoLogin", "error:" + error.message.toString())}
+                        { error -> Log.d("KakaoLogin", "error:" + error.message.toString()) }  //onError
                     )
             }
         }
