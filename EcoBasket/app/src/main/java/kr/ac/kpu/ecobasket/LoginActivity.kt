@@ -10,6 +10,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -17,6 +19,7 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_login.*
@@ -112,6 +115,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
+        val loadingDialog = LoadingDialog(this)
+        loadingDialog.show()
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         Firebase.auth.signInWithCredential(credential)
             .addOnCompleteListener(this) {
@@ -119,16 +124,17 @@ class LoginActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("Google Login", "signInWithCredential:success")
 
-                    var email = Firebase.auth.currentUser?.email!!
-                    var name = Firebase.auth.currentUser?.displayName
-                    var phone = Firebase.auth.currentUser?.phoneNumber
-                    Log.d("Google Login",
+                    val uid = Firebase.auth.currentUser?.uid!!
+                    val email = Firebase.auth.currentUser?.email!!
+                    val name = Firebase.auth.currentUser?.displayName
+                    val phone = Firebase.auth.currentUser?.phoneNumber
+                    Log.d("Database",
                         "\n email : $email" +
-                            "\n name : $name" +
-                            "\n phone : $phone")
-                    createUserDB(name, phone, email)
-2
+                                "\n name : $name" +
+                                "\n phone : $phone")
+                    createUserDB(uid, name, phone, email)
                     finish()
+                    loadingDialog.dismiss()
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("Google Login", "signInWithCredential:failure", it.exception)
@@ -176,7 +182,8 @@ class LoginActivity : AppCompatActivity() {
                                             else if (user != null) {
                                                 Log.d("KakaoUserIn", "\n name : ${user.kakaoAccount?.profile?.nickname}" +
                                                         "\n email : ${user.kakaoAccount?.email}")
-                                                createUserDB(user.kakaoAccount?.profile?.nickname.toString(),
+                                                createUserDB(Firebase.auth.currentUser?.uid!!,
+                                                    user.kakaoAccount?.profile?.nickname.toString(),
                                                     "", user.kakaoAccount?.email.toString())
                                                 Log.d("KakaoLogin", "DB에 추가 성공")
                                                 finish()
@@ -204,29 +211,33 @@ class LoginActivity : AppCompatActivity() {
     }
 
     //DB에 회원정보 넣기
-    private fun createUserDB(name: String?, phone: String?, email: String){
-        val user = User(name = name, phone = phone, mileage = 0, isUsing = false, level = 1, email = email)
+    private fun createUserDB(uid: String, name: String?, phone: String?, email: String){
+        usersRef.addValueEventListener(object: ValueEventListener {  // 회원정보가 등록된 UID인지 검사
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var result = false
 
-        usersRef.child(Firebase.auth.currentUser?.uid.toString()).setValue(user.toMap()).addOnSuccessListener {
-            Log.i("KakaoDB", "Successful Create User")
-        }.addOnFailureListener{ Log.w("KakaoDB","Failure Create User")}
+                val child = snapshot.value as Map<*, *>
+                for (i in child.keys) {
+                    Log.d("Database", "key : $i")
+                    if(i == uid) {
+                        result = true
+                        break
+                    }
+                }
+                if (result) {  // 이미 등록되어 있을 경우 새로 등록하지 않음
+                    Log.d("Database", "Exist User")
+                } else {  // 등록된 회원정보가 없을경우 새로 생성
+                    val user = User(name = name, phone = phone, mileage = 0, isUsing = false, level = 1, email = email)
 
-        /*
-
-        usersRef.child(Firebase.auth.currentUser?.uid.toString()).get().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Log.d("KakaoDB", "Already exist UID")
-            } else {
-                Log.d("KakaoDB", "New UID")
-                usersRef.child(Firebase.auth.currentUser?.uid.toString()).setValue(user.toMap()).addOnSuccessListener {
-                    Log.i("KakaoDB", "Successful Create User")
-                }.addOnFailureListener{ Log.w("KakaoDB","Failure Create User")}
+                    usersRef.child(Firebase.auth.currentUser?.uid.toString()).setValue(user.toMap()).addOnSuccessListener {
+                        Log.i("Database", "Successful Create User")
+                    }.addOnFailureListener{ Log.w("Database","Failure Create User")}
+                }
             }
-        }
-
-         */
-
-
+            override fun onCancelled(error: DatabaseError) {
+                toast("DB 오류")
+            }
+        })
     }
 
 }
