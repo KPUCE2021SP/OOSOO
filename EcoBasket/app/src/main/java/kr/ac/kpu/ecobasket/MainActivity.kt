@@ -313,6 +313,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                                 else {
                                     cabinet.remain -= 1
                                     usersRef.child("isUsing").setValue(true)
+                                    cabinetRef.child(key).child("isOpen").setValue(true)
                                 }
                             } else {                        /**예외처리 필요 (구현 안됨)*/
                                 if(cabinet.remain >= MAX_COUNT_OF_BASKET) {
@@ -323,6 +324,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                                     cabinet.remain += 1
                                     queryAddPoint(10)
                                     usersRef.child("isUsing").setValue(false)
+                                    cabinetRef.child(key).child("isOpen").setValue(false)
                                 }
                             }
                             mutableData.value = cabinet.toMap()
