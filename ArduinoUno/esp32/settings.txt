@@ -1,0 +1,5 @@
+DOIT ESP32 DEVKIT V1
+115200
+80MHz
+Debug Level: "None"
+포트: 포트
