@@ -35,13 +35,15 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.05" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_profile"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:src="@drawable/google_icon"
+        app:civ_border_width="2dp"
+        app:civ_border_color="@color/gray"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_my_info" />
 
@@ -49,7 +51,7 @@
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:text="이름or닉네임"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"

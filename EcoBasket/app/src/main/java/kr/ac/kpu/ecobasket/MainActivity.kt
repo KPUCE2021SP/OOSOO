@@ -28,6 +28,7 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_layout.*
+import kotlinx.android.synthetic.main.header_menu.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
 import org.jetbrains.anko.toast
@@ -57,6 +58,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             queryIsUsingState()
         }
 
+        //회원명, 레벨 네비게이션 드로어 헤더에 적용
+        usersRef.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val map = snapshot.value as Map<*, *>
+
+                tv_name_header.text = map["name"].toString()
+                tv_level_header.text = "Lv. ${map["level"].toString()}"
+            }
+            override fun onCancelled(error: DatabaseError) {
+                toast("DB에러")
+            }
+        })
+
         //위치 서비스
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
 
@@ -75,7 +89,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         //메인 - 섬꾸미기 아이콘
-        btn_island.setOnClickListener {
+        img_island.setOnClickListener {
             startActivity<IslandActivity>()
             boxInfoCard.visibility = GONE   //보관함 정보 숨기기
         }

@@ -12,7 +12,6 @@ import com.google.firebase.ktx.Firebase
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_preferences.*
 import org.jetbrains.anko.alert
-import org.jetbrains.anko.customView
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
@@ -46,14 +45,12 @@ class PreferencesActivity : AppCompatActivity() {
                 //클릭 이벤트
                 when (position) {
                     0 -> { // 회원정보 전체 수정
-                        toast("0번 클릭")
                         // 회원정보수정 액티비티
                         startActivity<ModifyActivity>()
                         finish()
                     }
 
                     1 -> { //로그아웃하고 로그인화면으로 돌아가기
-                        toast("1번 클릭")
                         alert(title = "로그아웃", message = "로그아웃 하시겠습니까?") {
                             positiveButton("확인") {
                                 Firebase.auth.signOut()
@@ -75,7 +72,6 @@ class PreferencesActivity : AppCompatActivity() {
                     }
 
                     2 -> { //회원탈퇴하고 로그인화면으로 돌아가기
-                        toast("2번 클릭")
                         alert(title = "회원 탈퇴", message = "회원 탈퇴 하시겠습니까?") {
                             positiveButton("확인") {
                                 //DB삭제 후 auth삭제
@@ -139,17 +135,11 @@ class PreferencesActivity : AppCompatActivity() {
             override fun onClick(v: View, position: Int) {
                 //클릭 이벤트
                 when (position) {
-                    0 -> {
-                        toast("0번 클릭")
-                    }
-
                     1 -> {
-                        toast("1번 클릭")
-                        alert(title = "개발자 정보", message = "개발자 정보 다이얼로그") {
+                        alert(title = "Team OOSOO", message = "팀장 박찬호(2017152017)\n" +
+                                "팀원 김재현(2017150009)\n" +
+                                "팀원 김진호(2017150011)") {
                             positiveButton("확인") {
-
-                            }
-                            negativeButton("취소") {
 
                             }
                         }.show()

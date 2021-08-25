@@ -113,34 +113,37 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <ImageButton
-        android:id="@+id/btn_island"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:padding="0sp"
-        android:scaleType="centerCrop"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_island"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/main_island"
+        app:civ_border_color="@color/gray"
+        app:civ_border_width="2dp"
         app:layout_constraintBottom_toTopOf="@+id/guide1"
         app:layout_constraintEnd_toStartOf="@+id/guide3"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/main_island" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
         android:id="@+id/btn_menu"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         android:background="#00ff0000"
         android:padding="0sp"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/guide2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guide4"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_baseline_menu_24"
         tools:ignore="VectorDrawableCompat" />
 
