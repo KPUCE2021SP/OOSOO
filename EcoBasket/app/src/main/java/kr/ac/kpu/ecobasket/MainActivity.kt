@@ -17,7 +17,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
@@ -37,8 +36,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     var database = Firebase.database.reference
     private val cabinetRef = Firebase.database.getReference("Cabinet")
-    private val auth = FirebaseAuth.getInstance()
-    private val usersRef = Firebase.database.getReference("users").child("${auth.currentUser?.uid}")
+    private var auth = FirebaseAuth.getInstance()
+    private var usersRef = Firebase.database.getReference("users").child("${auth.currentUser?.uid}")
     //var user : User? = null  //현재 로그인한 user 정보 객체 -- 비동기식 firebase 함수 때문에 보류
 
     private lateinit var naverMap: NaverMap  // 네이버 지도 객체
@@ -49,6 +48,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        /*
+
         // 로그인 안되어있을 시에 로그인 화면
         if (Firebase.auth.currentUser == null || usersRef == null){
             startActivity(
@@ -57,6 +58,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             queryUserInformation()  //user 객체 초기화
             queryIsUsingState()
         }
+
+         */
+
+        queryUserInformation()  //user 객체 초기화
+        queryIsUsingState()
 
         //위치 서비스
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
@@ -215,8 +221,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Log.i("firebase", "Got value $userInfo")
 
                 //회원명, 레벨 네비게이션 드로어 헤더에 적용
-                tv_name_header.text = userInfo.name
-                tv_level_header.text = "Lv. ${userInfo.level.toString()}"
+                tv_name_header.setText("${userInfo.name.toString()}")
+                tv_level_header.setText("Lv. ${userInfo.level.toString()}")
             }
 
             override fun onCancelled(databaseError: DatabaseError) {

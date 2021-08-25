@@ -35,6 +35,11 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        if (Firebase.auth.currentUser != null){
+            startActivity<MainActivity>()
+            finish()
+        }
+
         Log.d("KakaoKey", Utility.getKeyHash(this))
 
         //로그인 버튼 누를 시 로그인 시도
@@ -101,6 +106,7 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this){
                 if (it.isSuccessful){
                     startActivity<MainActivity>()
+                    finish()
                     //메인 액티비티
                     toast("로그인 성공!")
                 } else{
@@ -128,6 +134,7 @@ class LoginActivity : AppCompatActivity() {
                                 "\n name : $name" +
                                 "\n phone : $phone")
                     createUserDB(uid, name, phone, email)
+                    startActivity<MainActivity>()
                     finish()
                     loadingDialog.dismiss()
                 } else {
@@ -181,6 +188,7 @@ class LoginActivity : AppCompatActivity() {
                                                     user.kakaoAccount?.profile?.nickname.toString(),
                                                     "", user.kakaoAccount?.email.toString())
                                                 Log.d("KakaoLogin", "DB에 추가 성공")
+                                                startActivity<MainActivity>()
                                                 finish()
                                                 loadingDialog.dismiss()
                                             }
