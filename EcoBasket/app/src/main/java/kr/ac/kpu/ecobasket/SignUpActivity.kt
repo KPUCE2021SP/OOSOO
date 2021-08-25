@@ -30,6 +30,7 @@ class SignUpActivity: AppCompatActivity() {
             var password2 = edit_pw2.text.toString().trim()
             var nickname = edit_nickname.text.toString().trim()
             var phoneNum = edit_phoneNum.text.toString().trim()
+            var pattern = android.util.Patterns.EMAIL_ADDRESS;
 
             //각각의 예외처리 한 후 새로운 계정 만들기 함수 실행
             if (email == "" || password1 == "" || password2 == ""){
@@ -38,6 +39,8 @@ class SignUpActivity: AppCompatActivity() {
                 toast("비밀번호는 6자리 이상이어야 합니다. 다시 입력해주십시오.")
             } else if (password1 != password2){
                 toast("비밀번호가 다릅니다. 다시 확인해주십시오.")
+            } else if(!pattern.matcher(email).matches()){
+                toast("이메일 형식을 다시 확인해주십시오.")
             } else {
                 createUser(email, password1, nickname, phoneNum)
             }

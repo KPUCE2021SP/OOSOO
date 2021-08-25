@@ -49,10 +49,6 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        btn_test.setOnClickListener {
-            finish()
-        }
-
         //회원가입 버튼 누를 시 회원가입 액티비티로 전환
         btn_signUp.setOnClickListener {
             startActivity<SignUpActivity>()
