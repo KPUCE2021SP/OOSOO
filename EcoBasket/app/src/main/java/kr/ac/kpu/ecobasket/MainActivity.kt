@@ -58,19 +58,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             queryIsUsingState()
         }
 
-        //회원명, 레벨 네비게이션 드로어 헤더에 적용
-        usersRef.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val map = snapshot.value as Map<*, *>
-
-                tv_name_header.text = map["name"].toString()
-                tv_level_header.text = "Lv. ${map["level"].toString()}"
-            }
-            override fun onCancelled(error: DatabaseError) {
-                toast("DB에러")
-            }
-        })
-
         //위치 서비스
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
 
@@ -226,6 +213,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 //테스트 코드 (성공 확인)
                 Log.i("firebase", "Got value $userInfo")
+
+                //회원명, 레벨 네비게이션 드로어 헤더에 적용
+                tv_name_header.text = userInfo.name
+                tv_level_header.text = "Lv. ${userInfo.level.toString()}"
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
