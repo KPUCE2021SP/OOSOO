@@ -7,13 +7,17 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View.*
 import androidx.annotation.RequiresApi
 import androidx.annotation.UiThread
+import androidx.annotation.WorkerThread
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -28,9 +32,7 @@ import com.naver.maps.map.util.FusedLocationSource
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_layout.*
 import kotlinx.android.synthetic.main.header_menu.*
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.startActivityForResult
-import org.jetbrains.anko.toast
+import org.jetbrains.anko.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
@@ -339,8 +341,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                                 }
                             }
                             mutableData.value = cabinet.toMap()
+
+                            runOnUiThread {
+                                val version : String = if(isUsing) "대여" else "반납"
+                                alert(message = "${cabinet.name}보관함의 ${version}서비스가 완료되었습니다.") {
+                                    okButton {  }
+                                }.show()
+                            }
                             return Transaction.success(mutableData)
                         }
+
+
 
                         override fun onComplete(
                             databaseError: DatabaseError?,

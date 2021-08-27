@@ -175,6 +175,7 @@ class QRActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        cameraController?.enableTorch(false)
         cameraExecutor.shutdown()
     }
 
@@ -215,7 +216,7 @@ private class QRCodeAnalyzer(private val listener: QRListener) : ImageAnalysis.A
             val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
 
             //바코드 인식 후 정보 전달 함수
-            scanBarcodes(image, listener)
+            scanBarcodes(image, listener )
         }
         //imageProxy 닫기
         imageProxy.close()
@@ -239,6 +240,7 @@ private fun scanBarcodes(image: InputImage, listener: QRListener) {
         .addOnSuccessListener { barcodes ->
             for (barcode in barcodes) {
                 listener(barcode.rawValue ?: "")
+                //graphicOverlay.add(QRGraphic(graphicOverlay, barcode))
             }
         }
         .addOnFailureListener { }
