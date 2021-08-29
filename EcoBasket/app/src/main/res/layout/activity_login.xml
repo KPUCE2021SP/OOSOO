@@ -10,23 +10,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3" />
+        app:layout_constraintGuide_percent="0.35" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.65" />
+        app:layout_constraintGuide_percent="0.7" />
 
     <EditText
         android:id="@+id/EMail_edit"
         android:layout_width="350dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/edit_background"
         android:ems="10"
         android:hint="이메일 주소를 입력해 주세요."
         android:inputType="textPersonName"
+        android:textCursorDrawable="@drawable/edit_cursor"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,10 +37,13 @@
     <EditText
         android:id="@+id/PW_edit"
         android:layout_width="350dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edit_background"
         android:ems="10"
         android:hint="비밀번호를 입력해 주세요."
         android:inputType="textPassword"
+        android:textCursorDrawable="@drawable/edit_cursor"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,47 +65,12 @@
         android:id="@+id/btn_signUp"
         android:layout_width="95dp"
         android:layout_height="37dp"
-
         android:layout_marginEnd="52dp"
         android:background="#00ff0000"
         android:text="회원가입"
-        android:textColor="#8C9EFF"
+        android:textColor="#536DFE"
         app:layout_constraintEnd_toEndOf="@+id/btn_login"
         app:layout_constraintTop_toBottomOf="@+id/btn_login" />
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/google_btn"
-        android:layout_width="358dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/kakao_btn"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/kakao_btn"
-        android:layout_width="350dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="60dp"
-        android:drawableLeft="@drawable/kakao_icon"
-        android:text="카카오 로그인 / 회원가입"
-        android:textColor="#3A1D1D"
-        app:backgroundTint="#F7E600"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline2" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:text="간편 로그인"
-        app:layout_constraintBottom_toTopOf="@+id/kakao_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
@@ -121,6 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Eco Basket 계정이 없으신가요?"
+        android:textColor="@color/app_primaryVariantColor"
         app:layout_constraintStart_toStartOf="@+id/btn_login"
         app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
@@ -133,5 +104,60 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ecobasket_icon" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="간편로그인"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+    <Button
+        android:id="@+id/kakao_btn"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:drawableLeft="@drawable/kakao_icon"
+        android:text="카카오 로그인"
+        android:textColor="#3A1D1D"
+        app:backgroundTint="#F7E600"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/google_btn"
+        android:layout_width="358dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kakao_btn"/>
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="135dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/border_line"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="135dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/border_line"
+        app:layout_constraintEnd_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="@+id/textView4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
