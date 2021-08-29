@@ -46,44 +46,32 @@
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="145dp"
+        android:layout_width="330dp"
         android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:text="Login"
+        android:layout_marginTop="8dp"
+        android:text="로그인"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/PW_edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PW_edit"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btn_signUp"
-        android:layout_width="145dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:text="회원가입"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2"
-        app:layout_constraintEnd_toEndOf="@+id/PW_edit"
-        app:layout_constraintTop_toBottomOf="@+id/PW_edit"
-        app:layout_constraintVertical_bias="0.0" />
+        android:layout_width="95dp"
+        android:layout_height="37dp"
 
-    <Button
-        android:id="@+id/kakao_btn"
-        android:layout_width="350dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="36dp"
-        android:drawableLeft="@drawable/kakao_icon"
-        android:text="카카오 로그인 / 회원가입"
-        android:textColor="#3A1D1D"
-        app:backgroundTint="#F7E600"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline2" />
+        android:layout_marginEnd="52dp"
+        android:background="#00ff0000"
+        android:text="회원가입"
+        android:textColor="#8C9EFF"
+        app:layout_constraintEnd_toEndOf="@+id/btn_login"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/google_btn"
         android:layout_width="358dp"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -91,27 +79,59 @@
         app:layout_constraintTop_toBottomOf="@+id/kakao_btn"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="공용 장바구니\n시작하기"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        android:textStyle="bold"
+    <Button
+        android:id="@+id/kakao_btn"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="60dp"
+        android:drawableLeft="@drawable/kakao_icon"
+        android:text="카카오 로그인 / 회원가입"
+        android:textColor="#3A1D1D"
+        app:backgroundTint="#F7E600"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:text="간편 로그인"
         app:layout_constraintBottom_toTopOf="@+id/kakao_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="공용 장바구니\n    시작하기"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Eco Basket 계정이 없으신가요?"
+        app:layout_constraintStart_toStartOf="@+id/btn_login"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ecobasket_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
