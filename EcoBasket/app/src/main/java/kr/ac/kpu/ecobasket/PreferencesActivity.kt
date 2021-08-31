@@ -105,20 +105,11 @@ class PreferencesActivity : AppCompatActivity() {
                 //클릭 이벤트
                 when (position) {
                     0 -> {
-                        toast("0번 클릭")
                         startActivity<RequestActivity>()
                     }
 
                     1 -> {
-                        toast("1번 클릭")
-                        alert(title = "신고하기", message = "신고하기 다이얼로그") {
-                            positiveButton("확인") {
-
-                            }
-                            negativeButton("취소") {
-
-                            }
-                        }.show()
+                        startActivity<ReportActivity>()
                     }
                 }
             }

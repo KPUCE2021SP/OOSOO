@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EcoBasket"
         android:usesCleartextTraffic="true">
-        <activity android:name=".RequestActivity"></activity>
+        <activity android:name=".RequestActivity" />
+        <activity android:name=".ReportActivity" />
         <activity android:name=".QRActivity" />
         <activity android:name=".PreferencesActivity" />
         <activity android:name=".GuideActivity" />

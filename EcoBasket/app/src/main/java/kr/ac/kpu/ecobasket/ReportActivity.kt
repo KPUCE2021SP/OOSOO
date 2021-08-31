@@ -10,10 +10,10 @@ import kotlinx.android.synthetic.main.activity_request.*
 import org.jetbrains.anko.email
 import org.jetbrains.anko.toast
 
-class RequestActivity : AppCompatActivity() {
+class ReportActivity : AppCompatActivity() {
 
     lateinit var spinnerAdapter : ArrayAdapter<String>
-    private val dataArray = arrayOf("장바구니 추가 요청", "장바구니 교체 요청", "보관함 추가 설치 요청")
+    private val dataArray = arrayOf("보관함 고장 신고", "장바구니 분실 신고")
     private var pos = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +24,7 @@ class RequestActivity : AppCompatActivity() {
         supportActionBar?.title = ""
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        tv_req_title.text = "요청하기"
+        tv_req_title.text = "신고하기"
 
         spinnerAdapter = ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, dataArray)
         spinner_req.adapter = spinnerAdapter
@@ -35,9 +35,8 @@ class RequestActivity : AppCompatActivity() {
                         "${dataArray[position]} 선택함")
                 pos = position
                 when (position) {
-                    0 -> tv_req.text = "장바구니 추가가 필요한 보관함 이름 또는 위치를 적어서\n메일을 보내주세요."
-                    1 -> tv_req.text = "장바구니 교체가 필요한 보관함 이름 또는 위치와\n교체 사유를 함께 적어서 메일을 보내주세요."
-                    2 -> tv_req.text = "보관함이 설치되기를 원하는 장소를 이유와 함께 적어서\n메일을 보내주세요."
+                    0 -> tv_req.text = "고장난 보관함 이름 또는 위치를 적어서 메일을 보내주세요."
+                    1 -> tv_req.text = "대여한 장바구니를 분실하셨다면 대여한 보관함 위치와\n대여한 날짜를 적어서 메일을 보내주세요."
                 }
             }
 
