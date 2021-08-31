@@ -26,7 +26,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/edit_background"
         android:ems="10"
-        android:hint="이메일 주소를 입력해 주세요."
+        android:hint=" 이메일 주소를 입력해 주세요."
         android:inputType="textPersonName"
         android:textCursorDrawable="@drawable/edit_cursor"
         android:textSize="15sp"
@@ -41,7 +41,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/edit_background"
         android:ems="10"
-        android:hint="비밀번호를 입력해 주세요."
+        android:hint=" 비밀번호를 입력해 주세요."
         android:inputType="textPassword"
         android:textCursorDrawable="@drawable/edit_cursor"
         android:textSize="15sp"
@@ -77,9 +77,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="공용 장바구니\n    시작하기"
+        android:text="Eco Basket\n   시작하기"
         android:textColor="@color/black"
-        android:textSize="25sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -97,13 +97,13 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ecobasket_icon" />
+        app:srcCompat="@drawable/eco_basket_icon" />
 
     <TextView
         android:id="@+id/textView4"

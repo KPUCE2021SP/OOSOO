@@ -30,63 +30,78 @@
 
     <EditText
         android:id="@+id/mod_email"
-        android:layout_width="250dp"
+        android:layout_width="350dp"
         android:layout_height="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/edit_background"
         android:ems="10"
-        android:hint="eco@example.com"
+        android:hint=" 예) eco@example.com"
         android:inputType="none|textEmailAddress"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/mod_pw1"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        android:textCursorDrawable="@drawable/edit_cursor"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView24" />
 
     <EditText
         android:id="@+id/mod_pw1"
         android:layout_width="350dp"
         android:layout_height="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/edit_background"
         android:ems="10"
-        android:hint="6자리 이상 영문, 숫자 조합"
+        android:hint="비밀번호를 1회 더 입력하시오."
         android:inputType="none|textPassword"
+        android:textCursorDrawable="@drawable/edit_cursor"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mod_email" />
+        app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
     <EditText
         android:id="@+id/mod_pw2"
         android:layout_width="350dp"
         android:layout_height="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/edit_background"
         android:ems="10"
-        android:hint="비밀번호 1회 더 입력하시오"
+        android:hint=" 6자리 이상 영문, 숫자 조합"
         android:inputType="none|textPassword"
+        android:textCursorDrawable="@drawable/edit_cursor"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mod_pw1" />
+        app:layout_constraintTop_toBottomOf="@+id/textView45" />
 
     <EditText
         android:id="@+id/mod_nickname"
         android:layout_width="350dp"
         android:layout_height="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/edit_background"
         android:ems="10"
-        android:hint="닉네임은 변경 가능"
+        android:hint=" 예) 010-0000-0000"
         android:inputType="textPersonName"
+        android:textCursorDrawable="@drawable/edit_cursor"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mod_pw2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
     <EditText
         android:id="@+id/mod_phoneNum"
         android:layout_width="350dp"
         android:layout_height="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/edit_background"
         android:ems="10"
-        android:hint="ex) 010-0000-0000"
+        android:hint=" 닉네임"
         android:inputType="none|number|phone"
+        android:textCursorDrawable="@drawable/edit_cursor"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mod_nickname" />
+        app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
     <TextView
         android:id="@+id/textView10"
@@ -111,5 +126,85 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <TextView
+        android:id="@+id/textView45"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="비밀번호"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/mod_pw2"
+        app:layout_constraintTop_toBottomOf="@+id/mod_email" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="전화번호"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/mod_nickname"
+        app:layout_constraintTop_toBottomOf="@+id/mod_phoneNum" />
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="닉네임"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/mod_phoneNum"
+        app:layout_constraintTop_toBottomOf="@+id/mod_pw1" />
+
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="비밀번호 확인"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/mod_pw1"
+        app:layout_constraintTop_toBottomOf="@+id/mod_pw2" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="이메일(아이디)"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/mod_email"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="*"
+        android:textColor="@android:color/holo_red_light"
+        app:layout_constraintBottom_toTopOf="@+id/mod_email"
+        app:layout_constraintStart_toEndOf="@+id/textView24" />
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="*"
+        android:textColor="@android:color/holo_red_light"
+        app:layout_constraintBottom_toTopOf="@+id/mod_pw2"
+        app:layout_constraintStart_toEndOf="@+id/textView45" />
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="*"
+        android:textColor="@android:color/holo_red_light"
+        app:layout_constraintBottom_toTopOf="@+id/mod_pw1"
+        app:layout_constraintStart_toEndOf="@+id/textView23" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
