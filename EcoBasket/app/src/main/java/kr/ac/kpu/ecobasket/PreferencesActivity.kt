@@ -106,14 +106,7 @@ class PreferencesActivity : AppCompatActivity() {
                 when (position) {
                     0 -> {
                         toast("0번 클릭")
-                        alert(title = "요청하기", message = "요청하기 다이얼로그") {
-                            positiveButton("확인") {
-
-                            }
-                            negativeButton("취소") {
-
-                            }
-                        }.show()
+                        startActivity<RequestActivity>()
                     }
 
                     1 -> {

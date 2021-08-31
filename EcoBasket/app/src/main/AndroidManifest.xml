@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="kr.ac.kpu.ecobasket">
-
-    <!-- 인터넷 사용 권한 설정-->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- 위치 사용 권한 설정-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!-- 카메라 Realtime 보장 -->
-    <uses-feature android:name="android.hardware.camera.any" />
-    <!-- 카메라 접근권한 -->
+    <!-- 인터넷 사용 권한 설정 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 위치 사용 권한 설정 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 카메라 Realtime 보장 -->
+    <uses-feature android:name="android.hardware.camera.any" /> <!-- 카메라 접근권한 -->
     <uses-permission android:name="android.permission.CAMERA" />
-
 
     <application
         android:name=".GlobalApplication"
@@ -21,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EcoBasket"
         android:usesCleartextTraffic="true">
-        <activity android:name=".QRActivity"></activity>
+        <activity android:name=".RequestActivity"></activity>
+        <activity android:name=".QRActivity" />
         <activity android:name=".PreferencesActivity" />
         <activity android:name=".GuideActivity" />
         <activity android:name=".MyInfoActivity" />
@@ -40,11 +36,13 @@
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth" -->
-                <data android:host="oauth"
+                <data
+                    android:host="oauth"
                     android:scheme="kakao0091a5e6843ee089e0bcdfe685c63edb" />
             </intent-filter>
         </activity>
