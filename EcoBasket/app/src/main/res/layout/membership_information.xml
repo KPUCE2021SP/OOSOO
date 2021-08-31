@@ -74,7 +74,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView45" />
 
     <EditText
-        android:id="@+id/mod_nickname"
+        android:id="@+id/mod_phoneNum"
         android:layout_width="350dp"
         android:layout_height="40dp"
         android:layout_marginTop="1dp"
@@ -87,21 +87,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView21" />
-
-    <EditText
-        android:id="@+id/mod_phoneNum"
-        android:layout_width="350dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="1dp"
-        android:background="@drawable/edit_background"
-        android:ems="10"
-        android:hint=" 닉네임"
-        android:inputType="none|number|phone"
-        android:textCursorDrawable="@drawable/edit_cursor"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
     <TextView
         android:id="@+id/textView10"
@@ -144,8 +129,8 @@
         android:layout_marginTop="16dp"
         android:text="전화번호"
         android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@+id/mod_nickname"
-        app:layout_constraintTop_toBottomOf="@+id/mod_phoneNum" />
+        app:layout_constraintStart_toStartOf="@+id/mod_phoneNum"
+        app:layout_constraintTop_toBottomOf="@+id/mod_nickname" />
 
     <TextView
         android:id="@+id/textView22"
@@ -154,7 +139,7 @@
         android:layout_marginTop="16dp"
         android:text="닉네임"
         android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@+id/mod_phoneNum"
+        app:layout_constraintStart_toStartOf="@+id/mod_nickname"
         app:layout_constraintTop_toBottomOf="@+id/mod_pw1" />
 
     <TextView
@@ -206,5 +191,32 @@
         android:textColor="@android:color/holo_red_light"
         app:layout_constraintBottom_toTopOf="@+id/mod_pw1"
         app:layout_constraintStart_toEndOf="@+id/textView23" />
+
+    <EditText
+        android:id="@+id/mod_nickname"
+        android:layout_width="350dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/edit_background"
+        android:ems="10"
+        android:hint="닉네임"
+        android:inputType="textPersonName"
+        android:textCursorDrawable="@drawable/edit_cursor"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+    <TextView
+        android:id="@+id/textView28"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="3dp"
+        android:text="' - ' 포함 "
+        android:textSize="11sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/mod_phoneNum"
+        app:layout_constraintStart_toEndOf="@+id/textView21" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

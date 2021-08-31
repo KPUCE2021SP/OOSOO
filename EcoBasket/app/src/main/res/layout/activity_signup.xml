@@ -94,7 +94,7 @@
         android:layout_marginTop="1dp"
         android:background="@drawable/edit_background"
         android:ems="10"
-        android:hint=" '-' 포함해서 입력해주십시오."
+        android:hint=" 예) 010-0000-0000"
         android:inputType="none|number|phone"
         android:textCursorDrawable="@drawable/edit_cursor"
         android:textSize="12sp"
@@ -216,5 +216,17 @@
         android:textColor="@android:color/holo_red_light"
         app:layout_constraintBottom_toTopOf="@+id/edit_pw2"
         app:layout_constraintStart_toEndOf="@+id/textView13" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="3dp"
+        android:text="' - ' 포함 "
+        android:textSize="11sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/edit_phoneNum"
+        app:layout_constraintStart_toEndOf="@+id/textView15" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
