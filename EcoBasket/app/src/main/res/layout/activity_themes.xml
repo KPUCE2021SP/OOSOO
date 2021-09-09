@@ -84,7 +84,7 @@
                         android:layout_gravity="center_horizontal"
                         android:background="@color/white"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/island" />
+                        app:srcCompat="@drawable/island_lv1" />
 
                 </FrameLayout>
 
@@ -102,7 +102,7 @@
                         android:layout_gravity="center_horizontal"
                         android:background="@color/white"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/raspberry" />
+                        app:srcCompat="@drawable/spring_lv4" />
 
                     <TextView
                         android:id="@+id/tv_spring"
@@ -151,7 +151,7 @@
                         android:layout_gravity="center_horizontal"
                         android:background="@color/white"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/beach" />
+                        app:srcCompat="@drawable/summer_lv4" />
 
                     <TextView
                         android:id="@+id/tv_summer"
@@ -205,7 +205,7 @@
                         android:layout_gravity="center_horizontal"
                         android:background="@color/white"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/tree" />
+                        app:srcCompat="@drawable/autumn_lv5" />
 
                     <TextView
                         android:id="@+id/tv_autumn"
@@ -269,7 +269,7 @@
                         android:layout_gravity="center_horizontal"
                         android:background="@color/white"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/hill" />
+                        app:srcCompat="@drawable/winter_lv1" />
 
                     <TextView
                         android:id="@+id/tv_winter"
@@ -323,7 +323,7 @@
                         android:layout_gravity="center_horizontal"
                         android:background="@color/white"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/ocean" />
+                        app:srcCompat="@drawable/sunset_lv1" />
 
                     <TextView
                         android:id="@+id/tv_sunset"
