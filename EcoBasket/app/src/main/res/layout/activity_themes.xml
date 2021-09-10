@@ -12,13 +12,15 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/btn_back3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/btn_back_to_island"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:background="#00E5FF"
-            android:src="@drawable/ic_baseline_keyboard_backspace_24" />
+            android:background="@null"
+            android:src="@drawable/ic_baseline_keyboard_backspace_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Space
             android:layout_width="wrap_content"

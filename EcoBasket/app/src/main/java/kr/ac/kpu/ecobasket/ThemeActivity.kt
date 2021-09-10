@@ -9,7 +9,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_island.*
 import kotlinx.android.synthetic.main.activity_themes.*
 import kotlinx.android.synthetic.main.activity_themes.ecoPoint3
 import org.jetbrains.anko.toast
@@ -34,7 +33,7 @@ class ThemeActivity : AppCompatActivity() {
             }
         })
 
-        btn_back3.setOnClickListener{
+        btn_back_to_island.setOnClickListener{
             finish()
         }
 

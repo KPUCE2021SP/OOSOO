@@ -7,17 +7,13 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View.*
 import androidx.annotation.RequiresApi
 import androidx.annotation.UiThread
-import androidx.annotation.WorkerThread
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -44,6 +40,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private lateinit var naverMap: NaverMap  // 네이버 지도 객체
     private lateinit var locationSource: FusedLocationSource
+
 
     @RequiresApi(Build.VERSION_CODES.M) //getColor 함수
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,12 +78,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         btn_menu.setOnClickListener {
             drawerLayout.openDrawer(Gravity.RIGHT)
             boxInfoCard.visibility = GONE   //보관함 정보 숨기기
+            designButtonColor()
         }
 
         //메인 - 섬꾸미기 아이콘
         img_island.setOnClickListener {
             startActivity<IslandActivity>()
             boxInfoCard.visibility = GONE   //보관함 정보 숨기기
+            designButtonColor()
         }
 
         //메인 - 우측메뉴바
@@ -119,6 +118,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     //네이버 지도
+    @RequiresApi(Build.VERSION_CODES.M)
     @UiThread
     override fun onMapReady(map: NaverMap) {
         naverMap = map
@@ -137,6 +137,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         kpuMarker.setOnClickListener {
             queryCabinetLocation(777, 777)
             boxInfoCard.visibility = VISIBLE
+            designButtonColor()
             true
         }
 
@@ -146,6 +147,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         emartMarker.setOnClickListener {
             queryCabinetLocation(234, 234)
             boxInfoCard.visibility = VISIBLE
+            designButtonColor()
             true
         }
 
@@ -155,6 +157,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         exit2Marker.setOnClickListener {
             queryCabinetLocation(123, 123)
             boxInfoCard.visibility = VISIBLE
+            designButtonColor()
             true
         }
     }
@@ -175,6 +178,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     //Back 버튼 이벤트 커스텀
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onBackPressed() {
         when {
             drawerLayout.isDrawerOpen(Gravity.RIGHT) -> {
@@ -182,6 +186,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             boxInfoCard.isVisible -> {
                 boxInfoCard.visibility = GONE
+                designButtonColor()
             }
             else -> {
                 super.onBackPressed()
@@ -255,10 +260,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if(snapshot.value.toString().toBoolean()) {   //반납
                     btn_rent.text = "반납하기"
                     btn_rent.setBackgroundColor(getColor(R.color.btn_return_color))
+                    btn_rent.textColor = getColor(R.color.white)
                 }
                 else {  //대여
                     btn_rent.text = "대여하기"
                     btn_rent.setBackgroundColor(getColor(R.color.btn_rent_color))
+                    btn_rent.textColor = getColor(R.color.white)
                 }
                 Log.i("firebase", "Change State For IsUsing")
             }
@@ -284,7 +291,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     var cabinet = snapshot.getValue<Cabinet>()   //객체화
                     //map.keys.toString()
                     textCabinetTitle.text = cabinet?.name.toString()
-                    textCabinetQR.text = cabinet?.QRCode.toString()
+                    textCabinetQR.text = "#${cabinet?.QRCode.toString()}"
                     textRemainBacket.text = "잔여 바구니 : ${cabinet?.remain.toString()}"
 
                     //테스트 코드 (성공 확인)
@@ -337,7 +344,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                                     cabinet.remain += 1
                                     queryAddPoint(10)
                                     usersRef.child("isUsing").setValue(false)
-                                    cabinetRef.child(key).child("isOpen").setValue(false)
+                                    cabinetRef.child(key).child("isOpen").setValue(true)
                                 }
                             }
                             mutableData.value = cabinet.toMap()
@@ -393,6 +400,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         })
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun designButtonColor() {
+        when(btn_rent.text) {
+            "대여하기" -> {
+                if (boxInfoCard.visibility == VISIBLE) {
+                    btn_rent.setBackgroundColor(getColor(R.color.btn_rent_cardOpen_color))
+                    btn_rent.textColor = getColor(R.color.black)
+                } else {
+                    btn_rent.setBackgroundColor(getColor(R.color.btn_rent_color))
+                    btn_rent.textColor = getColor(R.color.white)
+                }
+            }
+            "반납하기" -> {
+                btn_rent.setBackgroundColor(getColor(R.color.btn_return_color))
+                btn_rent.textColor = getColor(R.color.white)
+            }
+        }
+    }
     companion object {
         const val MAX_COUNT_OF_BASKET = 12  //보관함 최대 바구니 개수
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000  // 위치 요청 코드

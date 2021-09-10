@@ -32,9 +32,9 @@ class IslandActivity : AppCompatActivity() {
               val map = snapshot.value as Map<*, *>
 
                 //텍스트뷰에 텍스트 넣기
-                island_name.setText(map["name"].toString())
-                user_level.setText("Lv.${map["level"].toString()}")
-                ecoPoint2.setText("${map["mileage"].toString()} 에코포인트")
+                island_name.text = map["name"].toString() + "의 섬"
+                user_level.text = "Lv.${map["level"].toString()}"
+                ecoPoint2.text = "${map["mileage"].toString()} 에코포인트"
             }
             override fun onCancelled(error: DatabaseError) {
                 toast("DB에러")
@@ -47,7 +47,7 @@ class IslandActivity : AppCompatActivity() {
         }
 
         //뒤로가기 버튼
-        btn_back4.setOnClickListener{
+        btn_back_to_main.setOnClickListener{
             finish()
         }
 

@@ -11,6 +11,7 @@
     <color name="light_gray">#AAAAAA</color>
     <color name="app_primeColor">#666666</color>
     <color name="app_primaryVariantColor">#AAAAAA</color>
-    <color name="btn_rent_color">#666666</color>
+    <color name="btn_rent_color">#11324D</color>
+    <color name="btn_rent_cardOpen_color">#C1CFC0</color>
     <color name="btn_return_color">#FF4848</color>
 </resources>
