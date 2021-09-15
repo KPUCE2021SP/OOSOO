@@ -259,14 +259,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
                 if(snapshot.value.toString().toBoolean()) {   //반납
                     btn_rent.text = "반납하기"
-                    btn_rent.setBackgroundColor(getColor(R.color.btn_return_color))
-                    btn_rent.textColor = getColor(R.color.white)
                 }
                 else {  //대여
                     btn_rent.text = "대여하기"
-                    btn_rent.setBackgroundColor(getColor(R.color.btn_rent_color))
-                    btn_rent.textColor = getColor(R.color.white)
                 }
+                designButtonColor()
                 Log.i("firebase", "Change State For IsUsing")
             }
 

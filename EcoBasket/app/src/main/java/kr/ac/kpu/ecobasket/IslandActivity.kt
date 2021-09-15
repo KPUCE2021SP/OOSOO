@@ -2,33 +2,32 @@ package kr.ac.kpu.ecobasket
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_island.*
+import org.jetbrains.anko.alert
+import org.jetbrains.anko.okButton
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
 class IslandActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
-    private lateinit var islandImage : ImageView
+    private var auth = FirebaseAuth.getInstance()
+    private val uid = auth.currentUser?.uid
+
+    //유저의 uid를 받아서 레퍼런스 생성
+    private val usersRef = Firebase.database.getReference("users").child("$uid")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_island)
 
         var userThemeName : String = "island"
-
-        auth = FirebaseAuth.getInstance()
-        val uid = auth.currentUser?.uid
-
-        //유저의 uid를 받아서 레퍼런스 생성
-        val usersRef = Firebase.database.getReference("users").child("$uid")
 
         //유저 데이터에 따라 섬이미지 변화(출력 리스너)
         usersRef.addValueEventListener(object: ValueEventListener{
@@ -63,7 +62,7 @@ class IslandActivity : AppCompatActivity() {
         })
 
         levelUpBtn.setOnClickListener {
-
+            levelUp()
         }
         //테마 고르기 버튼
         shop_btn.setOnClickListener {
@@ -75,6 +74,38 @@ class IslandActivity : AppCompatActivity() {
             finish()
         }
 
+    }
+
+    private fun levelUp() {
+        usersRef.runTransaction(object : Transaction.Handler { //잔여 바구니 count
+            override fun doTransaction(mutableData: MutableData): Transaction.Result {
+                val user = mutableData.getValue<User>()
+                    ?: return Transaction.success(mutableData)
+
+                if(user.mileage!! >= printMaxEXP(user.level!!)) {
+                    usersRef.child("mileage").setValue( user.mileage!! - printMaxEXP(user.level!!) )
+                    usersRef.child("level").setValue( user.level!! + 1 )
+                }
+                else {
+                    toast("경험치가 부족합니다. 마일리지를 모아주세요.")
+                    return Transaction.success(mutableData)
+                }
+
+                return Transaction.success(mutableData)
+            }
+
+
+
+            override fun onComplete(
+                databaseError: DatabaseError?,
+                committed: Boolean,
+                currentData: DataSnapshot?
+            ) {
+                Log.d("Transaction",
+                    "Transaction Level Up Complete : $currentData"
+                )
+            }
+        })
     }
     private fun printMaxEXP(level : Int) : Int{
         return when (level) {
