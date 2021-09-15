@@ -2,6 +2,7 @@ package kr.ac.kpu.ecobasket
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -15,10 +16,13 @@ import org.jetbrains.anko.toast
 class IslandActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var islandImage : ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_island)
+
+        var userThemeName : String = "island"
 
         auth = FirebaseAuth.getInstance()
         val uid = auth.currentUser?.uid
@@ -32,12 +36,17 @@ class IslandActivity : AppCompatActivity() {
                 val map = snapshot.value as Map<*, *>
                 val userLevel = map["level"].toString().toInt()     //레벨
                 val userMileage = map["mileage"].toString().toInt()     //유저 마일리지 = 경험치
-                var expRatio : Float = userMileage.toFloat() / printMaxEXP(userLevel).toFloat() * 100f   //경험치 %
+                var expPercent : Float = userMileage.toFloat() / printMaxEXP(userLevel).toFloat() * 100f   //경험치 %
 
-                if(expRatio >= 100 || printMaxEXP(userLevel) == 0) {
-                    expRatio = 100f
-                    expRatio = String.format("%.1f",expRatio).toFloat()
-                } else expRatio = String.format("%.1f",expRatio).toFloat()
+                if(expPercent >= 100 || printMaxEXP(userLevel) == 0) {
+                    expPercent = 100f
+                    expPercent = String.format("%.1f",expPercent).toFloat()
+                } else expPercent = String.format("%.1f",expPercent).toFloat()  //경험치 % 조정
+
+                userEXPtextRatio.text = "$userMileage / ${printMaxEXP(userLevel)}"
+
+                //메인 섬 이미지 레벨별 이미지 소스 변경
+                main_island.setImageResource(resources.getIdentifier("@drawable/${userThemeName}_lv$userLevel",null,packageName))
 
                 //텍스트뷰에 텍스트 넣기
                 island_name.text = map["name"].toString() + "의 섬"
@@ -45,14 +54,17 @@ class IslandActivity : AppCompatActivity() {
                 ecoPoint.text = "$userMileage 에코포인트"
 
 
-                userEXPtext.text = "${expRatio}%"
-                userEXP.progress = expRatio.toInt()
+                userEXPtextPercent.text = "${expPercent}%"
+                userEXP.progress = expPercent.toInt()
             }
             override fun onCancelled(error: DatabaseError) {
                 toast("DB에러")
             }
         })
 
+        levelUpBtn.setOnClickListener {
+
+        }
         //테마 고르기 버튼
         shop_btn.setOnClickListener {
             startActivity<ThemeActivity>()
