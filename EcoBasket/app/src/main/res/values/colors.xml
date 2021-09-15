@@ -14,4 +14,8 @@
     <color name="btn_rent_color">#11324D</color>
     <color name="btn_rent_cardOpen_color">#C1CFC0</color>
     <color name="btn_return_color">#FF4848</color>
+    <color name="island_main_color">#6bc62b</color>
+    <color name="island_sub_color">#00c073</color>
+    <color name="island_main_text_color">#FDFCE5</color>
+    <color name="island_sub_text_color">#FCFFA6</color>
 </resources>

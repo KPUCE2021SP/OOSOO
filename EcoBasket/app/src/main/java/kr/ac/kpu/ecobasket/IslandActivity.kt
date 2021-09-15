@@ -26,15 +26,27 @@ class IslandActivity : AppCompatActivity() {
         //유저의 uid를 받아서 레퍼런스 생성
         val usersRef = Firebase.database.getReference("users").child("$uid")
 
-        //데이터 한번만 알려주는 리스너
-        usersRef.addListenerForSingleValueEvent(object: ValueEventListener{
+        //유저 데이터에 따라 섬이미지 변화(출력 리스너)
+        usersRef.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-              val map = snapshot.value as Map<*, *>
+                val map = snapshot.value as Map<*, *>
+                val userLevel = map["level"].toString().toInt()     //레벨
+                val userMileage = map["mileage"].toString().toInt()     //유저 마일리지 = 경험치
+                var expRatio : Float = userMileage.toFloat() / printMaxEXP(userLevel).toFloat() * 100f   //경험치 %
+
+                if(expRatio >= 100 || printMaxEXP(userLevel) == 0) {
+                    expRatio = 100f
+                    expRatio = String.format("%.1f",expRatio).toFloat()
+                } else expRatio = String.format("%.1f",expRatio).toFloat()
 
                 //텍스트뷰에 텍스트 넣기
                 island_name.text = map["name"].toString() + "의 섬"
-                user_level.text = "Lv.${map["level"].toString()}"
-                ecoPoint2.text = "${map["mileage"].toString()} 에코포인트"
+                user_level.text = "Lv.$userLevel"
+                ecoPoint.text = "$userMileage 에코포인트"
+
+
+                userEXPtext.text = "${expRatio}%"
+                userEXP.progress = expRatio.toInt()
             }
             override fun onCancelled(error: DatabaseError) {
                 toast("DB에러")
@@ -51,5 +63,17 @@ class IslandActivity : AppCompatActivity() {
             finish()
         }
 
+    }
+    private fun printMaxEXP(level : Int) : Int{
+        return when (level) {
+            1 -> 100
+            2 -> 150
+            3 -> 200
+            4 -> 250
+            5 -> 300
+            6 -> 350
+            7 -> 400
+            else -> 0
+        }
     }
 }

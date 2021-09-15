@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/main_gradient">
 
     <ImageButton
         android:id="@+id/btn_back_to_main"
@@ -14,7 +15,8 @@
         android:background="@null"
         android:src="@drawable/ic_baseline_keyboard_backspace_24"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/island_main_text_color" />
 
     <ImageButton
         android:id="@+id/shop_btn"
@@ -25,7 +27,8 @@
         android:background="#00000000"
         android:src="@drawable/ic_baseline_shopping_cart_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/island_main_text_color" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
@@ -33,6 +36,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.12" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.70" />
 
     <ImageView
         android:id="@+id/main_island"
@@ -52,6 +62,7 @@
         android:layout_height="45dp"
         android:background="#00000000"
         android:text="이름 표시"
+        android:textColor="@color/island_main_text_color"
         android:textSize="33sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/main_island"
@@ -61,83 +72,97 @@
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <TextView
-        android:id="@+id/ecoPoint2"
+        android:id="@+id/ecoPoint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:layout_marginBottom="32dp"
-        android:background="#00E676"
-        android:drawableLeft="@drawable/eco_icon"
+        android:background="#00000000"
+        android:drawableLeft="@drawable/eco_point_64px"
+        android:drawablePadding="6dp"
+        android:gravity="center"
         android:text="n 에코포인트"
-        android:textSize="20sp"
+        android:textColor="@color/island_sub_text_color"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/levelProgress" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-    <TextView
-        android:id="@+id/user_level"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="8dp"
-        android:background="#00000000"
-        android:gravity="bottom|left"
-        android:text="레벨"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/levelProgress"
-        app:layout_constraintHorizontal_bias="0.87"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_island" />
-
-    <RelativeLayout
-        android:id="@+id/levelProgress"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="32dp"
+        android:layout_margin="16dp"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/ecoPoint"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/user_level"
-        app:layout_constraintTop_toBottomOf="@+id/main_island">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline6">
 
-        <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id="@+id/linearProgressIndicator"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:progress="30"
-            app:indicatorColor="#80ED99"
-            app:trackColor="#FFFBDF"
-            app:trackThickness="24dp" />
 
         <TextView
-            android:id="@+id/userEXP"
+            android:id="@+id/user_level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/linearProgressIndicator"
-            android:layout_alignTop="@id/linearProgressIndicator"
-            android:layout_alignRight="@id/linearProgressIndicator"
-            android:layout_alignBottom="@id/linearProgressIndicator"
-            android:background="@android:color/transparent"
-            android:gravity="center"
-            android:text="30/250"
+            android:background="#00000000"
+            android:gravity="left"
+            android:lines="1"
+            android:text="레벨"
+            android:textColor="@color/island_main_text_color"
             android:textSize="20sp"
-            tools:layout_editor_absoluteY="559dp" />
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </RelativeLayout>
+        <ImageButton
+            android:id="@+id/levelUpBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_levelup"
+            android:src="@drawable/ic_baseline_arrow_upward_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="levelProgress" />
+        <RelativeLayout
+            android:id="@+id/levelProgress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/levelUpBtn"
+            app:layout_constraintStart_toEndOf="@+id/user_level"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/userEXP"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:progress="30"
+                app:indicatorColor="#80ED99"
+                app:trackColor="#FFFBDF"
+                app:trackThickness="24dp" />
 
-    <!-- Linear progress indicator -->
+            <TextView
+                android:id="@+id/userEXPtext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignLeft="@id/userEXP"
+                android:layout_alignTop="@id/userEXP"
+                android:layout_alignRight="@id/userEXP"
+                android:layout_alignBottom="@id/userEXP"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:text="\??/??"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
