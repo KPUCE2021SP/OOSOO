@@ -12,13 +12,13 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_my_info.*
-import kotlinx.android.synthetic.main.activity_themes.*
 import org.jetbrains.anko.toast
 
 class MyInfoActivity : AppCompatActivity() {
 
+    private var historyRef = Firebase.database.getReference("History")
     lateinit var usageRecyAdapter: UsageRecyAdapter
-    val datas = mutableListOf<String>()
+    val datas = mutableListOf<History>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,8 +66,8 @@ class MyInfoActivity : AppCompatActivity() {
         recy_usage_history.adapter = usageRecyAdapter
 
         datas.apply {
-            for (i in 0..9) {
-                add("${i}번째")
+            for (i in 0..8) {
+                add(History("2021-09-0${i+1}", "한국산업기술대 보관함", false))
             }
         }
 

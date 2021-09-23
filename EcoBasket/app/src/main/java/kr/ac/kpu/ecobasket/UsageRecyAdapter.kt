@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class UsageRecyAdapter(private val context: Context) : RecyclerView.Adapter<UsageRecyAdapter.ViewHolder>() {
-    var datas = mutableListOf<String>()
+    var datas = mutableListOf<History>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsageRecyAdapter.ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_usage_history, parent, false)
@@ -26,8 +26,15 @@ class UsageRecyAdapter(private val context: Context) : RecyclerView.Adapter<Usag
         private val tv_usage_location = itemView.findViewById<TextView>(R.id.tv_usage_location)
         private val tv_usage_date = itemView.findViewById<TextView>(R.id.tv_usage_date)
 
-        fun bind(item: String) {
-            tv_usage_status.text = item
+        fun bind(item: History) {
+            if (item.status == false) {
+                tv_usage_status.text = "사용 중"
+            } else {
+                tv_usage_status.text = "반납 완료"
+            }
+
+            tv_usage_location.text = item.location
+            tv_usage_date.text = item.date
         }
     }
 

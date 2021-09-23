@@ -29,6 +29,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_layout.*
 import kotlinx.android.synthetic.main.header_menu.*
 import org.jetbrains.anko.*
+import java.util.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var auth = FirebaseAuth.getInstance()
     private var usersRef = Firebase.database.getReference("users").child("${auth.currentUser?.uid}")
     //var user : User? = null  //현재 로그인한 user 정보 객체 -- 비동기식 firebase 함수 때문에 보류
+    private val historyRef = Firebase.database.getReference("History")
 
     private lateinit var naverMap: NaverMap  // 네이버 지도 객체
     private lateinit var locationSource: FusedLocationSource
@@ -331,6 +333,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                                     cabinet.remain -= 1
                                     usersRef.child("isUsing").setValue(true)
                                     cabinetRef.child(key).child("isOpen").setValue(true)
+                                    saveHistory(cabinet.name.toString(), false)   //사용 내역 저장 함수
                                 }
                             } else {                        /**예외처리 필요 (구현 안됨)*/
                                 if(cabinet.remain >= MAX_COUNT_OF_BASKET) {
@@ -342,6 +345,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                                     queryAddPoint(10)
                                     usersRef.child("isUsing").setValue(false)
                                     cabinetRef.child(key).child("isOpen").setValue(true)
+                                    saveHistory(cabinet.name.toString(), true)   //사용 내역 저장 함수
                                 }
                             }
                             mutableData.value = cabinet.toMap()
@@ -415,6 +419,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
     }
+
+    private fun saveHistory(location: String, status: Boolean) {
+
+        if (!status) {  //장바구니를 빌렸을 때
+            val cal = Calendar.getInstance()
+            val year = cal.get(Calendar.YEAR)
+            val month = cal.get(Calendar.MONTH)
+            val day = cal.get(Calendar.DATE)
+            val date = "${year}-${month+1}-${day}"
+
+            val history = History(date, location, false)
+
+            historyRef.child(auth.currentUser?.uid.toString()).setValue(history.toMap()).addOnSuccessListener {
+                Log.i("firebase", "Successful Add History")
+            }.addOnFailureListener{ Log.w("firebase","Failure Add History")}
+
+        } else {  //장바구니 반납 시 상태 변경
+            val statusMap : Map<String, Boolean> = mapOf("status" to true)  //반납상태 true 로 변경
+            historyRef.child(auth.currentUser?.uid.toString()).updateChildren(statusMap).addOnSuccessListener {
+                Log.i("firebase", "Successful Modified History")
+            }.addOnFailureListener{ Log.w("firebase","Failure Modified History")}
+        }
+
+    }
+
     companion object {
         const val MAX_COUNT_OF_BASKET = 12  //보관함 최대 바구니 개수
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1000  // 위치 요청 코드
