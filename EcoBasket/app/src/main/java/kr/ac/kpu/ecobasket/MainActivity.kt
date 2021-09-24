@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
@@ -431,17 +432,37 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             val history = History(date, location, false)
 
-            historyRef.child(auth.currentUser?.uid.toString()).setValue(history.toMap()).addOnSuccessListener {
+            val identifyKey = cal.timeInMillis.toString()
+
+            historyRef.child(auth.currentUser?.uid.toString()).child(identifyKey).setValue(history.toMap()).addOnSuccessListener {
                 Log.i("firebase", "Successful Add History")
-            }.addOnFailureListener{ Log.w("firebase","Failure Add History")}
+                saveKey(identifyKey)
+            }.addOnFailureListener{ Log.w("firebase","Failure Add History") }
 
         } else {  //장바구니 반납 시 상태 변경
+            val identifyKey = loadKey()
+
             val statusMap : Map<String, Boolean> = mapOf("status" to true)  //반납상태 true 로 변경
-            historyRef.child(auth.currentUser?.uid.toString()).updateChildren(statusMap).addOnSuccessListener {
+            historyRef.child(auth.currentUser?.uid.toString()).child(identifyKey).updateChildren(statusMap).addOnSuccessListener {
                 Log.i("firebase", "Successful Modified History")
             }.addOnFailureListener{ Log.w("firebase","Failure Modified History")}
         }
 
+    }
+
+    private fun saveKey(identifyKey: String) {
+        val pref = PreferenceManager.getDefaultSharedPreferences(this)
+        val editor = pref.edit()
+
+        editor.putString("ID_KEY", identifyKey)
+            .apply()
+    }
+
+    private fun loadKey() : String {
+        val pref = PreferenceManager.getDefaultSharedPreferences(this)
+        val identifyKey = pref.getString("ID_KEY", "")
+
+        return identifyKey.toString()
     }
 
     companion object {
