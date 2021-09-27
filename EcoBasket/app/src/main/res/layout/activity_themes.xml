@@ -152,6 +152,7 @@
                         android:layout_height="150dp"
                         android:layout_gravity="center_horizontal"
                         android:background="@color/white"
+                        android:clickable="false"
                         android:scaleType="fitCenter"
                         app:srcCompat="@drawable/summer_lv4" />
 

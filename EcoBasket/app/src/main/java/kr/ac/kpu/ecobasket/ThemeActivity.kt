@@ -14,6 +14,8 @@ import kotlinx.android.synthetic.main.activity_themes.ecoPoint3
 import org.jetbrains.anko.toast
 
 class ThemeActivity : AppCompatActivity() {
+    var themeName : String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_themes)

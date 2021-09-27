@@ -225,7 +225,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 //user = User()  --> DB 함수는 비동기식 함수 : 외부 변수 저장불가
                 //현재 테스트용
                 val userInfo = User(userMap["name"].toString(),userMap["phone"].toString(),userMap["level"].toString().toInt(),
-                    userMap["mileage"].toString().toInt(), userMap["isUsing"].toString().toBoolean(), userMap["email"].toString())
+                    userMap["mileage"].toString().toInt(), userMap["isUsing"].toString().toBoolean(), userMap["email"].toString(), "island")
 
                 //테스트 코드 (성공 확인)
                 Log.i("firebase", "Got value $userInfo")

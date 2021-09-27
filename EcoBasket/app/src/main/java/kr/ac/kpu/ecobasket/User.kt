@@ -10,7 +10,8 @@ data class User(val name : String? = null,   //유저 이름
                 var level : Int? = 1,        //유저 레벨
                 var mileage : Int? = 0,     //마일리지
                 var isUsing : Boolean? = false,
-                var email : String? = null
+                var email : String? = null,
+                var theme : String? = null
                 ) {
     @Exclude
     fun toMap(): Map<String, Any?> {
@@ -20,7 +21,8 @@ data class User(val name : String? = null,   //유저 이름
             "level" to level,
             "mileage" to mileage,
             "isUsing" to isUsing,
-            "email" to email
+            "email" to email,
+            "theme" to theme
         )
     }
 

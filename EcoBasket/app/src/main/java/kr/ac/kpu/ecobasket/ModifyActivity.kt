@@ -98,7 +98,7 @@ class ModifyActivity : AppCompatActivity() {
         var usersRef = Firebase.database.getReference("users")
         val user = User()
         val update_user = User(name = newNickname, phone = newPhoneNum, level = user.level,
-            mileage= user.mileage, isUsing = user.isUsing, email = newEmail)
+            mileage= user.mileage, isUsing = user.isUsing, email = newEmail, theme = user.theme)
 
         usersRef.child(auth.currentUser?.uid.toString()).updateChildren(update_user.toMap())
             .addOnSuccessListener {

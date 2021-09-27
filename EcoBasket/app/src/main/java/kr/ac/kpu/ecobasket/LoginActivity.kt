@@ -230,7 +230,7 @@ class LoginActivity : AppCompatActivity() {
                 if (result) {  // 이미 등록되어 있을 경우 새로 등록하지 않음
                     Log.d("Database", "Exist User")
                 } else {  // 등록된 회원정보가 없을경우 새로 생성
-                    val user = User(name = name, phone = phone, mileage = 0, isUsing = false, level = 1, email = email)
+                    val user = User(name = name, phone = phone, mileage = 0, isUsing = false, level = 1, email = email, theme = "island")
 
                     usersRef.child(Firebase.auth.currentUser?.uid.toString()).setValue(user.toMap()).addOnSuccessListener {
                         Log.i("Database", "Successful Create User")

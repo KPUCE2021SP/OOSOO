@@ -82,7 +82,7 @@ class SignUpActivity: AppCompatActivity() {
 
     //DB에 회원정보 넣기
     private fun createUserDB(name: String?, phone: String?, email: String){
-        val user = User(name = name, phone = phone, mileage = 30, isUsing = false, level = 1, email = email)
+        val user = User(name = name, phone = phone, mileage = 30, isUsing = false, level = 1, email = email, theme = "island")
 
         usersRef.child(auth.currentUser?.uid.toString()).setValue(user.toMap()).addOnSuccessListener {
             Log.i("firebase", "Successful Create User")
