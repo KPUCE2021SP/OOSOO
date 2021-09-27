@@ -2,6 +2,7 @@ package kr.ac.kpu.ecobasket
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -14,21 +15,36 @@ import kotlinx.android.synthetic.main.activity_themes.ecoPoint3
 import org.jetbrains.anko.toast
 
 class ThemeActivity : AppCompatActivity() {
-    var themeName : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_themes)
 
+        val themeArray = hashMapOf<String, Button>(
+            "island" to onfocused1,
+            "spring" to onfocused2,
+            "summer" to onfocused3,
+            "autumn" to onfocused4,
+            "winter" to onfocused5,
+            "sunset" to onfocused6
+        )
+
         var auth = FirebaseAuth.getInstance()
         val usersRef = Firebase.database.getReference("users").child("${auth.currentUser?.uid}")
+        var themeName : String? = null  //테마 이름
 
         //에코포인트 데이터 표시
         usersRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val map = snapshot.value as Map<*, *>
 
+                themeName = map["theme"].toString()
                 ecoPoint3.setText("${map["mileage"].toString()} 에코포인트")
+
+                themeArray.forEach{ it ->
+                    if(it.key == themeName) it.value.visibility = View.VISIBLE
+                    else it.value.visibility = View.INVISIBLE
+                }
             }
             override fun onCancelled(error: DatabaseError) {
                 toast("DB에러")
@@ -46,22 +62,15 @@ class ThemeActivity : AppCompatActivity() {
 
         //visibility 속성 테스트
         image_island.setOnClickListener {
-            onfocused1.visibility = View.VISIBLE
-            onfocused2.visibility = View.INVISIBLE
-            onfocused3.visibility = View.INVISIBLE
-            onfocused4.visibility = View.INVISIBLE
-            onfocused5.visibility = View.INVISIBLE
-            onfocused6.visibility = View.INVISIBLE
+            themeName = "island"
+            usersRef.child("theme").setValue(themeName.toString())
         }
 
         image_spring.setOnClickListener {
-            onfocused1.visibility = View.INVISIBLE
-            onfocused2.visibility = View.VISIBLE
-            onfocused3.visibility = View.INVISIBLE
-            onfocused4.visibility = View.INVISIBLE
-            onfocused5.visibility = View.INVISIBLE
-            onfocused6.visibility = View.INVISIBLE
+            themeName = "spring"
+            usersRef.child("theme").setValue(themeName.toString())
         }
 
     }
+
 }

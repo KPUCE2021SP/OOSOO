@@ -1,5 +1,7 @@
 package kr.ac.kpu.ecobasket
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,10 +12,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_island.*
-import org.jetbrains.anko.alert
-import org.jetbrains.anko.okButton
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.toast
+import org.jetbrains.anko.*
 
 class IslandActivity : AppCompatActivity() {
 
@@ -27,7 +26,7 @@ class IslandActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_island)
 
-        var userThemeName : String = "island"
+        var userThemeName : String? = null
 
         //유저 데이터에 따라 섬이미지 변화(출력 리스너)
         usersRef.addValueEventListener(object: ValueEventListener{
@@ -36,6 +35,7 @@ class IslandActivity : AppCompatActivity() {
                 val userLevel = map["level"].toString().toInt()     //레벨
                 val userMileage = map["mileage"].toString().toInt()     //유저 마일리지 = 경험치
                 var expPercent : Float = userMileage.toFloat() / printMaxEXP(userLevel).toFloat() * 100f   //경험치 %
+                userThemeName = map["theme"].toString()
 
                 if(expPercent >= 100 || printMaxEXP(userLevel) == 0) {
                     expPercent = 100f
