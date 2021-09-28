@@ -87,14 +87,18 @@ void loop()
     sendDataPrevMillis = millis();
     Serial.printf("get isOpen Data...%s\n", Firebase.RTDB.getBool(&fbdo, "/Cabinet/777_777/isOpen") ?fbdo.to<bool>() ? "true" : "false" : fbdo.errorReason().c_str());
     Serial.println();
+    bool trueChecking = fbdo.to<bool>();
+    Serial2.flush();
     
-    if(fbdo.to<bool>() == true ){
+    if(trueChecking == true ){
       //send to Uno Board
       Serial2.write(1);
       count = 1;
+    }else {
+      Serial2.write(0);
     }
     
-  } 
+  }
   
   if(Serial2.read() == 1 && count ==1)
     {

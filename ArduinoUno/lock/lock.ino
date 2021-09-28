@@ -19,12 +19,17 @@ void setup() {
 
 void loop() {
   
+  int aa  = 0;
+  aa = Serial.read();
   
-  if(Serial.read() == 1){ /*시리얼 모니터로 a라는 값을 입력받았을때 센서들 동작*/
+  if(aa == 1){ /* 보관함이 열렸을 때 센서들 동작*/
     Serial.println("Open");
     myservo.write(pos);
     pos += 90;
+    
     while(1){
+
+      delay(3000); //사용자가 보관함을 여는 시간 약 3초
 
     /* 초음파 보내기 */
       digitalWrite(trigPin, HIGH);
@@ -45,7 +50,7 @@ void loop() {
 
       val = digitalRead(magnetPin);
     /*보관함 뚜껑이 닫히면 카운트 세기 시작*/
-      if(distance <= 10 && val == 0 ){
+      if(distance <= 6 && val == 0 ){
         count++;
       }
 
@@ -56,6 +61,7 @@ void loop() {
         count = 0;
         Serial.write(1);
         Serial.println("close");
+        Serial.flush();
         break;
       }
       delay(1000); // 1초에 한번씩 측정
