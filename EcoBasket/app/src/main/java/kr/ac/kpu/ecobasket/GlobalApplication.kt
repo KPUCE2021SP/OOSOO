@@ -1,12 +1,15 @@
 package kr.ac.kpu.ecobasket
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import com.kakao.sdk.common.KakaoSdk
 import com.naver.maps.map.NaverMapSdk
 
 class GlobalApplication : Application() {
     override fun onCreate() {
         super.onCreate()
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         // Kakao SDK 초기화
         KakaoSdk.init(this, "0091a5e6843ee089e0bcdfe685c63edb")
