@@ -2,12 +2,13 @@
 
 Servo myservo;
 
+const int trigPin = 2;      //초음파 트리거핀 
+const int echoPin = 3;      //초음파 에코핀 
+const int magnetPin = 10;   //자석센서 디지털핀
 int pos = 0;          //모터 각도제어
-int trigPin = 2;      //초음파 트리거핀 
-int echoPin = 3;      //초음파 에코핀 
-int magnetPin = 10;   //자석센서 디지털핀
 int count = 0;        // 초 세는 변수 
 int val = 0;          //자석센서 입력값 받는 변수 
+
 
 void setup() {
   Serial.begin(115200);
@@ -26,10 +27,9 @@ void loop() {
     Serial.println("Open");
     myservo.write(pos);
     pos += 90;
+    delay(3000); //사용자가 보관함을 여는 시간 약 3초
     
     while(1){
-
-      delay(3000); //사용자가 보관함을 여는 시간 약 3초
 
     /* 초음파 보내기 */
       digitalWrite(trigPin, HIGH);
