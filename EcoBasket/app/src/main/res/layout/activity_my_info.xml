@@ -10,7 +10,7 @@
         android:id="@+id/toolbar_my_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#505050"
+        android:background="#228826"
         android:gravity="center"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -23,8 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="마이페이지"
-            android:textColor="@color/white"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/white" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -42,8 +42,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:src="@drawable/google_icon"
+        app:civ_border_color="#2D9600"
         app:civ_border_width="2dp"
-        app:civ_border_color="@color/gray"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_my_info" />
 
@@ -77,7 +77,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="10dp"
-        android:background="#AAAAAA"
+        android:background="#2D9600"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_profile" />

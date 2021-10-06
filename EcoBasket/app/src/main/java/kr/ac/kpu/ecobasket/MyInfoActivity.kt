@@ -2,6 +2,7 @@ package kr.ac.kpu.ecobasket
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,14 +12,21 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_my_info.*
 import org.jetbrains.anko.toast
 
 class MyInfoActivity : AppCompatActivity() {
 
-    private var historyRef = Firebase.database.getReference("History")
+    private var auth = FirebaseAuth.getInstance()
+    private var historyRef = Firebase.database.getReference("History").child("${auth.currentUser?.uid}")
     lateinit var usageRecyAdapter: UsageRecyAdapter
+
     val datas = mutableListOf<History>()
+    var disposable: Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +57,11 @@ class MyInfoActivity : AppCompatActivity() {
 
     }
 
+    override fun onDestroy() {
+        disposable?.let{ disposable!!.dispose() }
+        super.onDestroy()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home ->
@@ -58,6 +71,35 @@ class MyInfoActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun getHistory() : Observable<MutableList<History>> {
+
+        return Observable.create { subscriber ->
+
+            historyRef.addValueEventListener(object: ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val historyList = mutableListOf<History>()
+                    var historyMap = snapshot.value as Map<Long, Map<*, *>>
+
+                    historyMap = historyMap.toSortedMap(reverseOrder())
+
+                    historyList.apply {
+                        for (i in historyMap.values.iterator()) {
+                            val history = History(i["date"].toString(), i["location"].toString(), i["status"].toString().toBoolean())
+                            Log.d("firebase History", "history : $history")
+                            add(history)
+                        }
+                    }
+
+                    subscriber.onNext(historyList)
+                    subscriber.onComplete()
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    toast("DB에러")
+                }
+            })
+        }
+    }
+
     private fun initRecycler() {
         val divider = DividerItemDecoration(recy_usage_history.context, LinearLayoutManager(this).orientation)
         recy_usage_history.addItemDecoration(divider)
@@ -65,13 +107,21 @@ class MyInfoActivity : AppCompatActivity() {
         usageRecyAdapter = UsageRecyAdapter(this)
         recy_usage_history.adapter = usageRecyAdapter
 
-        datas.apply {
-            for (i in 0..8) {
-                add(History("2021-09-0${i+1}", "한국산업기술대 보관함", false))
-            }
-        }
-
-        usageRecyAdapter.datas = datas
-        usageRecyAdapter.notifyDataSetChanged()
+        disposable = getHistory()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { historyList ->
+                    Log.d("firebase History", "historyList : $historyList")
+                    usageRecyAdapter.datas = historyList
+                    usageRecyAdapter.notifyDataSetChanged()
+                },
+                { e ->
+                    Log.e("firebase History", e.toString())
+                },
+                {
+                    Log.d("firebase History", "getHistory Done")
+                }
+            )
     }
 }
