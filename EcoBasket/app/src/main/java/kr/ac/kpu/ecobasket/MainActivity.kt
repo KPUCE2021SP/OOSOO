@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View.*
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.annotation.UiThread
 import androidx.core.app.ActivityCompat
@@ -44,24 +45,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var naverMap: NaverMap  // 네이버 지도 객체
     private lateinit var locationSource: FusedLocationSource
 
+    lateinit var tv_header_name : TextView
+    lateinit var tv_header_lv : TextView
+
 
     @RequiresApi(Build.VERSION_CODES.M) //getColor 함수
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        /*
-
-        // 로그인 안되어있을 시에 로그인 화면
-        if (Firebase.auth.currentUser == null || usersRef == null){
-            startActivity(
-                Intent(this, LoginActivity::class.java))
-        }else{
-            queryUserInformation()  //user 객체 초기화
-            queryIsUsingState()
-        }
-
-         */
 
         //메인 - 우측메뉴바
         nav_menu.setNavigationItemSelectedListener(this)
@@ -72,6 +63,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 drawerLayout.closeDrawers()
             }
         }
+
+        val headerView = nav_menu.getHeaderView(0)
+
+        tv_header_name = headerView.findViewById(R.id.tv_name_header)
+        tv_header_lv = headerView.findViewById(R.id.tv_level_header)
 
         queryUserInformation()  //user 객체 초기화
         queryIsUsingState()
@@ -231,8 +227,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Log.i("firebase", "Got value $userInfo")
 
                 //회원명, 레벨 네비게이션 드로어 헤더에 적용
-                tv_name_header.setText("${userInfo.name.toString()}")
-                tv_level_header.setText("Lv. ${userInfo.level.toString()}")
+                tv_header_name.setText("${userInfo.name.toString()}")
+                tv_header_lv.setText("Lv. ${userInfo.level.toString()}")
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
