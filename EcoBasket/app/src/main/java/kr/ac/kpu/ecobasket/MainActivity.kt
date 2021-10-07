@@ -63,6 +63,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
          */
 
+        //메인 - 우측메뉴바
+        nav_menu.setNavigationItemSelectedListener(this)
+
+        nav_menu.getHeaderView(0).setOnClickListener {
+            startActivity<MyInfoActivity>()
+            if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
+                drawerLayout.closeDrawers()
+            }
+        }
+
         queryUserInformation()  //user 객체 초기화
         queryIsUsingState()
 
@@ -89,16 +99,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             startActivity<IslandActivity>()
             boxInfoCard.visibility = GONE   //보관함 정보 숨기기
             designButtonColor()
-        }
-
-        //메인 - 우측메뉴바
-        nav_menu.setNavigationItemSelectedListener(this)
-
-        nav_menu.getHeaderView(0).setOnClickListener {
-            startActivity<MyInfoActivity>()
-            if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
-                drawerLayout.closeDrawers()
-            }
         }
     }
 
