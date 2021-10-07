@@ -77,21 +77,23 @@ class MyInfoActivity : AppCompatActivity() {
 
             historyRef.addValueEventListener(object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val historyList = mutableListOf<History>()
-                    var historyMap = snapshot.value as Map<Long, Map<*, *>>
+                    if (snapshot.value != null) {
+                        val historyList = mutableListOf<History>()
+                        var historyMap = snapshot.value as Map<Long, Map<*, *>>
 
-                    historyMap = historyMap.toSortedMap(reverseOrder())
+                        historyMap = historyMap.toSortedMap(reverseOrder())
 
-                    historyList.apply {
-                        for (i in historyMap.values.iterator()) {
-                            val history = History(i["date"].toString(), i["location"].toString(), i["status"].toString().toBoolean())
-                            Log.d("firebase History", "history : $history")
-                            add(history)
+                        historyList.apply {
+                            for (i in historyMap.values.iterator()) {
+                                val history = History(i["date"].toString(), i["location"].toString(), i["status"].toString().toBoolean())
+                                Log.d("firebase History", "history : $history")
+                                add(history)
+                            }
                         }
-                    }
 
-                    subscriber.onNext(historyList)
-                    subscriber.onComplete()
+                        subscriber.onNext(historyList)
+                        subscriber.onComplete()
+                    }
                 }
                 override fun onCancelled(error: DatabaseError) {
                     toast("DB에러")

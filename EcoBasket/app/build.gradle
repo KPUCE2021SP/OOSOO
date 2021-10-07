@@ -92,6 +92,9 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
     implementation 'io.reactivex.rxjava3:rxjava:3.1.0'
 
+    //Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
+
     //Naver 지도
     implementation "com.naver.maps:map-sdk:3.12.0"
 

@@ -19,6 +19,7 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_login.*
@@ -30,6 +31,7 @@ class LoginActivity : AppCompatActivity() {
 
     private var usersRef = Firebase.database.getReference("users")
     var disposable: Disposable? = null
+    var createDisposable: Disposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,6 +100,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         disposable?.let{ disposable!!.dispose() }
+        createDisposable?.let{ createDisposable!!.dispose() }
         super.onDestroy()
     }
 
@@ -133,10 +136,22 @@ class LoginActivity : AppCompatActivity() {
                         "\n email : $email" +
                                 "\n name : $name" +
                                 "\n phone : $phone")
-                    createUserDB(uid, name, phone, email)
-                    startActivity<MainActivity>()
-                    finish()
-                    loadingDialog.dismiss()
+
+                    createDisposable = createUserDB(uid, name, phone, email)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                            {  //onComplete
+                                startActivity<MainActivity>()
+                                Log.d("Job", "start Activity")
+                                finish()
+                                Log.d("Job", "Activity finish")
+                                loadingDialog.dismiss()
+                            },
+                            { error ->  //onError
+                                Log.d("Job", error.toString())
+                            })
+
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("Google Login", "signInWithCredential:failure", it.exception)
@@ -184,13 +199,20 @@ class LoginActivity : AppCompatActivity() {
                                             else if (user != null) {
                                                 Log.d("KakaoUserIn", "\n name : ${user.kakaoAccount?.profile?.nickname}" +
                                                         "\n email : ${user.kakaoAccount?.email}")
-                                                createUserDB(Firebase.auth.currentUser?.uid!!,
+
+                                                createDisposable = createUserDB(Firebase.auth.currentUser?.uid!!,
                                                     user.kakaoAccount?.profile?.nickname.toString(),
                                                     "", user.kakaoAccount?.email.toString())
-                                                Log.d("KakaoLogin", "DB에 추가 성공")
-                                                startActivity<MainActivity>()
-                                                finish()
-                                                loadingDialog.dismiss()
+                                                    .subscribeOn(Schedulers.io())
+                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                    .subscribe(
+                                                        {  //onComplete
+                                                            Log.d("KakaoLogin", "DB에 추가 성공")
+                                                            startActivity<MainActivity>()
+                                                            finish()
+                                                            loadingDialog.dismiss()
+                                                        },
+                                                        { error -> Log.d("Job", error.toString()) })  //onError
                                             }
                                         }
                                     } else {
@@ -201,8 +223,7 @@ class LoginActivity : AppCompatActivity() {
                                     }
                                 }
                         },
-                        { error -> Log.d("KakaoLogin", "error:" + error.message.toString()) }  //onError
-                    )
+                        { error -> Log.d("KakaoLogin", "error:" + error.message.toString()) })  //onError
             }
         }
         // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
@@ -214,33 +235,40 @@ class LoginActivity : AppCompatActivity() {
     }
 
     //DB에 회원정보 넣기
-    private fun createUserDB(uid: String, name: String?, phone: String?, email: String){
-        usersRef.addValueEventListener(object: ValueEventListener {  // 회원정보가 등록된 UID인지 검사
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var result = false
+    private fun createUserDB(uid: String, name: String?, phone: String?, email: String) : Completable {
 
-                val child = snapshot.value as Map<*, *>
-                for (i in child.keys) {
-                    Log.d("Database", "key : $i")
-                    if(i == uid) {
-                        result = true
-                        break
+        return Completable.create { emitter ->
+            usersRef.addValueEventListener(object: ValueEventListener {  // 회원정보가 등록된 UID인지 검사
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var result = false
+
+                    val child = snapshot.value as Map<*, *>
+                    for (i in child.keys) {
+                        Log.d("Database", "key : $i")
+                        if(i == uid) {
+                            result = true
+                            break
+                        }
                     }
-                }
-                if (result) {  // 이미 등록되어 있을 경우 새로 등록하지 않음
-                    Log.d("Database", "Exist User")
-                } else {  // 등록된 회원정보가 없을경우 새로 생성
-                    val user = User(name = name, phone = phone, mileage = 0, isUsing = false, level = 1, email = email, theme = "island")
+                    if (result) {  // 이미 등록되어 있을 경우 새로 등록하지 않음
+                        Log.d("Database", "Exist User")
+                    } else {  // 등록된 회원정보가 없을경우 새로 생성
+                        val user = User(name = name, phone = phone, mileage = 0, isUsing = false, level = 1, email = email, theme = "island")
 
-                    usersRef.child(Firebase.auth.currentUser?.uid.toString()).setValue(user.toMap()).addOnSuccessListener {
-                        Log.i("Database", "Successful Create User")
-                    }.addOnFailureListener{ Log.w("Database","Failure Create User")}
+                        usersRef.child(Firebase.auth.currentUser?.uid.toString()).setValue(user.toMap()).addOnSuccessListener {
+                            Log.i("Database", "Successful Create User")
+                        }.addOnFailureListener{ Log.w("Database","Failure Create User")}
+                    }
+
+                    emitter.onComplete()
+                    Log.d("Job", "onComplete")
                 }
-            }
-            override fun onCancelled(error: DatabaseError) {
-                toast("DB 오류")
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    toast("DB 오류")
+                    emitter.onError(error.toException())
+                }
+            })
+        }
     }
 
 }
