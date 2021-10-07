@@ -91,7 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Eco Basket 계정이 없으신가요?"
-        android:textColor="@color/app_primaryVariantColor"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="@+id/btn_login"
         app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
@@ -111,6 +111,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="간편로그인/회원가입"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline2" />

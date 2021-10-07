@@ -51,7 +51,6 @@ class MyInfoActivity : AppCompatActivity() {
                 tv_level.text = "Lv. ${map["level"].toString()}"
             }
             override fun onCancelled(error: DatabaseError) {
-                toast("DB에러")
             }
         })
 
@@ -96,7 +95,6 @@ class MyInfoActivity : AppCompatActivity() {
                     }
                 }
                 override fun onCancelled(error: DatabaseError) {
-                    toast("DB에러")
                     subscriber.onError(error.toException())
                 }
             })

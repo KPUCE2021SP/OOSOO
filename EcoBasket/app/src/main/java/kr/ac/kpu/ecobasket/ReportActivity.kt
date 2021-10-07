@@ -31,8 +31,6 @@ class ReportActivity : AppCompatActivity() {
 
         spinner_req.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                toast("$position 번 선택\n" +
-                        "${dataArray[position]} 선택함")
                 pos = position
                 when (position) {
                     0 -> tv_req.text = "고장난 보관함 이름 또는 위치를 적어서 메일을 보내주세요."
@@ -41,7 +39,6 @@ class ReportActivity : AppCompatActivity() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                toast("선택되지 않음")
             }
 
         }

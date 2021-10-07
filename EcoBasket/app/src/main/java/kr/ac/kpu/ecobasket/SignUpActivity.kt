@@ -76,7 +76,6 @@ class SignUpActivity: AppCompatActivity() {
     //회원가입이 정상적으로 되었는지 사용자에게 toast메세지를 띄워주는 함수
     private fun updateUI(user: FirebaseUser?){
         user?.let {
-            toast("Email: ${user.email} Uid: ${user.uid}")
         }
     }
 

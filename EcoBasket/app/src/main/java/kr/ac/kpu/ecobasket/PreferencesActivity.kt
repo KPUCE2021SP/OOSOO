@@ -77,7 +77,6 @@ class PreferencesActivity : AppCompatActivity() {
                                 //DB삭제 후 auth삭제
                                 usersRef.removeValue()
                                     .addOnSuccessListener{
-                                        toast("DB삭제 완료")
                                         auth.currentUser?.delete()
                                         UserApiClient.instance.unlink { error ->
                                             if (error != null) {

@@ -27,7 +27,6 @@ class ModifyActivity : AppCompatActivity() {
 
         val usersRef = Firebase.database.getReference("users").child("${auth.currentUser?.uid}")
 
-        toast("${auth.currentUser?.email} ")
         //기존에 입력한 정보들 불러오기
         usersRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -38,7 +37,6 @@ class ModifyActivity : AppCompatActivity() {
                 mod_phoneNum.setText("${map["phone"].toString()}")
             }
             override fun onCancelled(error: DatabaseError) {
-                toast("DB에러")
             }
         })
 
@@ -76,8 +74,6 @@ class ModifyActivity : AppCompatActivity() {
             ?.addOnCompleteListener(this){
                 if(it.isSuccessful){
                     toast("$newEmail 로 이메일이 변경되었습니다.")
-                }else{
-                    toast("이멜 변경실패")
                 }
             }
 
@@ -86,8 +82,6 @@ class ModifyActivity : AppCompatActivity() {
             ?.addOnCompleteListener(this){
                 if(it.isSuccessful){
                     toast("$newPassword 로 비밀번호가 변경되었습니다.")
-                }else{
-                    toast("비번 변경실패")
                 }
             }
     }

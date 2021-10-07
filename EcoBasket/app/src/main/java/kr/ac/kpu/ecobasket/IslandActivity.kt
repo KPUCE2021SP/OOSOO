@@ -57,7 +57,6 @@ class IslandActivity : AppCompatActivity() {
                 userEXP.progress = expPercent.toInt()
             }
             override fun onCancelled(error: DatabaseError) {
-                toast("DB에러")
             }
         })
 

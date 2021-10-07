@@ -47,7 +47,6 @@ class ThemeActivity : AppCompatActivity() {
                 }
             }
             override fun onCancelled(error: DatabaseError) {
-                toast("DB에러")
             }
         })
 

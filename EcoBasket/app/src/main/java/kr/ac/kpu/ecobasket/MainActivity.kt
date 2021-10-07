@@ -207,7 +207,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
         else if(resultCode == Activity.RESULT_CANCELED) {
-            toast("반납 QR 촬영 Canceled")
+            toast("QR 촬영 취소")
         }
     }
 

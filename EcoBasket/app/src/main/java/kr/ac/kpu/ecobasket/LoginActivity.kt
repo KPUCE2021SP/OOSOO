@@ -218,7 +218,6 @@ class LoginActivity : AppCompatActivity() {
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w("KakaoLogin", "signInWithCustomToken:failure", task.exception)
-                                        toast("Authentication failed.")
                                         loadingDialog.dismiss()
                                     }
                                 }
@@ -264,7 +263,6 @@ class LoginActivity : AppCompatActivity() {
                     Log.d("Job", "onComplete")
                 }
                 override fun onCancelled(error: DatabaseError) {
-                    toast("DB 오류")
                     emitter.onError(error.toException())
                 }
             })
