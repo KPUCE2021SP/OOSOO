@@ -9,7 +9,8 @@ data class Theme(var default : Boolean = true,
                  var summer : Boolean = false,
                  var autumn : Boolean = false,
                  var winter : Boolean = false,
-                 var sunset : Boolean = false
+                 var sunset : Boolean = false,
+                 var usingLevel : Int = 1
 ) {
     @Exclude
     fun toMap(): Map<String, Any?> {
@@ -19,7 +20,8 @@ data class Theme(var default : Boolean = true,
             "summer" to summer,
             "autumn" to autumn,
             "winter" to winter,
-            "sunset" to sunset
+            "sunset" to sunset,
+            "usingLevel" to usingLevel
         )
     }
 }

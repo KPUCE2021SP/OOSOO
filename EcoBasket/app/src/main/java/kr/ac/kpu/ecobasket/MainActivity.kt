@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private val cabinetRef = Firebase.database.getReference("Cabinet")
     private var auth = FirebaseAuth.getInstance()
     private var usersRef = Firebase.database.getReference("users").child("${auth.currentUser?.uid}")
+    private var themeRef = Firebase.database.getReference("Theme").child("${auth.currentUser?.uid}")
     //var user : User? = null  //현재 로그인한 user 정보 객체 -- 비동기식 firebase 함수 때문에 보류
     private val historyRef = Firebase.database.getReference("History")
 
@@ -218,15 +219,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             override fun onDataChange(snapshot: DataSnapshot) {
                 //user = snapshot.getValue<User>()  --> Boolean값을 못받음
                 val userMap = snapshot.value as Map<*, *>   //user 객체화
-                val userLevel = userMap["level"].toString().toInt()     //레벨
-                var userThemeName = userMap["theme"].toString()
+
                 //user = User()  --> DB 함수는 비동기식 함수 : 외부 변수 저장불가
                 //현재 테스트용
                 val userInfo = User(userMap["name"].toString(),userMap["phone"].toString(),userMap["level"].toString().toInt(),
                     userMap["mileage"].toString().toInt(), userMap["isUsing"].toString().toBoolean(), userMap["email"].toString(), "island")
-
-                //메인 섬 이미지 레벨별 이미지 소스 변경
-                img_island.setImageResource(resources.getIdentifier("@drawable/${userThemeName}_lv$userLevel",null,packageName))
 
                 //테스트 코드 (성공 확인)
                 Log.i("firebase", "Got value $userInfo")
@@ -241,6 +238,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Log.w(TAG, "loadUser:onCancelled", databaseError.toException())
             }
 
+        })
+        //좌측상단 이미지 설정
+        themeRef.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val map = snapshot.value as Map<*, *>
+                val userUsingThemeLevel = map["usingLevel"].toString().toInt()    //현재 사용중인 섬 레벨
+                usersRef.addListenerForSingleValueEvent(object: ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val userMap = snapshot.value as Map<*, *>   //user 객체화
+                        var userThemeName = userMap["theme"].toString()
+
+                        //메인 섬 이미지 레벨별 이미지 소스 변경
+                        img_island.setImageResource(resources.getIdentifier("@drawable/${userThemeName}_lv$userUsingThemeLevel",null,packageName))
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {  }
+
+                })
+            }
+            override fun onCancelled(error: DatabaseError) {  }
         })
     }
 

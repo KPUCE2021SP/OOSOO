@@ -62,7 +62,7 @@ class ThemeActivity : AppCompatActivity() {
                     tv_eco_lock1.visibility = View.GONE
                     iv_lock1.visibility = View.GONE
                     frame3.foreground = null
-                    image_summer.isClickable = true
+                    image_summer.isEnabled = true
                     frame3.isClickable = true
                     image_summer.setOnClickListener(themeImageListener)
                 }
@@ -70,7 +70,7 @@ class ThemeActivity : AppCompatActivity() {
                     tv_eco_lock2.visibility = View.GONE
                     iv_lock2.visibility = View.GONE
                     frame4.foreground = null
-                    image_autumn.isClickable = true
+                    image_autumn.isEnabled = true
                     frame4.isClickable = true
                     image_autumn.setOnClickListener(themeImageListener)
                 }
@@ -78,7 +78,7 @@ class ThemeActivity : AppCompatActivity() {
                     tv_eco_lock3.visibility = View.GONE
                     iv_lock3.visibility = View.GONE
                     frame5.foreground = null
-                    image_winter.isClickable = true
+                    image_winter.isEnabled = true
                     frame5.isClickable = true
                     image_winter.setOnClickListener(themeImageListener)
                 }
@@ -86,7 +86,7 @@ class ThemeActivity : AppCompatActivity() {
                     tv_eco_lock4.visibility = View.GONE
                     iv_lock4.visibility = View.GONE
                     frame6.foreground = null
-                    image_sunset.isClickable = true
+                    image_sunset.isEnabled = true
                     frame6.isClickable = true
                     image_sunset.setOnClickListener(themeImageListener)
                 }

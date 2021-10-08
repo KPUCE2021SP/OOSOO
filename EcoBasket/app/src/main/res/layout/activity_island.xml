@@ -56,6 +56,16 @@
         app:layout_constraintVertical_bias="0.4"
         app:srcCompat="@drawable/island_lv1" />
 
+    <ImageView
+        android:id="@+id/btn_select_island"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/main_island"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/main_island"
+        app:layout_constraintTop_toBottomOf="@+id/main_island"
+        app:srcCompat="@drawable/ic_baseline_settings_24" />
+
     <TextView
         android:id="@+id/island_name"
         android:layout_width="wrap_content"
