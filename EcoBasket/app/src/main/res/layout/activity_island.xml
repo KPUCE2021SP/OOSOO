@@ -62,7 +62,7 @@
         android:layout_height="45dp"
         android:background="#00000000"
         android:text="이름 표시"
-        android:textColor="@color/island_main_text_color"
+        android:textColor="@color/island_name_text_color"
         android:textSize="33sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/main_island"

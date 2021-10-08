@@ -2,10 +2,15 @@ package kr.ac.kpu.ecobasket
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.widget.ImageView
+import androidx.annotation.RequiresApi
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
@@ -22,6 +27,7 @@ class IslandActivity : AppCompatActivity() {
     //유저의 uid를 받아서 레퍼런스 생성
     private val usersRef = Firebase.database.getReference("users").child("$uid")
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_island)
@@ -36,6 +42,7 @@ class IslandActivity : AppCompatActivity() {
                 val userMileage = map["mileage"].toString().toInt()     //유저 마일리지 = 경험치
                 var expPercent : Float = userMileage.toFloat() / printMaxEXP(userLevel).toFloat() * 100f   //경험치 %
                 userThemeName = map["theme"].toString()
+
 
                 if(expPercent >= 100 || printMaxEXP(userLevel) == 0) {
                     expPercent = 100f
@@ -52,6 +59,12 @@ class IslandActivity : AppCompatActivity() {
                 user_level.text = "Lv.$userLevel"
                 ecoPoint.text = "$userMileage 에코포인트"
 
+                //userName 하이라이트 색 변경
+                val island_string = island_name.text.toString()
+                val builder = SpannableStringBuilder(island_string)
+                val colorBlueSpan = ForegroundColorSpan(getColor(R.color.island_main_text_color))
+                builder.setSpan(colorBlueSpan, island_string.length - 3, island_string.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                island_name.text = builder
 
                 userEXPtextPercent.text = "${expPercent}%"
                 userEXP.progress = expPercent.toInt()
