@@ -143,6 +143,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:foreground="@drawable/rounded_layout">
 
                     <ImageButton
@@ -165,7 +166,7 @@
 
                     <ImageView
                         android:id="@+id/iv_lock1"
-                        android:layout_width="70dp"
+                        android:layout_width="71dp"
                         android:layout_height="70dp"
                         android:layout_gravity="center"
                         app:srcCompat="@drawable/lock" />
@@ -198,6 +199,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:foreground="@drawable/rounded_layout">
 
                     <ImageButton
@@ -262,6 +264,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:foreground="@drawable/rounded_layout">
 
                     <ImageButton
@@ -316,6 +319,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"
+                    android:clickable="false"
                     android:foreground="@drawable/rounded_layout">
 
                     <ImageButton
@@ -347,7 +351,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal|top"
-                        android:text="사용 횟수 10회 이상"
+                        android:text="300 에코포인트 달성"
                         android:textColor="#D50000"
                         android:textColorHighlight="#000000" />
 

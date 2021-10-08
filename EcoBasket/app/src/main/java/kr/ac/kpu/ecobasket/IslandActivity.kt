@@ -99,7 +99,9 @@ class IslandActivity : AppCompatActivity() {
                     usersRef.child("level").setValue( user.level!! + 1 )
                 }
                 else {
-                    toast("경험치가 부족합니다. 마일리지를 모아주세요.")
+                    runOnUiThread {
+                        toast("경험치가 부족합니다. 마일리지를 모아주세요.")
+                    }
                     return Transaction.success(mutableData)
                 }
 

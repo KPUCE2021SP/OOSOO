@@ -27,6 +27,7 @@ import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
+import kotlinx.android.synthetic.main.activity_island.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_layout.*
 import kotlinx.android.synthetic.main.header_menu.*
@@ -217,11 +218,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             override fun onDataChange(snapshot: DataSnapshot) {
                 //user = snapshot.getValue<User>()  --> Boolean값을 못받음
                 val userMap = snapshot.value as Map<*, *>   //user 객체화
-
+                val userLevel = userMap["level"].toString().toInt()     //레벨
+                var userThemeName = userMap["theme"].toString()
                 //user = User()  --> DB 함수는 비동기식 함수 : 외부 변수 저장불가
                 //현재 테스트용
                 val userInfo = User(userMap["name"].toString(),userMap["phone"].toString(),userMap["level"].toString().toInt(),
                     userMap["mileage"].toString().toInt(), userMap["isUsing"].toString().toBoolean(), userMap["email"].toString(), "island")
+
+                //메인 섬 이미지 레벨별 이미지 소스 변경
+                img_island.setImageResource(resources.getIdentifier("@drawable/${userThemeName}_lv$userLevel",null,packageName))
 
                 //테스트 코드 (성공 확인)
                 Log.i("firebase", "Got value $userInfo")
