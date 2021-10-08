@@ -14,6 +14,7 @@ class SignUpActivity: AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private var usersRef = Firebase.database.getReference("users")
+    private val themeRef = Firebase.database.getReference("Theme")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,11 +82,16 @@ class SignUpActivity: AppCompatActivity() {
 
     //DB에 회원정보 넣기
     private fun createUserDB(name: String?, phone: String?, email: String){
+        //User 객체로 DB에 User정보 생성
         val user = User(name = name, phone = phone, mileage = 30, isUsing = false, level = 1, email = email, theme = "island")
 
         usersRef.child(auth.currentUser?.uid.toString()).setValue(user.toMap()).addOnSuccessListener {
             Log.i("firebase", "Successful Create User")
         }.addOnFailureListener{ Log.w("firebase","Failure Create User")}
-        //사용중인 장바구니정보 추가해야함
+
+        val theme = Theme()
+        themeRef.child(auth.currentUser?.uid.toString()).setValue(theme.toMap()).addOnSuccessListener {
+            Log.i("firebase", "Successful Create ThemeInfo")
+        }.addOnFailureListener{ Log.w("firebase","Failure Create ThemeInfo")}
     }
 }

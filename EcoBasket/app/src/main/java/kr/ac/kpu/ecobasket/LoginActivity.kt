@@ -30,6 +30,7 @@ import org.json.JSONObject
 class LoginActivity : AppCompatActivity() {
 
     private var usersRef = Firebase.database.getReference("users")
+    private val themeRef = Firebase.database.getReference("Theme")
     var disposable: Disposable? = null
     var createDisposable: Disposable? = null
 
@@ -257,6 +258,11 @@ class LoginActivity : AppCompatActivity() {
                         usersRef.child(Firebase.auth.currentUser?.uid.toString()).setValue(user.toMap()).addOnSuccessListener {
                             Log.i("Database", "Successful Create User")
                         }.addOnFailureListener{ Log.w("Database","Failure Create User")}
+
+                        val theme = Theme()
+                        themeRef.child(Firebase.auth.currentUser?.uid.toString()).setValue(theme.toMap()).addOnSuccessListener {
+                            Log.i("firebase", "Successful Create ThemeInfo")
+                        }.addOnFailureListener{ Log.w("firebase","Failure Create ThemeInfo")}
                     }
 
                     emitter.onComplete()
