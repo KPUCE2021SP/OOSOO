@@ -71,6 +71,14 @@
             android:layout_margin="3dp"
             android:layout_weight="1"
             android:src="@drawable/shape_circle_gray" />
+
+        <ImageView
+            android:id="@+id/indicator3_guide"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:src="@drawable/shape_circle_gray" />
     </LinearLayout>
 
     <Button

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
     android:layout_height="100dp"
-    android:background="@color/gray"
+    android:background="@color/island_main_text_color"
     android:orientation="horizontal"
     android:padding="10dp"
     android:weightSum="4">
@@ -31,7 +31,7 @@
             android:paddingLeft="10dp"
             android:text="이름or닉네임"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="#FFFFFF"
+            android:textColor="#000000"
             android:textSize="25sp" />
 
         <TextView
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:text="Lv. ???"
-            android:textColor="#FFFFFF"
+            android:textColor="#000000"
             android:textSize="16sp" />
     </LinearLayout>
 
