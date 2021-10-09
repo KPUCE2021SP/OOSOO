@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
     android:layout_height="100dp"
-    android:background="@color/island_main_text_color"
+    android:background="#F3F8FE"
     android:orientation="horizontal"
     android:padding="10dp"
     android:weightSum="4">
@@ -13,9 +13,10 @@
         android:id="@+id/img_profile_header"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/google_icon"
+        android:src="@drawable/user_image"
         app:civ_border_color="@color/gray"
-        app:civ_border_width="2dp" />
+        app:civ_border_width="2dp"
+        app:civ_circle_background_color="@color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"

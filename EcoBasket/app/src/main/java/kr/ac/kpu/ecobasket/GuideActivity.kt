@@ -43,9 +43,9 @@ class GuideActivity : AppCompatActivity() {
 
     private fun getImageList() : ArrayList<ArrayList<Int>> {
 
-        var page1 = arrayListOf<Int>(R.drawable.marker, R.drawable.qr_scan, R.drawable.eco_basket_icon, R.drawable.google_icon)
+        var page1 = arrayListOf<Int>(R.drawable.marker, R.drawable.qr_scan, R.drawable.eco_basket_icon, R.drawable.storage_lock)
         var page2 = arrayListOf<Int>(R.drawable.error, R.drawable.request_icon, R.drawable.solve_icon)
-        var page3 = arrayListOf<Int>(R.drawable.marker, R.drawable.qr_scan, R.drawable.return_icon, R.drawable.google_icon)
+        var page3 = arrayListOf<Int>(R.drawable.marker, R.drawable.qr_scan, R.drawable.return_icon, R.drawable.storage_lock)
         var page4 = arrayListOf<Int>(R.drawable.eco_point_64px, R.drawable.theme_change_icon, R.drawable.protect_icon)
 
         return arrayListOf<ArrayList<Int>>(page1, page2, page3, page4)

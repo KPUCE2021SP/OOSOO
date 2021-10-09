@@ -1,6 +1,7 @@
 package kr.ac.kpu.ecobasket
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -20,6 +21,7 @@ class GuidePagerAdapter(imageList: ArrayList<ArrayList<Int>>, textList: ArrayLis
         if (images[position].size == 3) {
             holder.imageViews[3].isGone = true
             holder.textViews[3].isGone = true
+            holder.line.isGone = true
         }
 
         for (i in 0 until images[position].size) {
@@ -33,5 +35,6 @@ class GuidePagerAdapter(imageList: ArrayList<ArrayList<Int>>, textList: ArrayLis
 
         val imageViews = arrayListOf<ImageView>(itemView.img_guide1, itemView.img_guide2, itemView.img_guide3, itemView.img_guide4)
         val textViews = arrayListOf<TextView>(itemView.tv_guide1, itemView.tv_guide2, itemView.tv_guide3, itemView.tv_guide4)
+        val line: View = itemView.viewLine3
     }
 }

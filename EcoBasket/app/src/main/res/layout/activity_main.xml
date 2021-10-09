@@ -22,7 +22,7 @@
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="right"
-        android:background="@color/island_main_text_color"
+        android:background="#F3F8FE"
         app:headerLayout="@layout/header_menu"
         app:menu="@menu/menu">
 

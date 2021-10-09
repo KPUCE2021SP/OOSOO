@@ -87,7 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="다음"
-        app:backgroundTint="#505050"
+        app:backgroundTint="@color/app_primeColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline11"
         app:layout_constraintStart_toStartOf="@+id/guideline10" />

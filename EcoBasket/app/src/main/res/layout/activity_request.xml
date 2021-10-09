@@ -9,7 +9,7 @@
         android:id="@+id/toolbar_req"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#505050"
+        android:background="@color/app_primaryVariantColor"
         android:gravity="center"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
