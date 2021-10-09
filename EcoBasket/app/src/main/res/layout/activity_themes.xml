@@ -351,7 +351,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal|top"
-                        android:text="300 에코포인트 달성"
+                        android:text="Lv.5 달성"
                         android:textColor="#D50000"
                         android:textColorHighlight="#000000" />
 
